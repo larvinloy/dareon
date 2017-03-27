@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,7 +19,8 @@ import javax.persistence.Table;
 @Table( name="users" )
 public class User {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column( unique=true, nullable=false )
@@ -27,7 +29,11 @@ public class User {
 	@Column( nullable=false )
 	private String password;
 	
-	private String fullName;
+	@Column (nullable = false)
+	private String firstName;
+	
+	@Column (nullable = false)
+	private String lastName;
 	
 	// Setting relation
 	@ManyToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
@@ -64,12 +70,20 @@ public class User {
 		this.password = password;
 	}
 
-	public String getFullName() {
-		return fullName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Set<Role> getRoles() {

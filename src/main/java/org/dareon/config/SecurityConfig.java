@@ -9,34 +9,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
-@EnableGlobalMethodSecurity( securedEnabled = true )
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	@Autowired
-	private UserDetailsService userService;
-	
-	@Autowired
-	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception{
-		auth.userDetailsService(userService);
-	}
+@EnableGlobalMethodSecurity(securedEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter
+{
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.antMatchers("/admin/**").hasRole("ADMIN")
-				.anyRequest().authenticated()
-				.and()
-			.formLogin()
-				.loginPage("/login")
-				.usernameParameter("email")
-				.permitAll()
-				.and()
-			.logout()
-				.logoutSuccessUrl("/login?logout")
-				.permitAll();
-	}
+    @Autowired
+    private UserDetailsService userService;
 
+    @Autowired
+    public void configureAuth(AuthenticationManagerBuilder auth) throws Exception
+    {
+	auth.userDetailsService(userService);
+    }
 
-	
+    @Override
+    protected void configure(HttpSecurity http) throws Exception
+    {
+	http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated().and()
+		.formLogin().loginPage("/login").usernameParameter("email").permitAll().and().logout()
+		.logoutSuccessUrl("/login?logout").permitAll();
+    }
+
 }
