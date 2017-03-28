@@ -108,7 +108,7 @@ public class HomeController
 	return "callforproposals/create";
     }
     
-    @RequestMapping("/repo/list")
+    @RequestMapping("/callforproposals/list")
     public String callForProposalsList(Model model)
     {
 	model.addAttribute("callsForProposals", callForProposalsService.list());

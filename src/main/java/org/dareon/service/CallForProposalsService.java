@@ -28,4 +28,9 @@ public class CallForProposalsService {
 		return callForProposalsRepository.save(proposal);
 	}
 	
+	 public List<CallForProposals> list()
+	    {
+		return callForProposalsRepository.findAllByOrderByCreatedOnDesc();
+	    }
+	
 }
