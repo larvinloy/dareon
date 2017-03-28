@@ -8,22 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RepoService {
+public class RepoService
+{
 
-	private RepoRepository postRepository;
-	
-	@Autowired
-	public RepoService(RepoRepository postRepository){
-		this.postRepository = postRepository;
-	}
+    private RepoRepository postRepository;
 
+    @Autowired
+    public RepoService(RepoRepository postRepository)
+    {
+	this.postRepository = postRepository;
+    }
 
-	public Repo get(Long id) {
-		return postRepository.findOne(id);
-	}
+    public Repo get(Long id)
+    {
+	return postRepository.findOne(id);
+    }
 
-	public Repo save(Repo post) {
-		return postRepository.save(post);
-	}
-	
+    public Repo save(Repo post)
+    {
+	return postRepository.save(post);
+    }
+
+    public List<Repo> list()
+    {
+	return postRepository.findAllByOrderByCreatedOnDesc();
+    }
+
 }

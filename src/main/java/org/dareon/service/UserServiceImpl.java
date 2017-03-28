@@ -10,28 +10,33 @@ import org.dareon.domain.User;
 import org.dareon.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService
+{
 
-	private UserRepository userRepository;
-	
-	@Autowired
-	public UserServiceImpl(UserRepository userRepository){
-		this.userRepository = userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository)
+    {
+	this.userRepository = userRepository;
+    }
+
+    @Override
+    public User findByEmail(String email)
+    {
+	return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
+	User user = findByEmail(username);
+	if (user == null)
+	{
+	    throw new UsernameNotFoundException(username);
 	}
 
-	@Override
-	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
+	return new UserDetailsImpl(user);
+    }
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = findByEmail(username);
-		if( user == null ){
-			throw new UsernameNotFoundException(username);
-		}
-		
-		return new UserDetailsImpl(user);
-	}
-	
 }

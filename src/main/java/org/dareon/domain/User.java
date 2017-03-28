@@ -13,91 +13,117 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table( name="users" )
-public class User {
+@Table(name = "users")
+public class User
+{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	@Column( unique=true, nullable=false )
-	private String email;
-	
-	@Column( nullable=false )
-	private String password;
-	
-	@Column (nullable = false)
-	private String firstName;
-	
-	@Column (nullable = false)
-	private String lastName;
-	
-	// Setting relation
-	@ManyToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
-	@JoinTable( 
-		name = "users_roles", 
-		joinColumns = {@JoinColumn(name="user_id")}, 
-		inverseJoinColumns = {@JoinColumn(name="role_id")}  
-	)
-	private Set<Role> roles = new HashSet<Role>();
-	
-	private User() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(unique = true, nullable = false)
+    private String email;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(nullable = false)
+    private String password;
 
-	public String getEmail() {
-		return email;
-	}
+    @Column(nullable = false)
+    private String firstName;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Column(nullable = false)
+    private String lastName;
 
-	public String getPassword() {
-		return password;
-	}
+    // Setting relation
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+	    @JoinColumn(name = "role_id") })
+    private Set<Role> roles = new HashSet<Role>();
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    @OneToMany(mappedBy="user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Repo> repos = new HashSet<Repo>();
 
-	public String getFirstName() {
-		return firstName;
-	}
+    private User()
+    {
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
+    public Long getId()
+    {
+	return id;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setId(Long id)
+    {
+	this.id = id;
+    }
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
+    public String getEmail()
+    {
+	return email;
+    }
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    public void setEmail(String email)
+    {
+	this.email = email;
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + "]";
-	}
+    public String getPassword()
+    {
+	return password;
+    }
 
-	
+    public void setPassword(String password)
+    {
+	this.password = password;
+    }
+
+    public String getFirstName()
+    {
+	return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+	this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+	return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+	this.lastName = lastName;
+    }
+
+    public Set<Role> getRoles()
+    {
+	return roles;
+    }
+
+    public void setRoles(Set<Role> roles)
+    {
+	this.roles = roles;
+    }
+
+    public Set<Repo> getRepos()
+    {
+        return repos;
+    }
+
+    public void setRepos(Set<Repo> repos)
+    {
+        this.repos = repos;
+    }
+
+    @Override
+    public String toString()
+    {
+	return "User [id=" + id + ", email=" + email + ", password=" + password + "]";
+    }
+
 }

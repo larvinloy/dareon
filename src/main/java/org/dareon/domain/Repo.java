@@ -1,97 +1,143 @@
 package org.dareon.domain;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.dareon.json.JsonDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
-@Table (name = "repos")
+@Table(name = "repos")
 public class Repo
 {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
-    @Column (nullable= false, unique = true)
-    private String name;
-    
-    @Column (nullable= false)
+
+    @Column(nullable = false, unique = true)
+    private String title;
+
+    @Column(nullable = false)
+    private String institution;
+
+    @Basic(optional = false)
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdOn;
+
+    @Column(nullable = false)
     private String definition;
-    
-    @Column (nullable= false)
+
+    @Column(nullable = false)
     private String description;
-    
-    @OneToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
     private User user;
-    
-
-    public User getUser()
-    {
-        return user;
-    }
-
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
 
     public Repo()
     {
     }
-    
+
+    public User getUser()
+    {
+	return user;
+    }
+
+    @JsonSerialize(using = JsonDateSerializer.class)
+    public Date getCreatedOn()
+    {
+	return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn)
+    {
+	this.createdOn = createdOn;
+    }
+
+    public String getInstitution()
+    {
+	return institution;
+    }
+
+    public void setInstitution(String institution)
+    {
+	this.institution = institution;
+    }
+
+    public void setUser(User user)
+    {
+	this.user = user;
+    }
+
     public Repo(String name)
     {
-	this.setName(name);
+	this.setTitle(name);
     }
 
     public long getId()
     {
-        return id;
+	return id;
     }
 
     public void setId(long id)
     {
-        this.id = id;
+	this.id = id;
     }
 
-    public String getName()
+    public String getTitle()
     {
-        return name;
+	return title;
     }
 
-    public void setName(String name)
+    public void setTitle(String title)
     {
-        this.name = name;
+	this.title = title;
     }
 
     public String getDefinition()
     {
-        return definition;
+	return definition;
     }
 
     public void setDefinition(String definition)
     {
-        this.definition = definition;
+	this.definition = definition;
     }
 
     public String getDescription()
     {
-        return description;
+	return description;
     }
 
     public void setDescription(String description)
     {
-        this.description = description;
+	this.description = description;
     }
-    
+
     @Override
     public String toString()
     {
-	return "Repo [id=" + id + ", name=" + name + ", definition=" + definition + ", description=" + description
+	return "Repo [id=" + id + ", name=" + title + ", definition=" + definition + ", description=" + description
 		+ ", user=" + user + "]";
     }
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>Create New Repository</title>
+</head>
+<body>
+		
+	<div layout:fragment="content">
+	
+		<h2>Create New Repository</h2>
+		<br/>
+
+		<form class="form-horizontal" th:object="${repo}" th:action="@{/repo/save}" method="post">
+			<input type="hidden" th:field="*{id}" />
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Title: </label>
+				<div class="col-md-10">
+					<input type="text" class="form-control" th:field="*{title}" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Institution: </label>
+				<div class="col-md-10">
+					<input type="text" class="form-control" th:field="*{institution}" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Definition</label>
+				<div class="col-md-10">
+					<textarea class="form-control" rows="3" th:field="*{definition}">teaser</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Description</label>
+				<div class="col-md-10">
+					<textarea class="form-control" rows="5" th:field="*{description}">body</textarea>
+				</div>
+			</div>		  	
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+		
+	</div>
+		
+</body>
+</html>

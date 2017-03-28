@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>List Repos</title>
+</head>
+<body>
+		
+	<div layout:fragment="content">
+	
+	    <article th:each="repo : ${repos}">
+			<header>
+				<h2 th:text="${repo.title}">title</h2>
+				<p th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}">createdOn</p>
+			</header>
+			<footer>
+				<a th:href="|@{/repo/view/}${repo.title}|">View</a>
+				<address>
+					Posted By <a th:href="|mailto:${repo.user.email}|"> <span th:text="|${repo.user.firstName} ${repo.user.lastName}|">user</span></a>
+				</address>
+			</footer>
+			<hr/>
+		</article>
+
+		<p th:if="${repos.size() == 0}">
+			<div class="alert alert-warning" role="alert">No Posts Found.</div>
+		</p>
+		
+	</div>
+		
+</body>
+</html>
