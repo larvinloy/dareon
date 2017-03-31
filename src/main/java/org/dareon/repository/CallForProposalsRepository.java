@@ -11,7 +11,7 @@ public interface CallForProposalsRepository extends CrudRepository<CallForPropos
 {
 
     CallForProposals findById(Long id);
-
+    CallForProposals findByTitle(String title);
     List<CallForProposals> findAllByOrderByCreatedOnDesc();
 
 }

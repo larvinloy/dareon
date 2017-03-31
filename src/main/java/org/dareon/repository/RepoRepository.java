@@ -10,7 +10,7 @@ public interface RepoRepository extends CrudRepository<Repo, Long>
 {
 
     Repo findById(Long id);
-
+    Repo findByTitle(String title);
     List<Repo> findAllByOrderByCreatedOnDesc();
 
 }

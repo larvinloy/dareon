@@ -53,6 +53,21 @@ public class Repo
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
+    
+    private Boolean deleteStatus = true;
+    
+    @OneToMany(mappedBy="repo",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<CallForProposals> callForProposals = new HashSet<CallForProposals>();
+
+    public Boolean getDeleteStatus()
+    {
+        return deleteStatus;
+    }
+
+    public void setDeleteStatus(Boolean deleteStatus)
+    {
+        this.deleteStatus = deleteStatus;
+    }
 
     public Repo()
     {
@@ -133,6 +148,17 @@ public class Repo
     {
 	this.description = description;
     }
+    
+    public Set<CallForProposals> getCallForProposals()
+    {
+        return callForProposals;
+    }
+
+    public void setCallForProposals(Set<CallForProposals> callForProposals)
+    {
+        this.callForProposals = callForProposals;
+    }
+
 
     @Override
     public String toString()

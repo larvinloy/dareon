@@ -15,6 +15,14 @@
 		<form class="form-horizontal" th:object="${callForProposals}" th:action="@{/callforproposals/save}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<div class="form-group">
+				<label class="col-sm-2 control-label">Select Repo: </label>
+				<div class="col-md-10">
+				<select th:field="*{repo}">
+			    	<option th:each="r: ${repos}" th:value="${r.id}" th:text="${r.title}"  />
+			  	</select>
+			  	</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">Title: </label>
 				<div class="col-md-10">
 					<input type="text" class="form-control" th:field="*{title}" />

@@ -1,5 +1,8 @@
 package org.dareon.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dareon.domain.CallForProposals;
 import org.dareon.domain.Repo;
 import org.dareon.service.CallForProposalsService;
@@ -7,6 +10,7 @@ import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +21,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class HomeController
@@ -43,7 +51,6 @@ public class HomeController
 	this.repoService = repoService;
 	this.userService = userService;
 	this.callForProposalsService = callForProposalsService;
-
     }
 
     @RequestMapping("/")
@@ -63,16 +70,16 @@ public class HomeController
     public String repoSave(Repo repo)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	// UserDetailsImpl u = (UserDetailsImpl)auth.getPrincipal();
-//	repo.setUser(userService.findByEmail(auth.getName()));
+	 UserDetailsImpl u = (UserDetailsImpl)auth.getPrincipal();
+	 repo.setUser(userService.findByEmail(auth.getName()));
 	Repo savedRepo = repoService.save(repo);
 	return "repo/create";
     }
 
-    @RequestMapping("/repo/edit/{id}")
-    public String repoEdit(@PathVariable Long id, Model model)
+    @RequestMapping("/repo/edit/{title}")
+    public String repoEdit(@PathVariable String title, Model model)
     {
-	model.addAttribute("repo", repoService.get(id));
+	model.addAttribute("repo", repoService.findByTitle(title));
 	return "repo/create";
     }
 
@@ -82,10 +89,13 @@ public class HomeController
 	model.addAttribute("repos", repoService.list());
 	return "repo/list";
     }
-    
+
+//    @Secured("ROLE_ADMIN")
     @RequestMapping("/callforproposals/create")
     public String proposalCreate(Model model)
     {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	model.addAttribute("repos",userService.findByEmail(auth.getName()).getRepos());
 	model.addAttribute("callForProposals", new CallForProposals());
 	return "callforproposals/create";
     }
@@ -95,26 +105,28 @@ public class HomeController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	// UserDetailsImpl u = (UserDetailsImpl)auth.getPrincipal();
-	if(callForProposals.getUser() == null)
-	    callForProposals.setUser(userService.findByEmail(auth.getName()));
+//	if (callForProposals.getUser() == null)
+//	    callForProposals.setUser(repoService.findByTitle(title)));
+//	return callForProposals.getRepo().toString();
 	CallForProposals savedCallForProposals = callForProposalsService.save(callForProposals);
+	
 	return "callforproposals/create";
     }
-    
-    @RequestMapping("/callforproposals/edit/{id}")
-    public String callforproposalsEdit(@PathVariable Long id, Model model)
+
+    @RequestMapping("/callforproposals/edit/{title}")
+    public String callforproposalsEdit(@PathVariable String title, Model model)
     {
-	model.addAttribute("callForProposals", callForProposalsService.get(id));
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	model.addAttribute("repos",userService.findByEmail(auth.getName()).getRepos());
+	model.addAttribute("callForProposals", callForProposalsService.findByTitle(title));
 	return "callforproposals/create";
     }
-    
+
     @RequestMapping("/callforproposals/list")
     public String callForProposalsList(Model model)
     {
 	model.addAttribute("callsForProposals", callForProposalsService.list());
 	return "callforproposals/list";
     }
-
-    
 
 }

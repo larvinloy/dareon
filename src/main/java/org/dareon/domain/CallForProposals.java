@@ -3,11 +3,15 @@ package org.dareon.domain;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,8 +42,9 @@ public class CallForProposals
     @Column (nullable= false)
     private String details;
     
-    @OneToOne
-    private User user;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="repo_id")
+    private Repo repo;
 
     public long getId()
     {
@@ -101,14 +106,16 @@ public class CallForProposals
         this.details = details;
     }
 
-    public User getUser()
+    public Repo getRepo()
     {
-        return user;
+        return repo;
     }
 
-    public void setUser(User user)
+    public void setRepo(Repo repo)
     {
-        this.user = user;
+        this.repo = repo;
     }
+
+    
     
 }

@@ -10,27 +10,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CallForProposalsService {
+public class CallForProposalsService
+{
 
-	private CallForProposalsRepository callForProposalsRepository;
-	
-	@Autowired
-	public CallForProposalsService(CallForProposalsRepository postRepository){
-		this.callForProposalsRepository = postRepository;
-	}
+    private CallForProposalsRepository callForProposalsRepository;
 
+    @Autowired
+    public CallForProposalsService(CallForProposalsRepository postRepository)
+    {
+	this.callForProposalsRepository = postRepository;
+    }
 
-	public CallForProposals get(Long id) {
-		return callForProposalsRepository.findOne(id);
-	}
+    public CallForProposals get(Long id)
+    {
+	return callForProposalsRepository.findOne(id);
+    }
 
-	public CallForProposals save(CallForProposals proposal) {
-		return callForProposalsRepository.save(proposal);
-	}
-	
-	 public List<CallForProposals> list()
-	    {
-		return callForProposalsRepository.findAllByOrderByCreatedOnDesc();
-	    }
-	
+    public CallForProposals save(CallForProposals proposal)
+    {
+	return callForProposalsRepository.save(proposal);
+    }
+
+    public List<CallForProposals> list()
+    {
+	return callForProposalsRepository.findAllByOrderByCreatedOnDesc();
+    }
+
+    public CallForProposals findByTitle(String title)
+    {
+	return callForProposalsRepository.findByTitle(title);
+    }
 }

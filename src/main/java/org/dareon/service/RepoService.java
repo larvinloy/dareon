@@ -11,27 +11,32 @@ import org.springframework.stereotype.Service;
 public class RepoService
 {
 
-    private RepoRepository postRepository;
+    private RepoRepository repoRepository;
 
     @Autowired
     public RepoService(RepoRepository postRepository)
     {
-	this.postRepository = postRepository;
+	this.repoRepository = postRepository;
     }
 
     public Repo get(Long id)
     {
-	return postRepository.findOne(id);
+	return repoRepository.findOne(id);
     }
 
     public Repo save(Repo post)
     {
-	return postRepository.save(post);
+	return repoRepository.save(post);
     }
 
     public List<Repo> list()
     {
-	return postRepository.findAllByOrderByCreatedOnDesc();
+	return repoRepository.findAllByOrderByCreatedOnDesc();
+    }
+    
+    public Repo findByTitle(String title)
+    {
+	return repoRepository.findByTitle(title);
     }
 
 }
