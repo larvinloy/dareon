@@ -3,6 +3,10 @@
 	layout:decorator="layouts/main">
 <head>
 <title>Dareon: Repository Details</title>
+<link rel="stylesheet"
+	href="/webjars/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" />
+<script src="/webjars/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 </head>
 <body>
 
@@ -42,22 +46,25 @@
 				</div>
 			</div>
 			<div class="checkbox">
-				<label> <input data-toggle="toggle" type="checkbox"
-					th:field="*{status}" /> Status
-				</label>
+				<label class="col-sm-2 control-label"> Activity Status </label> <input
+					class="col-sm-2" type="checkbox" 
+					data-size="small" th:field="*{status}" />
 			</div>
 
 			<div class="checkbox">
-				<label> <input data-toggle="toggle" type="checkbox"
-					th:field="*{deleteStatus}" /> Delete
-				</label>
+				<label class="col-sm-2 control-label"> Delete Status </label> <input
+					class="col-sm-2" type="checkbox"
+					data-size="small" th:field="*{deleteStatus}" />
 			</div>
+
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-default">Save</button>
 					<button type="reset" class="btn btn-default">Reset</button>
 				</div>
 			</div>
+
+
 
 
 		</form>
