@@ -3,20 +3,29 @@
 	xmlns:th="http://www.thymeleaf.org"
 	layout:decorator="layouts/main">
 <head>
-	<title>List Repos</title>
+	<title>Dareon: Repositories</title>
 </head>
 <body>
 		
 	<div layout:fragment="content">
 		
-		<table class="table table-hover" id="repos">
+
+		
+		    <div class="col-lg-12">
+                <h1 class="page-header">
+					Repositories
+                	<a href="/repo/create" class="btn btn-danger btn-lg" role="button">Create a Repository</a>
+            	</h1>
+            
+ 		
+		<table class="table table-hover table-responsive" id="repos">
             <thead>
             <tr>
                 <th style="text-align:center">Title</th>
                 <th style="text-align:center">Created On</th>
-                <th style="text-align:center">Assigned Owner</th>
-                <th style="text-align:center">Owner's email</th>
-                <th style="text-align:center">Manage repository</th>
+                <th style="text-align:center">Owner's Name</th>
+                <th style="text-align:center">Owner's Email Address</th>
+                <th style="text-align:center">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -33,7 +42,12 @@
 	            		<td style="text-align:center"> No repository owner assigned </td>
 	            	</th:block>
 	            	<td style="text-align:center">
-	            		<a th:href="|@{/repo/view/}${repo.title}|">View</a>/<a th:href="|@{/repo/edit/}${repo.title}|">Edit</a>/<a th:href="|@{/repo/edit/}${repo.title}|">Delete</a>
+	            		<div class="btn-group btn-group-sm">
+    						<a th:href="|@{/repo/view/}${repo.title}|" class="btn btn-default">View</a>
+    						<a th:href="|@{/repo/edit/}${repo.title}|" class="btn btn-default">Edit</a>
+    						<a th:href="|@{/repo/edit/}${repo.title}|" class="btn btn-default">Delete</a>
+    						<a th:href="|@{/callforproposals/create/}${repo.title}|" class="btn btn-primary">Create CFP</a>
+  						</div>
 	            	</td>
 	          
 	            </tr>
@@ -41,6 +55,10 @@
             </tbody>
             
         </table>
+
+
+
+
 		<script type="application/javascript">
 		$(document).ready(function() {
 			$('#repos').DataTable();
@@ -50,6 +68,8 @@
 		<p th:if="${repos.size() == 0}">
 			<div class="alert alert-warning" role="alert">No Repositories Found.</div>
 		</p>
+
+		</div>
 		
 	</div>
 	

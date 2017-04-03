@@ -73,7 +73,7 @@ public class HomeController
 	 UserDetailsImpl u = (UserDetailsImpl)auth.getPrincipal();
 	 repo.setUser(userService.findByEmail(auth.getName()));
 	Repo savedRepo = repoService.save(repo);
-	return "repo/create";
+	return "redirect:list";
     }
 
     @RequestMapping("/repo/edit/{title}")
@@ -110,7 +110,7 @@ public class HomeController
 //	return callForProposals.getRepo().toString();
 	CallForProposals savedCallForProposals = callForProposalsService.save(callForProposals);
 	
-	return "callforproposals/create";
+	return "redirect:list";
     }
 
     @RequestMapping("/callforproposals/edit/{title}")
