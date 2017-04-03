@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="en"
-	xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 	layout:decorator="layouts/main">
 <head>
-	<title>Dareon: Repository Details</title>
+<title>Dareon: Repository Details</title>
 </head>
 <body>
-		
+
 	<div layout:fragment="content">
-	
-		    <div class="col-lg-12">
-                <h1 class="page-header">
-					Repository Details
-                </h1>
-            </div>
+
+		<div class="col-lg-12">
+			<h1 class="page-header">Repository Details</h1>
+		</div>
 
 
-		<form class="form-horizontal" th:object="${repo}" th:action="@{/repo/save}" method="post">
+		<form class="form-horizontal" th:object="${repo}"
+			th:action="@{/repo/save}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Title </label>
@@ -24,7 +22,7 @@
 					<input type="text" class="form-control" th:field="*{title}" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Institution </label>
 				<div class="col-md-10">
@@ -42,18 +40,30 @@
 				<div class="col-md-10">
 					<textarea class="form-control" rows="5" th:field="*{description}">body</textarea>
 				</div>
-			</div>		  	
-	
-			<div class="form-group">        
+			</div>
+			<div class="checkbox">
+				<label> <input data-toggle="toggle" type="checkbox"
+					th:field="*{status}" /> Status
+				</label>
+			</div>
+
+			<div class="checkbox">
+				<label> <input data-toggle="toggle" type="checkbox"
+					th:field="*{deleteStatus}" /> Delete
+				</label>
+			</div>
+			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-	   				<button type="submit" class="btn btn-default">Save</button>
-	   				<button type="reset" class="btn btn-default">Reset</button>
-      			</div>
-    		</div>
+					<button type="submit" class="btn btn-default">Save</button>
+					<button type="reset" class="btn btn-default">Reset</button>
+				</div>
+			</div>
+
+
 		</form>
-		
+
 	</div>
-		
+
 </body>
 
 

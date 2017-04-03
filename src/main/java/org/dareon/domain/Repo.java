@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.dareon.json.JsonDateSerializer;
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
@@ -50,19 +52,24 @@ public class Repo
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name="user_id")
     private User user;
     
-    private Boolean deleteStatus = true;
+    @Type(type="true_false")
+    private Boolean deleteStatus = false;
     
-    @OneToMany(mappedBy="repo",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Type(type="true_false")
+    private Boolean status = true;
+    
+    @OneToMany(mappedBy="repo", fetch = FetchType.EAGER)
     private Set<CallForProposals> callForProposals = new HashSet<CallForProposals>();
 
     public Boolean getDeleteStatus()
     {
         return deleteStatus;
     }
+    
 
     public void setDeleteStatus(Boolean deleteStatus)
     {
@@ -159,7 +166,16 @@ public class Repo
         this.callForProposals = callForProposals;
     }
 
+    public Boolean getStatus()
+    {
+        return status;
+    }
 
+    public void setStatus(Boolean status)
+    {
+        this.status = status;
+    }
+    
     @Override
     public String toString()
     {

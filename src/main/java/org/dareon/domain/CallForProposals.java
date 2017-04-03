@@ -42,7 +42,7 @@ public class CallForProposals
     @Column (nullable= false)
     private String details;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name="repo_id")
     private Repo repo;
 
