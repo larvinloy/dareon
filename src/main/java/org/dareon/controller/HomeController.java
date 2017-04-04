@@ -83,6 +83,13 @@ public class HomeController
 	return "repo/create";
     }
 
+    @RequestMapping("/repo/read/{title}")
+    public String repoRead(@PathVariable String title, Model model)
+    {
+	model.addAttribute("repo", repoService.findByTitle(title));
+	return "repo/read";
+    }
+    
     @RequestMapping("/repo/list")
     public String repoList(Model model)
     {
@@ -120,6 +127,15 @@ public class HomeController
 	model.addAttribute("repos", userService.findByEmail(auth.getName()).getRepos());
 	model.addAttribute("callForProposals", callForProposalsService.findByTitle(title));
 	return "callforproposals/create";
+    }
+    
+    @RequestMapping("/callforproposals/read/{title}")
+    public String callforproposalsRead(@PathVariable String title, Model model)
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	model.addAttribute("repos", userService.findByEmail(auth.getName()).getRepos());
+	model.addAttribute("callForProposals", callForProposalsService.findByTitle(title));
+	return "callforproposals/read";
     }
 
     @RequestMapping("/callforproposals/list")

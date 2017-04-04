@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+<title>Dareon: Repository Details</title>
+<link rel="stylesheet"
+	href="/webjars/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" />
+<script src="/webjars/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+</head>
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="col-lg-12">
+			<h1 class="page-header">Repository:</h1>
+		</div>
+
+
+		<div>
+			<label class="col-sm-2 control-label">Title:</label>
+			<div class="col-md-10">
+				<p th:text="${repo.title}" />
+			</div>
+		</div>
+		
+		<div>
+			<label class="col-sm-2 control-label">Date Created:</label>
+			<div class="col-md-10">
+				<p th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
+			</div>
+		</div>
+
+		<div>
+			<label class="col-sm-2 control-label">Institution:</label>
+			<div class="col-md-10">
+				<p th:text="${repo.institution}" />
+			</div>
+		</div>
+		<div>
+			<label class="col-sm-2 control-label">Definition:</label>
+			<div class="col-md-10">
+				<p th:text="${repo.definition}" />
+			</div>
+		</div>
+		<div>
+			<label class="col-sm-2 control-label">Description:</label>
+			<div class="col-md-10">
+				<p th:text="${repo.description}" />
+			</div>
+		</div>
+
+		<!-- Need better implementation -->
+		<th:block th:if="${repo.deleteStatus} == true">
+		<div>
+			<label class="col-sm-2 control-label"> Delete Status:</label> 
+			<div class="col-md-10">
+			<p>True </p>
+			</div>
+		</div>
+		</th:block>
+		<th:block th:if="${repo.deleteStatus} == false">
+		<div>
+			<label class="col-sm-2 control-label"> Delete Status:</label> 
+			<div class="col-md-10">
+			<p>False </p>
+			</div>
+		</div>
+		</th:block>
+		<th:block th:if="${repo.status} == true">
+		<div>
+			<label class="col-sm-2 control-label"> Activity Status:</label> 
+			<div class="col-md-10">
+			<p>True </p>
+			</div>
+		</div>
+		</th:block>
+		<th:block th:if="${repo.status} == false">
+		<div>
+			<label class="col-sm-2 control-label"> Activity Status:</label> 
+			<div class="col-md-10">
+			<p>False </p>
+			</div>
+		</div>
+		</th:block>
+		
+	
+	</div>
+	
+	
+
+</body>
+
+
+
+</html>
