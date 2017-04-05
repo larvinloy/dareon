@@ -71,7 +71,7 @@ public class HomeController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	UserDetailsImpl u = (UserDetailsImpl) auth.getPrincipal();
-	repo.setUser(userService.findByEmail(auth.getName()));
+	repo.setCreator(userService.findByEmail(auth.getName()));
 	Repo savedRepo = repoService.save(repo);
 	return "redirect:list";
     }
@@ -102,7 +102,7 @@ public class HomeController
     public String proposalCreate(Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	model.addAttribute("repos", userService.findByEmail(auth.getName()).getRepos());
+	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
 	model.addAttribute("callForProposals", new CallForProposals());
 	return "callforproposals/create";
     }
@@ -124,7 +124,7 @@ public class HomeController
     public String callforproposalsEdit(@PathVariable String title, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	model.addAttribute("repos", userService.findByEmail(auth.getName()).getRepos());
+	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
 	model.addAttribute("callForProposals", callForProposalsService.findByTitle(title));
 	return "callforproposals/create";
     }
@@ -133,7 +133,7 @@ public class HomeController
     public String callforproposalsRead(@PathVariable String title, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	model.addAttribute("repos", userService.findByEmail(auth.getName()).getRepos());
+	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
 	model.addAttribute("callForProposals", callForProposalsService.findByTitle(title));
 	return "callforproposals/read";
     }

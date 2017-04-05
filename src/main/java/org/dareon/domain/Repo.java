@@ -53,8 +53,12 @@ public class Repo
     private String description;
 
     @ManyToOne()
-    @JoinColumn(name="user_id")
-    private User user;
+    @JoinColumn(name="creator_id")
+    private User creator;
+    
+    @ManyToOne()
+    @JoinColumn(name="owner_id")
+    private User owner;
     
     @Type(type="true_false")
     private Boolean deleteStatus = false;
@@ -80,9 +84,21 @@ public class Repo
     {
     }
 
-    public User getUser()
+    public User getOwner()
     {
-	return user;
+        return owner;
+    }
+
+
+    public void setOwner(User owner)
+    {
+        this.owner = owner;
+    }
+
+
+    public User getCreator()
+    {
+	return creator;
     }
 
     @JsonSerialize(using = JsonDateSerializer.class)
@@ -106,9 +122,9 @@ public class Repo
 	this.institution = institution;
     }
 
-    public void setUser(User user)
+    public void setCreator(User creator)
     {
-	this.user = user;
+	this.creator = creator;
     }
 
     public Repo(String name)
@@ -180,6 +196,6 @@ public class Repo
     public String toString()
     {
 	return "Repo [id=" + id + ", name=" + title + ", definition=" + definition + ", description=" + description
-		+ ", user=" + user + "]";
+		+ ", user=" + creator + "]";
     }
 }

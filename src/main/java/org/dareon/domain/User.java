@@ -43,8 +43,11 @@ public class User
 	    @JoinColumn(name = "role_id") })
     private Set<Role> roles = new HashSet<Role>();
 
-    @OneToMany(mappedBy="user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Repo> repos = new HashSet<Repo>();
+    @OneToMany(mappedBy="creator",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Repo> createdRepos = new HashSet<Repo>();
+    
+    @OneToMany(mappedBy="owner",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Repo> ownedRepos = new HashSet<Repo>();
 
     private User()
     {
@@ -68,6 +71,16 @@ public class User
     public void setEmail(String email)
     {
 	this.email = email;
+    }
+
+    public Set<Repo> getOwnedRepos()
+    {
+        return ownedRepos;
+    }
+
+    public void setOwnedRepos(Set<Repo> ownedRepos)
+    {
+        this.ownedRepos = ownedRepos;
     }
 
     public String getPassword()
@@ -110,14 +123,15 @@ public class User
 	this.roles = roles;
     }
 
-    public Set<Repo> getRepos()
+   
+    public Set<Repo> getCreatedRepos()
     {
-        return repos;
+        return createdRepos;
     }
 
-    public void setRepos(Set<Repo> repos)
+    public void setCreatedRepos(Set<Repo> createdRepos)
     {
-        this.repos = repos;
+        this.createdRepos = createdRepos;
     }
 
     @Override

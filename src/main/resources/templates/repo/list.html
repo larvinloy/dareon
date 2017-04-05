@@ -27,8 +27,8 @@
 					<tr>
 						<th style="text-align: center">Title</th>
 						<th style="text-align: center">Created On</th>
-						<th style="text-align: center">Owner's Name</th>
-						<th style="text-align: center">Owner's Email Address</th>
+						<th style="text-align: center">Creator</th>
+						<th style="text-align: center">Owner</th>
 						<th style="text-align: center">Action</th>
 					</tr>
 				</thead>
@@ -38,17 +38,14 @@
 							<td style="text-align: center" th:text="${repo.title}" />
 							<td style="text-align: center"
 								th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
-							<th:block th:if="${repo.user} != null">
-								<td style="text-align: center"
-									th:text="|${repo.user.firstName} ${repo.user.lastName}|" />
-								<td style="text-align: center"
-									th:href="|mailto:${repo.user.email}|"><a
-									th:text="|${repo.user.email}|"></a></td>
+							<td style="text-align: center;cursor:pointer"  onclick="location.href='/repo/create'"
+									th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
+							<th:block th:if="${repo.owner} != null">
+								<td style="text-align: center;cursor:pointer"  onclick="location.href='/repo/create'"
+									th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
 							</th:block>
-							<th:block th:if="${repo.user} == null">
-								<td style="text-align: center">--</td>
-								<td style="text-align: center">No repository owner assigned
-								</td>
+							<th:block th:if="${repo.owner} == null">
+								<td style="text-align: center">Not assigned</td>
 							</th:block>
 							<td style="text-align: center">
 								<div class="btn-group btn-group-sm">
