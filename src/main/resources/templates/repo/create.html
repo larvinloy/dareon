@@ -3,9 +3,22 @@
 	layout:decorator="layouts/main">
 <head>
 <title>Dareon: Repository Details</title>
+<!-- 
 <link rel="stylesheet"
 	href="/webjars/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" />
+<link href="css/bootstrap-toggle.css" rel="stylesheet"/>
+
+
 <script src="/webjars/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+ -->
+
+	<link rel="canonical" href="http://www.bootstraptoggle.com" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css" rel="stylesheet" />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="css/bootstrap-toggle.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 </head>
 <body>
@@ -45,10 +58,11 @@
 					<textarea class="form-control" rows="5" th:field="*{description}">body</textarea>
 				</div>
 			</div>
+			 
 			<div class="form-group">
 				<label class="col-sm-2 control-label"> Activity Status:</label>
 				<div class="col-md-10">
-					<input type="checkbox" data-size="small" th:field="*{status}" />
+					<input type="checkbox" data-toggle="toggle" data-size="small" th:field="*{status}" />					
 				</div>
 
 			</div>
@@ -56,7 +70,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label"> Delete Status:</label>
 				<div class="col-md-10">
-					<input type="checkbox" data-size="small" th:field="*{deleteStatus}" />
+					<input type="checkbox" data-toggle="toggle" data-size="small" th:field="*{deleteStatus}" />
 				</div>
 			</div>
 
@@ -67,10 +81,8 @@
 				</div>
 			</div>
 
-
-
-
 		</form>
+
 
 	</div>
 
