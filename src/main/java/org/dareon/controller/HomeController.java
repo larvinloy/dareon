@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.dareon.domain.CallForProposals;
 import org.dareon.domain.Repo;
+import org.dareon.domain.User;
 import org.dareon.service.CallForProposalsService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
@@ -62,7 +63,12 @@ public class HomeController
     @RequestMapping("/repo/create")
     public String repoCreate(Model model)
     {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repo", new Repo());
+	List<User> users = userService.list();
+	users.remove((userService.findByEmail(auth.getName())));
+	users.add(0,userService.findByEmail(auth.getName()));
+	model.addAttribute("users",users);
 	return "repo/create";
     }
 
@@ -71,7 +77,9 @@ public class HomeController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	UserDetailsImpl u = (UserDetailsImpl) auth.getPrincipal();
-	repo.setCreator(userService.findByEmail(auth.getName()));
+	if(repoService.findByTitle(repo.getTitle()) == null)
+	    repo.setCreator(userService.findByEmail(auth.getName()));
+	
 	Repo savedRepo = repoService.save(repo);
 	return "redirect:list";
     }
@@ -79,7 +87,13 @@ public class HomeController
     @RequestMapping("/repo/edit/{title}")
     public String repoEdit(@PathVariable String title, Model model)
     {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	model.addAttribute("repo", new Repo());
+	List<User> users = userService.list();
+	users.remove((userService.findByEmail(auth.getName())));
 	model.addAttribute("repo", repoService.findByTitle(title));
+	users.add(0,userService.findByEmail(auth.getName()));
+	model.addAttribute("users",users);
 	return "repo/create";
     }
 

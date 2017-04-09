@@ -6,6 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+import org.dareon.domain.Repo;
 import org.dareon.domain.User;
 import org.dareon.repository.UserRepository;
 
@@ -37,6 +40,12 @@ public class UserServiceImpl implements UserService, UserDetailsService
 	}
 
 	return new UserDetailsImpl(user);
+    }
+    
+    @Override
+    public List<User> list()
+    {
+	return userRepository.findAllByOrderByIdAsc();
     }
 
 }

@@ -42,7 +42,7 @@
 									th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
 							<th:block th:if="${repo.owner} != null">
 								<td style="text-align: center;cursor:pointer"  onclick="location.href='/repo/create'"
-									th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
+									th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
 							</th:block>
 							<th:block th:if="${repo.owner} == null">
 								<td style="text-align: center">Not assigned</td>
@@ -55,7 +55,7 @@
 										class="btn btn-default">Edit</a> <a
 										th:href="|@{/repo/edit/}${repo.title}|"
 										class="btn btn-default">Delete</a> <a
-										th:href="|@{/callforproposals/create/}${repo.title}|"
+										th:href="|@{/callforproposals/create/}|"
 										class="btn btn-primary">Create CFP</a>
 								</div>
 							</td>

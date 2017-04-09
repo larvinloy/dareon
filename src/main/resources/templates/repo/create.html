@@ -33,6 +33,7 @@
 		<form class="form-horizontal" th:object="${repo}"
 			th:action="@{/repo/save}" method="post">
 			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{creator}" />
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Title:</label>
 				<div class="col-md-10">
@@ -60,6 +61,20 @@
 			</div>
 			 
 			<div class="form-group">
+				<label class="col-sm-2 control-label">Select Owner:</label>
+				<div class="col-md-10">
+				<select th:field="*{owner}">
+			    	<option th:each="user: ${users}" th:value="${user.id}" th:text="${user.email}"  />
+			  	</select>
+			  	</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default">Save</button>
+					<button type="reset" class="btn btn-default">Reset</button>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label"> Activity Status:</label>
 				<div class="col-md-10">
 					<input type="checkbox" data-toggle="toggle" data-size="small" th:field="*{status}" />					
@@ -74,12 +89,7 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">Save</button>
-					<button type="reset" class="btn btn-default">Reset</button>
-				</div>
-			</div>
+			
 
 		</form>
 
