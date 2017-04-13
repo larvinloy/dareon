@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	auth.userDetailsService(userService);
     }
 
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
@@ -29,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		.formLogin().loginPage("/login").usernameParameter("email").permitAll().and().logout()
 		.logoutSuccessUrl("/login?logout").permitAll();
 	http.authorizeRequests().antMatchers("/webjars/**").permitAll();
+	http.csrf().disable();
     }
 
 }

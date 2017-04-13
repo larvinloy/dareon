@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,7 +74,7 @@ public class HomeController
     }
 
     @RequestMapping(value = "/repo/save", method = RequestMethod.POST)
-    public String repoSave(Repo repo)
+    public String repoSave(@ModelAttribute Repo repo)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	UserDetailsImpl u = (UserDetailsImpl) auth.getPrincipal();
@@ -83,7 +84,7 @@ public class HomeController
 	Repo savedRepo = repoService.save(repo);
 	return "redirect:list";
     }
-
+    
     @RequestMapping("/repo/edit/{title}")
     public String repoEdit(@PathVariable String title, Model model)
     {
