@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,15 +32,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
 
-/**
- * Unit test methods for Dareon - Repository.
- * 
- * @author Rommel Gaddi
- */
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -54,13 +46,11 @@ public class repoServiceTest
 
     @Resource
     private WebApplicationContext webApplicationContext;
-
 	private MockMvc mockMvc;
 	private String loginPageUrl = "http://localhost:8080/login";
     
     @Before
-    public void setUp()
-    {
+    public void setUp() {
 	mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
 		.apply(springSecurity())
         .build();
@@ -73,43 +63,29 @@ public class repoServiceTest
     }
 
     @Test
-    @WithMockUser(username = "admin@dareon.org")
+    @WithUserDetails("s3562412@student.rmit.edu.au")
     public void testRepoRead()
     {
-
-	// Search for repository with ID=1
-	Repo repoEntity = repoRepository.findByTitle("test_repo1");
-	User userEntity = userRepository.findByEmail("s3562412@student.rmit.edu.au");
-
-	// Repo expectedRepoDetails = new Repo (1, "test_repo1",
-	// "test_definition1", "test_description1", "test_institution1", true,
-	// false, null, null);
-	// For verification only, check console
-	// System.out.println(userEntity);
-
-	// Verify results should be the same as:
-	// (1, "test_repo1", "test_definition1", "test_description1",
-	// "test_institution1", true, false, 1, 1)
-	assertNotNull("failure - user null", userEntity);
-	System.out.println(userEntity);
-	System.out.println(repoEntity);
-	assertNotNull("failure - not null", repoEntity);
-	assertEquals("failure - ID attribute not match", repoEntity.getId(), 1);
-	assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "test_repo1");
-	assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "test_definition1");
-	assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "test_description1");
-	assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "test_institution1");
-	assertEquals("failure - Status attribute not match", repoEntity.getStatus(), true);
-	assertEquals("failure - Delete Status attribute not match", repoEntity.getDeleteStatus(), false);
-	// assertEquals("failure - Creator attribute not match",
-	// repoEntity.getCreator(), 1);
-	// assertEquals("failure - Owner attribute not match",
-	// repoEntity.getOwner() , 1);
-	// or use this
-	// assertEquals("failure - Creator attribute not match",
-	// repoEntity.getCreator(), userRepository.findById((long)1));
-	// assertEquals("failure - Owner attribute not match",
-	// repoEntity.getOwner() , userRepository.findById((long)1));
+		// Search for repository with ID=1
+		Repo repoEntity = repoRepository.findByTitle("test_repo1");
+		User userEntity = userRepository.findByEmail("s3562412@student.rmit.edu.au");
+		//System.out.println("==================> " + userEntity);
+	
+		
+		// Verify results should be the same as:
+		// (1, "test_repo1", "test_definition1", "test_description1",
+		// "test_institution1", true, false, 1, 1)
+		assertNotNull("failure - user null", userEntity);
+		assertNotNull("failure - not null", repoEntity);
+		assertEquals("failure - ID attribute not match", repoEntity.getId(), 1);
+		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "test_repo1");
+		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "test_definition1");
+		assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "test_description1");
+		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "test_institution1");
+		assertEquals("failure - Status attribute not match", repoEntity.getStatus(), true);
+		assertEquals("failure - Delete Status attribute not match", repoEntity.getDeleteStatus(), false);
+		//assertEquals("failure - Creator attribute not match", repoEntity.getCreator(), userEntity);
+		//assertEquals("failure - Owner attribute not match", repoEntity.getOwner(), userEntity);
     }
 
     @Test
@@ -132,54 +108,71 @@ public class repoServiceTest
     @WithUserDetails("admin@dareon.org")
     public void testRepoCreateWeb() throws Exception
     {
-	MvcResult res = mockMvc.perform(post("/repo/save")
-		.contentType(MediaType.APPLICATION_FORM_URLENCODED) //
+    	User creator = userRepository.findByEmail("admin@dareon.org");
+    	User owner = userRepository.findByEmail("admin@dareon.org");
+    	
+    	MvcResult res = mockMvc.perform(post("/repo/save")
+		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-		.param("title", "hello")
-		.param("institution", "world")
-		.param("definition", "definitionooooo")
-		.param("description", "djahdjkahdkjh"))
-//		.param("owner", "1")
-//		.param("status", "F")
-//		.param("deleteStatus", "F"))
+		.param("title", "sample repository 1")
+		.param("institution", "Sample institution for repository 1")
+		.param("definition", "Sample definition for repository 1")
+		.param("description", "Sample description for repository 1"))
+    	//check if redirected to repository list page - /repo/list
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("list"))
 		.andReturn();
+    	// parameters id, owner, user, status and deleteStatus are automatically created
 	
-	Repo repoEntity = repoRepository.findByTitle("hello");
-	System.out.println(repoEntity);
-////	mockMvc.perform(get("/repo/read/test_repo1"))
-////	.andExpect(status().is2xxSuccessful());
-//	MvcResult res = mockMvc.perform(get("/repo/read/test_repo1"))
-//	        .andExpect(status().isOk()).andExpect(view().name("repo/read"))
-//	        .andExpect(model().attributeExists("repo"))
-//	        .andReturn();
-//	
-//	Object dt = res.getModelAndView().getModel().get("repo");
-//        if(dt instanceof Repo)
-//            System.out.println(dt);
+		// check if the repository is created 
+		Repo repoEntity = repoRepository.findByTitle("sample repository 1");
+		assertNotNull("failure - not null", repoEntity);
+		assertEquals("failure - ID attribute not match", repoEntity.getId(), 2);
+		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "sample repository 1");
+		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "Sample definition for repository 1");
+		assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "Sample description for repository 1");
+		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "Sample institution for repository 1");
+		assertEquals("failure - Status attribute not match", repoEntity.getStatus(), true);
+		assertEquals("failure - Delete Status attribute not match", repoEntity.getDeleteStatus(), false);
+		//assertEquals("failure - Creator attribute not match", repoEntity.getCreator(), creator);
+		//assertEquals("failure - Creator attribute not match", repoEntity.getOwner(), owner);	
     }
+
+
+    @Test
+    @WithUserDetails("admin@dareon.org")
+    public void testRepoEditWeb() throws Exception
+    {
+    	
+    	MvcResult res = mockMvc.perform(post("/repo/edit/test_repo1")
+		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON)
+//        .param("title", "sample repository 1")
+//		.param("institution", "Sample institution for repository 1")
+//		.param("definition", "Sample definition for repository 1")
+		.param("description", "new Description"))
+    	//check if redirected to repository list page - /repo/list
+		//.andExpect(status().is3xxRedirection())
+		//.andExpect(redirectedUrl("list"))
+		.andReturn();
+    	
+    	
+  		// check if the description is changed
+		Repo repoEntity = repoRepository.findByTitle("test_repo1");
+		assertNotNull("failure - not null", repoEntity);
+		assertEquals("failure - ID attribute not match", repoEntity.getId(), 1);
+		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "test_repo1");
+		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "test_definition1");
+		assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "new Description"); //this is the expected change
+		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "test_institution1");
+		assertEquals("failure - Status attribute not match", repoEntity.getStatus(), true);
+		assertEquals("failure - Delete Status attribute not match", repoEntity.getDeleteStatus(), false);
+		//assertEquals("failure - Creator attribute not match", repoEntity.getCreator(), creator);
+		//assertEquals("failure - Creator attribute not match", repoEntity.getOwner(), owner);	
+
+    }
+
+
 
 }
 
-/*
- * @Test
- * 
- * @WithMockUser(username="s3562412@student.rmit.edu.au") public void
- * testRepoRead() {
- * 
- * 
- * Search for repository with ID=1 Repo repoEntity = repoService.findOne((long)
- * 1); Repo expectedRepoDetails = new Repo (1, "test_repo1", "test_definition1",
- * "test_description1", "test_institution1", true, false, null, null); For
- * verification only, check console System.out.println(repoEntity);
- * 
- * Verify results should be the same as: Repo [id=1, name=test_repo1,
- * definition=test_definition1, description=test_description1,
- * institution=test_institution1, status=true, deleteStatus=false, creator=User
- * [id=1, email=s3562412@student.rmit.edu.au, password=password], owner=User
- * [id=1, email=s3562412@student.rmit.edu.au, password=password]]
- * Assert.assertNotNull("failure - not null", repoEntity);
- * Assert.assertEquals("failure - attribute not match", expectedRepoDetails,
- * repoEntity); }
- */
