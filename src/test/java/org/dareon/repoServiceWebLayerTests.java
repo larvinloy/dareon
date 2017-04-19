@@ -68,14 +68,14 @@ public class repoServiceWebLayerTests
     {
     	long numberOfRepositories = repoService.list().size();
     	
-    	this.mockMvc.perform(post("/repo/save")
+    	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
 		.param("title", "sample repository 2")
 		.param("institution", "Sample institution for repository 2")
 		.param("definition", "Sample definition for repository 2")
 		.param("description", "Sample description for repository 2")
-		.param("owner", "1"))
+		.param("owner", "3"))
      	//check if redirected to repository list page - /repo/list
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("list"))
@@ -94,7 +94,7 @@ public class repoServiceWebLayerTests
 		//number of repositories should have increased
 		assertNotEquals("failure - repository did not increased", numberOfRepositories, repoService.list().size());
 		//The ID should be automatically created with an incremental value
-		assertEquals("failure - ID attribute not match", rv.getId(), 2);
+		assertEquals("failure - ID attribute not match", rv.getId(), 3);
 		assertEquals("failure - Repository attribute not match", rv.getTitle(), "sample repository 2");
 		assertEquals("failure - Definition attribute not match", rv.getDefinition(), "Sample definition for repository 2");
 		assertEquals("failure - Description attribute not match", rv.getDescription(), "Sample description for repository 2");
@@ -103,7 +103,7 @@ public class repoServiceWebLayerTests
 		assertEquals("failure - Status attribute not match", rv.getStatus(), true);
 		//The Delete Status should be automatically created with the default: false		
 		assertEquals("failure - Delete Status attribute not match", rv.getDeleteStatus(), false);
-		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "s3562412@student.rmit.edu.au");	
+		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "repoowner@rmit.edu.au");	
 		//The Creator should be automatically created with the name of the currently logged-in user
 		assertEquals("failure - Creator attribute not match", rv.getCreator().getEmail(), "admin@dareon.org");    
     }
@@ -115,7 +115,7 @@ public class repoServiceWebLayerTests
     {
     	long numberOfRepositories = repoService.list().size();
     	
-    	this.mockMvc.perform(post("/repo/save")
+    	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
                 .param("id", "1") //search for repository to edit
@@ -152,7 +152,7 @@ public class repoServiceWebLayerTests
 		assertEquals("failure - Institution attribute not match", rv.getInstitution(), "test_institution1");
 		assertEquals("failure - Status attribute not match", rv.getStatus(), true);
 		assertEquals("failure - Delete Status attribute not match", rv.getDeleteStatus(), true);
-		assertEquals("failure - Creator attribute not match", rv.getCreator().getEmail(), "s3562412@student.rmit.edu.au");
+		assertEquals("failure - Creator attribute not match", rv.getCreator().getEmail(), "admin@dareon.org");
 		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "admin@dareon.org");	
     }
     

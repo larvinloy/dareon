@@ -97,7 +97,6 @@ public class HomeController
 	return "redirect:list";
     }
     
-//    @PreAuthorize("hasAuthority('REPO_EDIT_PRIVILEGE')")
     @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#title)")
     @RequestMapping("/repo/edit/{title}")
     public String repoEdit(@PathVariable String title, Model model)

@@ -43,8 +43,7 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 
     private Object filterObject;
     private Object returnObject;
-    
-    
+
     private RepoService repoService;
 
     public CustomSecurityExpressionRoot(Authentication authentication, RepoService repoService)
@@ -61,8 +60,8 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
     public final boolean hasAuthority(String authority)
     {
 	final Set<String> roleSet = getAuthoritySet();
-	if(roleSet.contains(authority))
-		return true;
+	if (roleSet.contains(authority))
+	    return true;
 	return false;
     }
 
@@ -70,25 +69,13 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
     @Transactional
     public boolean isRepoOwner(String title)
     {
-//	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
-//	Collection<Repo> ownedRepos = user.getOwnedRepos();
-//	System.out.println(ownedRepos);
-//	for (Repo repo : ownedRepos)
-//	{
-//	    if (repo.getTitle().equals(title))
-//		return true;
-//	}
-//	return false;
 	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
 	Repo repo = repoService.findByTitle(title);
-	
-	
-	    if (repo.getOwner().getEmail().equals(user.getEmail()))
-		return true;
-	
+	if (repo.getOwner().getEmail().equals(user.getEmail()))
+	    return true;
 	return false;
     }
-    
+
     @Transactional
     public boolean isRepoOwner(Repo repo)
     {

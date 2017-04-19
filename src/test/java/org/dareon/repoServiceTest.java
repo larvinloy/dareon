@@ -63,12 +63,12 @@ public class repoServiceTest
     }
 
     @Test
-    @WithUserDetails("s3562412@student.rmit.edu.au")
+    @WithUserDetails("admin@dareon.org")
     public void testRepoRead()
     {
 		// Search for repository with ID=1
-		Repo repoEntity = repoRepository.findByTitle("test_repo1");
-		User userEntity = userRepository.findByEmail("s3562412@student.rmit.edu.au");
+		Repo repoEntity = repoRepository.findByTitle("Test Title 1");
+		User userEntity = userRepository.findByEmail("admin@dareon.org");
 		//System.out.println("==================> " + userEntity);
 	
 		
@@ -78,10 +78,10 @@ public class repoServiceTest
 		assertNotNull("failure - user null", userEntity);
 		assertNotNull("failure - not null", repoEntity);
 		assertEquals("failure - ID attribute not match", repoEntity.getId(), 1);
-		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "test_repo1");
-		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "test_definition1");
-		assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "test_description1");
-		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "test_institution1");
+		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "Test Title 1");
+		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "Test Definition 1");
+		assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "Test Description 1");
+		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "Test Institution 1");
 		assertEquals("failure - Status attribute not match", repoEntity.getStatus(), true);
 		assertEquals("failure - Delete Status attribute not match", repoEntity.getDeleteStatus(), false);
 		//assertEquals("failure - Creator attribute not match", repoEntity.getCreator(), userEntity);
@@ -94,7 +94,7 @@ public class repoServiceTest
     {
 //	mockMvc.perform(get("/repo/read/test_repo1"))
 //	.andExpect(status().is2xxSuccessful());
-	MvcResult res = mockMvc.perform(get("/repo/read/test_repo1"))
+	MvcResult res = mockMvc.perform(get("/repo/read/Test Title 1"))
 	        .andExpect(status().isOk()).andExpect(view().name("repo/read"))
 	        .andExpect(model().attributeExists("repo"))
 	        .andReturn();
@@ -111,10 +111,10 @@ public class repoServiceTest
     	User creator = userRepository.findByEmail("admin@dareon.org");
     	User owner = userRepository.findByEmail("admin@dareon.org");
     	
-    	MvcResult res = mockMvc.perform(post("/repo/save")
+    	MvcResult res = mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-		.param("title", "sample repository 1")
+		.param("title", "Sample repository 1")
 		.param("institution", "Sample institution for repository 1")
 		.param("definition", "Sample definition for repository 1")
 		.param("description", "Sample description for repository 1"))
@@ -125,10 +125,10 @@ public class repoServiceTest
     	// parameters id, owner, user, status and deleteStatus are automatically created
 	
 		// check if the repository is created 
-		Repo repoEntity = repoRepository.findByTitle("sample repository 1");
+		Repo repoEntity = repoRepository.findByTitle("Sample repository 1");
 		assertNotNull("failure - not null", repoEntity);
-		assertEquals("failure - ID attribute not match", repoEntity.getId(), 2);
-		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "sample repository 1");
+		assertEquals("failure - ID attribute not match", repoEntity.getId(), 3);
+		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "Sample repository 1");
 		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "Sample definition for repository 1");
 		assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "Sample description for repository 1");
 		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "Sample institution for repository 1");
@@ -144,7 +144,7 @@ public class repoServiceTest
     public void testRepoEditWeb() throws Exception
     {
     	
-    	MvcResult res = mockMvc.perform(post("/repo/edit/test_repo1")
+    	MvcResult res = mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
 //        .param("title", "sample repository 1")
@@ -158,13 +158,13 @@ public class repoServiceTest
     	
     	
   		// check if the description is changed
-		Repo repoEntity = repoRepository.findByTitle("test_repo1");
+		Repo repoEntity = repoRepository.findByTitle("Test Title 1");
 		assertNotNull("failure - not null", repoEntity);
 		assertEquals("failure - ID attribute not match", repoEntity.getId(), 1);
-		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "test_repo1");
-		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "test_definition1");
+		assertEquals("failure - Repository attribute not match", repoEntity.getTitle(), "Test Title 1");
+		assertEquals("failure - Definition attribute not match", repoEntity.getDefinition(), "Test Definition 1");
 		assertEquals("failure - Description attribute not match", repoEntity.getDescription(), "new Description"); //this is the expected change
-		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "test_institution1");
+		assertEquals("failure - Institution attribute not match", repoEntity.getInstitution(), "Test Institution 1");
 		assertEquals("failure - Status attribute not match", repoEntity.getStatus(), true);
 		assertEquals("failure - Delete Status attribute not match", repoEntity.getDeleteStatus(), false);
 		//assertEquals("failure - Creator attribute not match", repoEntity.getCreator(), creator);

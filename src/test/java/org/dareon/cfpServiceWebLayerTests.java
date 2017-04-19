@@ -69,7 +69,7 @@ public class cfpServiceWebLayerTests
     {
     	long numberOfCfpPriorToCreate = cfpService.list().size();
     	
-    	this.mockMvc.perform(post("/callforproposals/save")
+    	this.mockMvc.perform(post("/callforproposals/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
 		.param("title", "sample cfp 2")
@@ -101,7 +101,7 @@ public class cfpServiceWebLayerTests
 		assertEquals("failure - Details attribute not match", cv.getDetails(), "Sample details for cfp 2");
 		assertEquals("failure - Description attribute not match", cv.getDescription(), "Sample description for cfp 2");
 		assertEquals("failure - Institution attribute not match", cv.getInstitution(), "Sample institution for cfp 2");
-		assertEquals("failure - Repository attribute not match", cv.getRepo().getTitle(), "test_repo1");
+		assertEquals("failure - Repository attribute not match", cv.getRepo().getTitle(), "Test Title 1");
     }
 
 
@@ -109,9 +109,24 @@ public class cfpServiceWebLayerTests
     @WithUserDetails("admin@dareon.org")
     public void CfpUpdateAndReadWebTest() throws Exception
     {
+	this.mockMvc.perform(post("/callforproposals/create")
+		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON)
+                .param("id", "1") //create CFP to update
+		.param("title", "test_cfp1")
+		.param("institution", "test_cfp_institution1")
+		.param("details", "test_cfp_details") // modified contents
+		.param("description", "test_cfp_description1")
+		.param("repo", "1")) // test_repo1
+     	//check if redirected to CFP list page - /callforproposals/list
+		.andExpect(status().is3xxRedirection())
+		.andExpect(redirectedUrl("list"))
+		.andReturn();
+    	
+	
     	long numberOfCfpPriorToUpdate = cfpService.list().size();
     	
-    	this.mockMvc.perform(post("/callforproposals/save")
+    	this.mockMvc.perform(post("/callforproposals/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
                 .param("id", "1") //search for CFP to update
@@ -144,7 +159,7 @@ public class cfpServiceWebLayerTests
 		assertEquals("failure - Details attribute not match", cv.getDetails(), "Modified details");
 		assertEquals("failure - Description attribute not match", cv.getDescription(), "test_cfp_description1");
 		assertEquals("failure - Institution attribute not match", cv.getInstitution(), "test_cfp_institution1");
-		assertEquals("failure - Repository attribute not match", cv.getRepo().getTitle(), "test_repo1");  
+		assertEquals("failure - Repository attribute not match", cv.getRepo().getTitle(), "Test Title 1");  
     }
 
 }
