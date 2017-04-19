@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
 
@@ -22,11 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	auth.userDetailsService(userService);
     }
 
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-	http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated().and()
+	http.authorizeRequests().antMatchers("/admin/**").hasAuthority("REPO_CREATE_PRIVILEGE").anyRequest().authenticated().and()
 		.formLogin().loginPage("/login").usernameParameter("email").permitAll().and().logout()
 		.logoutSuccessUrl("/login?logout").permitAll();
 	http.authorizeRequests().antMatchers("/webjars/**").permitAll();

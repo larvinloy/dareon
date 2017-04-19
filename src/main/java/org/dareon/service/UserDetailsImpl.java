@@ -4,10 +4,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import org.dareon.domain.Privilege;
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
 
@@ -21,18 +23,6 @@ public class UserDetailsImpl implements UserDetails
     public UserDetailsImpl(User user)
     {
 	this.user = user;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
-	Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-	Set<Role> roles = user.getRoles();
-	for (Role role : roles)
-	{
-	    authorities.add(new SimpleGrantedAuthority(role.getRole()));
-	}
-	return authorities;
     }
 
     @Override
@@ -74,5 +64,22 @@ public class UserDetailsImpl implements UserDetails
     public long getId()
     {
 	return user.getId();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities()
+    {
+	Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+	Collection<Role> roles = user.getRoles();
+	for (Role role : roles)
+	{
+	    authorities.add(new SimpleGrantedAuthority(role.getName()));
+	    Collection<Privilege> privileges = role.getPrivileges();
+	    for(Privilege privilege : privileges)
+	    {
+		authorities.add(new SimpleGrantedAuthority(privilege.getName()));
+	    }
+	}
+	return authorities;
     }
 }

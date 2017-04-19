@@ -65,6 +65,7 @@ public class HomeController
 	return "index";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/repo/create")
     public String repoCreate(Model model)
     {
@@ -108,6 +109,7 @@ public class HomeController
 	return "repo/read";
     }
     
+    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
     @RequestMapping("/repo/list")
     public String repoList(Model model)
     {

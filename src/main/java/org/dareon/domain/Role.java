@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,12 +22,12 @@ public class Role
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String role;
+    private String name;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
 
@@ -34,6 +35,12 @@ public class Role
     {
 
     } //
+    
+    public Role(final String name)
+    {
+	super();
+	this.name = name;
+    }
 
     public Long getId()
     {
@@ -45,14 +52,14 @@ public class Role
 	this.id = id;
     }
 
-    public String getRole()
+    public String getName()
     {
-	return role;
+        return name;
     }
 
-    public void setRole(String role)
+    public void setName(String name)
     {
-	this.role = role;
+        this.name = name;
     }
 
     public Set<User> getUsers()
@@ -78,7 +85,7 @@ public class Role
     @Override
     public String toString()
     {
-	return "Role [id=" + id + ", role=" + role + "]";
+	return "Role [id=" + id + ", role=" + name + "]";
     }
 
 }
