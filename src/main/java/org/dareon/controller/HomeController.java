@@ -3,6 +3,8 @@ package org.dareon.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.dareon.domain.CallForProposals;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
@@ -12,6 +14,7 @@ import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -73,11 +77,10 @@ public class HomeController
 	return "repo/create";
     }
 
-    @RequestMapping(value = "/repo/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/repo/create", method = RequestMethod.POST)
     public String repoSave(@ModelAttribute Repo repo)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	UserDetailsImpl u = (UserDetailsImpl) auth.getPrincipal();
 	if(repoService.findByTitle(repo.getTitle()) == null)
 	    repo.setCreator(userService.findByEmail(auth.getName()));
 	
@@ -114,7 +117,7 @@ public class HomeController
 
     // @Secured("ROLE_ADMIN")
     @RequestMapping("/callforproposals/create")
-    public String proposalCreate(Model model)
+    public String callForProposalsCreate(Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
@@ -122,8 +125,8 @@ public class HomeController
 	return "callforproposals/create";
     }
 
-    @RequestMapping(value = "/callforproposals/save", method = RequestMethod.POST)
-    public String proposalSave(CallForProposals callForProposals)
+    @RequestMapping(value = "/callforproposals/create", method = RequestMethod.POST)
+    public String proposalSave(@ModelAttribute CallForProposals callForProposals)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	// UserDetailsImpl u = (UserDetailsImpl)auth.getPrincipal();
@@ -136,7 +139,7 @@ public class HomeController
     }
 
     @RequestMapping("/callforproposals/edit/{title}")
-    public String callforproposalsEdit(@PathVariable String title, Model model)
+    public String callForProposalsEdit(@PathVariable String title, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
@@ -145,7 +148,7 @@ public class HomeController
     }
     
     @RequestMapping("/callforproposals/read/{title}")
-    public String callforproposalsRead(@PathVariable String title, Model model)
+    public String callForProposalsRead(@PathVariable String title, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
@@ -159,5 +162,28 @@ public class HomeController
 	model.addAttribute("callsForProposals", callForProposalsService.list());
 	return "callforproposals/list";
     }
-
+    
+    @RequestMapping("/user/sysadmin")
+    public String sysAdminCreate(Model model)
+    {
+	model.addAttribute("sysAdmin",new User());
+	return "user/sysadmin";
+	
+    }
+    
+    @RequestMapping("/user/read/{email}")
+    public String userRead(@PathVariable String email, Model model)
+    {
+	model.addAttribute("user",userService.findByEmail(email));
+	return "user/read";
+	
+    }
+    
+    @RequestMapping(value = "/user/sysadmin", method = RequestMethod.POST)
+    public String sysAdminSave(@ModelAttribute User sysAdmin)
+    {
+	User newUser = userService.save(sysAdmin);
+	return "redirect:read/" + newUser.getEmail();
+	
+    }
 }

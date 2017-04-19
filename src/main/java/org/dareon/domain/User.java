@@ -1,8 +1,11 @@
 package org.dareon.domain;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +18,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 @Entity
 @Table(name = "users")
@@ -36,21 +42,31 @@ public class User
 
     @Column(nullable = false)
     private String lastName;
+    
+    @Column(nullable = false)
+    private String institution;
+    
+    @Basic(optional = false)
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdOn;
 
     // Setting relation
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 	    @JoinColumn(name = "role_id") })
-    private Set<Role> roles = new HashSet<Role>();
+    private Collection<Role> roles;
 
-    @OneToMany(mappedBy="creator",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Repo> createdRepos = new HashSet<Repo>();
-    
-    @OneToMany(mappedBy="owner",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Repo> ownedRepos = new HashSet<Repo>();
 
-    private User()
+    public User()
     {
+	super();
+	
     }
 
     public Long getId()
@@ -75,12 +91,12 @@ public class User
 
     public Set<Repo> getOwnedRepos()
     {
-        return ownedRepos;
+	return ownedRepos;
     }
 
     public void setOwnedRepos(Set<Repo> ownedRepos)
     {
-        this.ownedRepos = ownedRepos;
+	this.ownedRepos = ownedRepos;
     }
 
     public String getPassword()
@@ -113,27 +129,47 @@ public class User
 	this.lastName = lastName;
     }
 
-    public Set<Role> getRoles()
+    public Collection<Role> getRoles()
     {
 	return roles;
     }
 
-    public void setRoles(Set<Role> roles)
+    public void setRoles(Collection<Role> roles)
     {
 	this.roles = roles;
     }
 
-   
     public Set<Repo> getCreatedRepos()
     {
-        return createdRepos;
+	return createdRepos;
     }
 
     public void setCreatedRepos(Set<Repo> createdRepos)
     {
-        this.createdRepos = createdRepos;
+	this.createdRepos = createdRepos;
+    }
+    
+    public String getInstitution()
+    {
+        return institution;
     }
 
+    public void setInstitution(String institution)
+    {
+        this.institution = institution;
+    }
+
+    public Date getCreatedOn()
+    {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn)
+    {
+        this.createdOn = createdOn;
+    }
+
+    
     @Override
     public String toString()
     {
