@@ -65,7 +65,7 @@ public class HomeController
 	return "index";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
     @RequestMapping("/repo/create")
     public String repoCreate(Model model)
     {
@@ -78,6 +78,7 @@ public class HomeController
 	return "repo/create";
     }
 
+    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
     @RequestMapping(value = "/repo/create", method = RequestMethod.POST)
     public String repoSave(@ModelAttribute Repo repo)
     {
@@ -89,6 +90,8 @@ public class HomeController
 	return "redirect:list";
     }
     
+//    @PreAuthorize("hasAuthority('REPO_EDIT_PRIVILEGE')")
+    @PreAuthorize("isRepoOwner(#title)")
     @RequestMapping("/repo/edit/{title}")
     public String repoEdit(@PathVariable String title, Model model)
     {
@@ -102,6 +105,7 @@ public class HomeController
 	return "repo/create";
     }
 
+    @PreAuthorize("hasAuthority('REPO_READ_PRIVILEGE')")
     @RequestMapping("/repo/read/{title}")
     public String repoRead(@PathVariable String title, Model model)
     {
@@ -109,7 +113,7 @@ public class HomeController
 	return "repo/read";
     }
     
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('REPO_READ_PRIVILEGE')")
     @RequestMapping("/repo/list")
     public String repoList(Model model)
     {
@@ -117,7 +121,7 @@ public class HomeController
 	return "repo/list";
     }
 
-    // @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
     @RequestMapping("/callforproposals/create")
     public String callForProposalsCreate(Model model)
     {
@@ -127,6 +131,7 @@ public class HomeController
 	return "callforproposals/create";
     }
 
+    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
     @RequestMapping(value = "/callforproposals/create", method = RequestMethod.POST)
     public String proposalSave(@ModelAttribute CallForProposals callForProposals)
     {
@@ -140,6 +145,7 @@ public class HomeController
 	return "redirect:list";
     }
 
+    @PreAuthorize("hasAuthority('CFP_EDIT_PRIVILEGE')")
     @RequestMapping("/callforproposals/edit/{title}")
     public String callForProposalsEdit(@PathVariable String title, Model model)
     {
@@ -149,6 +155,7 @@ public class HomeController
 	return "callforproposals/create";
     }
     
+    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
     @RequestMapping("/callforproposals/read/{title}")
     public String callForProposalsRead(@PathVariable String title, Model model)
     {
@@ -158,6 +165,7 @@ public class HomeController
 	return "callforproposals/read";
     }
 
+    @PreAuthorize("hasAuthority('CFP_READ_PRIVILEGE')")
     @RequestMapping("/callforproposals/list")
     public String callForProposalsList(Model model)
     {
@@ -165,6 +173,7 @@ public class HomeController
 	return "callforproposals/list";
     }
     
+    @PreAuthorize("hasAuthority('SYSADMIN_CREATE_PRIVILEGE')")
     @RequestMapping("/user/sysadmin")
     public String sysAdminCreate(Model model)
     {
@@ -173,14 +182,7 @@ public class HomeController
 	
     }
     
-    @RequestMapping("/user/read/{email}")
-    public String userRead(@PathVariable String email, Model model)
-    {
-	model.addAttribute("user",userService.findByEmail(email));
-	return "user/read";
-	
-    }
-    
+    @PreAuthorize("hasAuthority('SYSADMIN_CREATE_PRIVILEGE')")
     @RequestMapping(value = "/user/sysadmin", method = RequestMethod.POST)
     public String sysAdminSave(@ModelAttribute User sysAdmin)
     {
@@ -188,4 +190,14 @@ public class HomeController
 	return "redirect:read/" + newUser.getEmail();
 	
     }
+    
+    @PreAuthorize("hasAuthority('USER_READ_PRIVILEGE')")
+    @RequestMapping("/user/read/{email}")
+    public String userRead(@PathVariable String email, Model model)
+    {
+	model.addAttribute("user",userService.findByEmail(email));
+	return "user/read";
+	
+    } 
+   
 }

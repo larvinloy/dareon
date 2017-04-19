@@ -53,19 +53,23 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	final Privilege cfpCreatePrivilege = createPrivilegeIfNotFound("CFP_CREATE_PRIVILEGE");
 	final Privilege cfpEditPrivilege = createPrivilegeIfNotFound("CFP_EDIT_PRIVILEGE");
 	final Privilege cfpDeletePrivilege = createPrivilegeIfNotFound("CFP_DELETE_PRIVILEGE");
-
+	
+	// == create cfp privileges
+	final Privilege sysAdminCretePrivilege = createPrivilegeIfNotFound("SYSADMIN_CREATE_PRIVILEGE");
+	final Privilege userReadPrivilege = createPrivilegeIfNotFound("USER_READ_PRIVILEGE");
+	
 	// == create initial roles
-	final List<Privilege> sdPrivileges = Arrays.asList(repoReadPrivilege, repoCreatePrivilege,
-		repoEditPrivilege,repoDeletePrivilege, cfpReadPrivilege, cfpCreatePrivilege,
-		cfpEditPrivilege,cfpDeletePrivilege);
+	final List<Privilege> sdPrivileges = Arrays.asList(sysAdminCretePrivilege);
+	
 	final List<Privilege> saPrivileges = Arrays.asList(repoReadPrivilege, repoCreatePrivilege,
 		repoEditPrivilege,repoDeletePrivilege, cfpReadPrivilege, cfpCreatePrivilege,
 		cfpEditPrivilege,cfpDeletePrivilege);
-	final List<Privilege> roPrivileges = Arrays.asList(cfpReadPrivilege);
+	
+	final List<Privilege> roPrivileges = Arrays.asList(cfpReadPrivilege,repoReadPrivilege);
+	
 	createRoleIfNotFound("ROLE_SD", sdPrivileges);
 	createRoleIfNotFound("ROLE_SA", saPrivileges);
 	createRoleIfNotFound("ROLE_RO", roPrivileges);
-	createRoleIfNotFound("ROLE_ADMIN", roPrivileges);
 
 	final Role sdRole = roleRepository.findByName("ROLE_SD");
 	final User user = new User();
@@ -76,6 +80,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	user.setInstitution("Dareon");
 	user.setRoles(Arrays.asList(sdRole));
 	userRepository.save(user);
+	
+	userRepository.findByEmail("admin@dareon.org").setRoles(roleRepository.findAll());
 
 	alreadySetup = true;
     }
