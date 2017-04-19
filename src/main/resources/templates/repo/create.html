@@ -31,7 +31,7 @@
 
 
 		<form class="form-horizontal" th:object="${repo}"
-			th:action="@{/repo/save}" method="post">
+			th:action="@{/repo/create}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<input type="hidden" th:field="*{creator}" />
 			<div class="form-group">

@@ -3,6 +3,7 @@ package org.dareon.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.dareon.domain.CallForProposals;
@@ -13,6 +14,7 @@ import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.authentication.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,7 +81,7 @@ public class HomeController
 	return "repo/create";
     }
 
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#repo)")
     @RequestMapping(value = "/repo/create", method = RequestMethod.POST)
     public String repoSave(@ModelAttribute Repo repo)
     {
@@ -87,11 +90,15 @@ public class HomeController
 	    repo.setCreator(userService.findByEmail(auth.getName()));
 	
 	Repo savedRepo = repoService.save(repo);
+	
+	Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), auth.getAuthorities());
+	SecurityContextHolder.getContext().setAuthentication(newAuth);
+	
 	return "redirect:list";
     }
     
 //    @PreAuthorize("hasAuthority('REPO_EDIT_PRIVILEGE')")
-    @PreAuthorize("isRepoOwner(#title)")
+    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#title)")
     @RequestMapping("/repo/edit/{title}")
     public String repoEdit(@PathVariable String title, Model model)
     {

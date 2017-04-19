@@ -26,7 +26,7 @@ public class RepoService
 
     public Repo save(Repo post)
     {
-	return repoRepository.save(post);
+	return repoRepository.saveAndFlush(post);
     }
 
     public List<Repo> list()
