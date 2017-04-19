@@ -67,7 +67,7 @@ public class Repo
     private Boolean status = true;
     
     @OneToMany(mappedBy="repo", fetch = FetchType.EAGER)
-    private Set<CallForProposals> callForProposals = new HashSet<CallForProposals>();
+    private Set<CFP> cFPs = new HashSet<CFP>();
 
     public Boolean getDeleteStatus()
     {
@@ -172,14 +172,14 @@ public class Repo
 	this.description = description;
     }
     
-    public Set<CallForProposals> getCallForProposals()
+    public Set<CFP> getCFPs()
     {
-        return callForProposals;
+        return cFPs;
     }
 
-    public void setCallForProposals(Set<CallForProposals> callForProposals)
+    public void setCFPs(Set<CFP> cFP)
     {
-        this.callForProposals = callForProposals;
+        this.cFPs = cFP;
     }
 
     public Boolean getStatus()

@@ -1,8 +1,8 @@
 package org.dareon;
 
 import org.dareon.domain.Repo;
-import org.dareon.domain.CallForProposals;
-import org.dareon.service.CallForProposalsService;
+import org.dareon.domain.CFP;
+import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.junit.After;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class cfpServiceWebLayerTests
 	RepoService repoService;
 	
 	@Autowired
-	CallForProposalsService cfpService;	
+	CFPService cfpService;	
 	
     @Resource
     private WebApplicationContext webApplicationContext;
@@ -90,8 +90,8 @@ public class cfpServiceWebLayerTests
 		        .andExpect(model().attributeExists("callForProposals"))
 		        .andReturn();
 		Object cfpValue = response.getModelAndView().getModel().get("callForProposals");
-		assertTrue(cfpValue instanceof CallForProposals);
-		CallForProposals cv = (CallForProposals)cfpValue;
+		assertTrue(cfpValue instanceof CFP);
+		CFP cv = (CFP)cfpValue;
 				
 		assertNotNull("failure - not null", cfpValue);
 		//number of CFPs should have increased
@@ -148,8 +148,8 @@ public class cfpServiceWebLayerTests
 		        .andExpect(model().attributeExists("callForProposals"))
 		        .andReturn();
 		Object cfpValue = response.getModelAndView().getModel().get("callForProposals");
-		assertTrue(cfpValue instanceof CallForProposals);
-		CallForProposals cv = (CallForProposals)cfpValue;
+		assertTrue(cfpValue instanceof CFP);
+		CFP cv = (CFP)cfpValue;
 		
 		assertNotNull("failure - not null", cfpValue);
 		//number of CFPs should have not increased

@@ -12,7 +12,7 @@
 		<h2>Create New Call For Proposals</h2>
 		<br/>
 
-		<form class="form-horizontal" th:object="${callForProposals}" th:action="@{/callforproposals/save}" method="post">
+		<form class="form-horizontal" th:object="${callForProposals}" th:action="@{/callforproposals/create}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Select Repo:</label>

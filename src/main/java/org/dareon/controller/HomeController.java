@@ -6,10 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import org.dareon.domain.CallForProposals;
+import org.dareon.domain.CFP;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
-import org.dareon.service.CallForProposalsService;
+import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
@@ -41,7 +41,7 @@ public class HomeController
 
     private RepoService repoService;
     private UserService userService;
-    private CallForProposalsService callForProposalsService;
+    private CFPService cFPService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -54,12 +54,12 @@ public class HomeController
 
     @Autowired
     public HomeController(RepoService repoService, UserService userService,
-	    CallForProposalsService callForProposalsService)
+	    CFPService cFPService)
     {
 	super();
 	this.repoService = repoService;
 	this.userService = userService;
-	this.callForProposalsService = callForProposalsService;
+	this.cFPService = cFPService;
     }
 
     @RequestMapping("/")
@@ -133,20 +133,20 @@ public class HomeController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
-	model.addAttribute("callForProposals", new CallForProposals());
+	model.addAttribute("callForProposals", new CFP());
 	return "callforproposals/create";
     }
 
     @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
     @RequestMapping(value = "/callforproposals/create", method = RequestMethod.POST)
-    public String proposalSave(@ModelAttribute CallForProposals callForProposals)
+    public String proposalSave(@ModelAttribute CFP cFP)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	// UserDetailsImpl u = (UserDetailsImpl)auth.getPrincipal();
 	// if (callForProposals.getUser() == null)
 	// callForProposals.setUser(repoService.findByTitle(title)));
 	// return callForProposals.getRepo().toString();
-	CallForProposals savedCallForProposals = callForProposalsService.save(callForProposals);
+	CFP savedCallForProposals = cFPService.save(cFP);
 
 	return "redirect:list";
     }
@@ -157,7 +157,7 @@ public class HomeController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
-	model.addAttribute("callForProposals", callForProposalsService.findByTitle(title));
+	model.addAttribute("callForProposals", cFPService.findByTitle(title));
 	return "callforproposals/create";
     }
     
@@ -167,7 +167,7 @@ public class HomeController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
-	model.addAttribute("callForProposals", callForProposalsService.findByTitle(title));
+	model.addAttribute("callForProposals", cFPService.findByTitle(title));
 	return "callforproposals/read";
     }
 
@@ -175,7 +175,7 @@ public class HomeController
     @RequestMapping("/callforproposals/list")
     public String callForProposalsList(Model model)
     {
-	model.addAttribute("callsForProposals", callForProposalsService.list());
+	model.addAttribute("callsForProposals", cFPService.list());
 	return "callforproposals/list";
     }
     

@@ -4,10 +4,10 @@ import static org.mockito.Mockito.mock;
 import java.util.Date;
 
 import org.dareon.domain.Repo;
-import org.dareon.repository.CallForProposalsRepository;
+import org.dareon.repository.CFPRepository;
 import org.dareon.repository.RepoRepository;
 import org.dareon.repository.UserRepository;
-import org.dareon.service.CallForProposalsService;
+import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserServiceImpl;
@@ -38,11 +38,11 @@ public class DareonWebAppApplicationTests {
 private MockMvc mvc;
 private UserRepository userRepository;
 private RepoRepository repoRepository;
-private CallForProposalsRepository  callForProposalsRepository;
+private CFPRepository  cFPRepository;
 private RepoService repoService;
 private UserServiceImpl userServiceImpl;
 private UserDetailsImpl userDetailsImpl;
-private CallForProposalsService callForProposalsService;
+private CFPService cFPService;
 
 @Autowired
 WebApplicationContext webApplicationContext;
@@ -51,7 +51,7 @@ WebApplicationContext webApplicationContext;
 public void setUp(){
 	userRepository =mock(UserRepository.class);
 	repoRepository=mock(RepoRepository.class);
-	callForProposalsRepository=mock(CallForProposalsRepository.class);
+	cFPRepository=mock(CFPRepository.class);
 	RepoService repoService=new RepoService(repoRepository);
 	
     mvc=MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -63,7 +63,7 @@ public void setUp(){
 public void tearDown(){
 	userRepository =null;
 	repoRepository=null;
-	callForProposalsRepository=null;
+	cFPRepository=null;
 	 mvc=null;
 }
 
