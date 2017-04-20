@@ -86,7 +86,7 @@ public class HomeController
     public String repoSave(@ModelAttribute Repo repo)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	if(repoService.findByTitle(repo.getTitle()) == null)
+	if(repoService.findById(repo.getId()) == null)
 	    repo.setCreator(userService.findByEmail(auth.getName()));
 	
 	Repo savedRepo = repoService.save(repo);
@@ -97,25 +97,25 @@ public class HomeController
 	return "redirect:list";
     }
     
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#title)")
-    @RequestMapping("/repo/edit/{title}")
-    public String repoEdit(@PathVariable String title, Model model)
+    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#id)")
+    @RequestMapping("/repo/edit/{id}")
+    public String repoEdit(@PathVariable Long id, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	model.addAttribute("repo", new Repo());
 	List<User> users = userService.list();
 	users.remove((userService.findByEmail(auth.getName())));
-	model.addAttribute("repo", repoService.findByTitle(title));
+	model.addAttribute("repo", repoService.findById(id));
 	users.add(0,userService.findByEmail(auth.getName()));
 	model.addAttribute("users",users);
 	return "repo/create";
     }
 
     @PreAuthorize("hasAuthority('REPO_READ_PRIVILEGE')")
-    @RequestMapping("/repo/read/{title}")
-    public String repoRead(@PathVariable String title, Model model)
+    @RequestMapping("/repo/read/{id}")
+    public String repoRead(@PathVariable Long id, Model model)
     {
-	model.addAttribute("repo", repoService.findByTitle(title));
+	model.addAttribute("repo", repoService.findById(id));
 	return "repo/read";
     }
     

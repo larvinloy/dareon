@@ -24,9 +24,14 @@ public class RepoService
 	return repoRepository.findOne(id);
     }
 
-    public Repo save(Repo post)
+    public Repo save(Repo repo)
     {
-	return repoRepository.saveAndFlush(post);
+	return repoRepository.saveAndFlush(repo);
+    }
+    
+    public void delete(Repo post)
+    {
+	repoRepository.delete(post.getId());
     }
 
     public List<Repo> list()
@@ -37,6 +42,11 @@ public class RepoService
     public Repo findByTitle(String title)
     {
 	return repoRepository.findByTitle(title);
+    }
+    
+    public Repo findById(Long Id)
+    {
+	return repoRepository.findById(Id);
     }
 
 }

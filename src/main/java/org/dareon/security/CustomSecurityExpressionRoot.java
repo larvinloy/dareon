@@ -67,10 +67,10 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 
     //
     @Transactional
-    public boolean isRepoOwner(String title)
+    public boolean isRepoOwner(Long id)
     {
 	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
-	Repo repo = repoService.findByTitle(title);
+	Repo repo = repoService.findById(id);
 	if (repo.getOwner().getEmail().equals(user.getEmail()))
 	    return true;
 	return false;

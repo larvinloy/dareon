@@ -51,22 +51,7 @@
 		</div>
 
 		<!-- Need better implementation -->
-		<th:block th:if="${repo.deleteStatus} == true">
-		<div>
-			<label class="col-sm-2 control-label"> Delete Status:</label> 
-			<div class="col-md-10">
-			<p>True </p>
-			</div>
-		</div>
-		</th:block>
-		<th:block th:if="${repo.deleteStatus} == false">
-		<div>
-			<label class="col-sm-2 control-label"> Delete Status:</label> 
-			<div class="col-md-10">
-			<p>False </p>
-			</div>
-		</div>
-		</th:block>
+		
 		<th:block th:if="${repo.status} == true">
 		<div>
 			<label class="col-sm-2 control-label"> Activity Status:</label> 

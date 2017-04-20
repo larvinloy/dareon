@@ -61,24 +61,10 @@ public class Repo
     private User owner;
     
     @Type(type="true_false")
-    private Boolean deleteStatus = false;
-    
-    @Type(type="true_false")
     private Boolean status = true;
     
     @OneToMany(mappedBy="repo", fetch = FetchType.EAGER)
     private Set<CFP> cFPs = new HashSet<CFP>();
-
-    public Boolean getDeleteStatus()
-    {
-        return deleteStatus;
-    }
-    
-
-    public void setDeleteStatus(Boolean deleteStatus)
-    {
-        this.deleteStatus = deleteStatus;
-    }
 
     public Repo()
     {
