@@ -14,9 +14,9 @@ public class RepoService
     private RepoRepository repoRepository;
 
     @Autowired
-    public RepoService(RepoRepository postRepository)
+    public RepoService(RepoRepository repoRepository)
     {
-	this.repoRepository = postRepository;
+	this.repoRepository = repoRepository;
     }
 
     public Repo get(Long id)

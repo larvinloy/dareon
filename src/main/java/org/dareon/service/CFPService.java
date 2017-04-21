@@ -16,9 +16,9 @@ public class CFPService
     private CFPRepository cFPRepository;
 
     @Autowired
-    public CFPService(CFPRepository postRepository)
+    public CFPService(CFPRepository cFPRepository)
     {
-	this.cFPRepository = postRepository;
+	this.cFPRepository = cFPRepository;
     }
 
     public CFP get(Long id)
