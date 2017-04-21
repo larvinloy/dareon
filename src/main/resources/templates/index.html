@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en"
-	layout:decorator="layouts/main">
-<head>
-	<title>Security Demo - Home Page</title>
-</head>
+<html lang="en">
+
+	<head th:replace="layouts/fragments :: head"></head>
+
 <body>
+
+	<div th:replace="layouts/fragments :: nav-private"></div>
 		
 	<div layout:fragment="content">
 		
 	    <!-- Page Content -->
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Main Section -->
   
@@ -65,12 +66,10 @@
 
      </div>
     <!-- /.container -->	
-            	
-            	
-            	
-            	
+ 	</div>
 
-	</div>
+	<head th:replace="layouts/fragments :: footer"></head>
+
 		
 </body>
 </html>

@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	layout:decorator="layouts/main">
-<head>
-<title>Dareon: Repository Details</title>
-<link rel="stylesheet"
-	href="/webjars/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" />
-<script src="/webjars/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-</head>
+	<head th:replace="layouts/fragments :: head-min"></head>
+
 <body>
 
-	<div layout:fragment="content">
+	<div th:replace="layouts/fragments :: nav-private"></div>
+
+	    <!-- Page Content -->
+    <div class="container">
 
 		<div class="col-lg-12">
 			<h1 class="page-header">Delete Repository?:</h1>
@@ -79,10 +77,8 @@
 
 	</div>
 
-
+	<head th:replace="layouts/fragments :: footer"></head>
 
 </body>
-
-
 
 </html>

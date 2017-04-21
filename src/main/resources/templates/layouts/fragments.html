@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+
+	<head th:fragment="head-all">
+  
+	  	<title>Data Reviews Online</title>
+	  
+	  	<link rel="stylesheet" href="external/bootstrap/css/bootstrap.min.css" 
+				th:href="@{/external/bootstrap/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="external/bootstrap-select/css/bootstrap-select.min.css" 
+			th:href="@{/external/bootstrap-select/css/bootstrap-select.min.css}" />
+		<link rel="stylesheet" href="external/bootstrap-toggle/css/bootstrap-toggle.min.css" 
+				th:href="@{/external/bootstrap-toggle/css/bootstrap-toggle.min.css}" />
+		<link rel="stylesheet" href="external/datatables.net-bs/css/jquery.dataTables.min.css" 
+				th:href="@{/external/datatables.net-bs/css/jquery.dataTables.min.css}" />
+		<link rel="stylesheet" href="css/custom.css" th:href="@{/css/custom.css}" />
+	
+		<script src="external/bootstrap/js/bootstrap.min.js"
+				th:src="@{/external/bootstrap/js/bootstrap.min.js}" ></script>			
+		<script src="external/bootstrap-select/js/bootstrap-select.min.js"
+			th:src="@{/external/bootstrap-select/js/bootstrap-select.min.js}" ></script>
+		<script src="external/bootstrap-toggle/js/bootstrap-toggle.min.js"
+				th:src="@{/external/bootstrap-toggle/js/bootstrap-toggle.min.js}" ></script>
+		<script src="external/jquery/jquery-3.2.1.min.js"
+				th:src="@{/external/jquery/jquery-3.2.1.min.js}" ></script>	
+		<script src="external/datatables.net-bs/js/jquery.dataTables.min.js" 
+				th:src="@{/external/datatables.net-bs/js/jquery.dataTables.min.js}" ></script>
+
+	</head>
+
+	<head th:fragment="head-min">
+  
+	  	<title>Data Reviews Online</title>
+	  
+	  	<link rel="stylesheet" href="external/bootstrap/css/bootstrap.min.css" 
+				th:href="@{/external/bootstrap/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="css/custom.css" th:href="@{/css/custom.css}" />
+	
+		<script src="external/bootstrap/js/bootstrap.min.js"
+				th:src="@{/external/bootstrap/js/bootstrap.min.js}" ></script>			
+		<script src="external/jquery/jquery-3.2.1.min.js"
+				th:src="@{/external/jquery/jquery-3.2.1.min.js}" ></script>	
+	</head>
+
+  
+	<head th:fragment="head-list">
+  
+	  	<title>Data Reviews Online</title>
+	  
+	  	<link rel="stylesheet" href="external/bootstrap/css/bootstrap.min.css" 
+				th:href="@{/external/bootstrap/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="external/datatables.net-bs/css/jquery.dataTables.min.css" 
+				th:href="@{/external/datatables.net-bs/css/jquery.dataTables.min.css}" />
+		<link rel="stylesheet" href="css/custom.css" th:href="@{/css/custom.css}" />
+	
+		<script src="external/bootstrap/js/bootstrap.min.js"
+				th:src="@{/external/bootstrap/js/bootstrap.min.js}" ></script>			
+		<script src="external/jquery/jquery-3.2.1.min.js"
+				th:src="@{/external/jquery/jquery-3.2.1.min.js}" ></script>	
+		<script src="external/datatables.net-bs/js/jquery.dataTables.min.js" 
+				th:src="@{/external/datatables.net-bs/js/jquery.dataTables.min.js}" ></script>
+
+	</head>
+  
+	<head th:fragment="head-create">
+  
+	  	<title>Data Reviews Online</title>
+	  
+	  	<link rel="stylesheet" href="external/bootstrap/css/bootstrap.min.css" 
+				th:href="@{/external/bootstrap/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="external/bootstrap-select/css/bootstrap-select.min.css" 
+			th:href="@{/external/bootstrap-select/css/bootstrap-select.min.css}" />
+		<link rel="stylesheet" href="external/bootstrap-toggle/css/bootstrap-toggle.min.css" 
+				th:href="@{/external/bootstrap-toggle/css/bootstrap-toggle.min.css}" />
+		<link rel="stylesheet" href="css/custom.css" th:href="@{/css/custom.css}" />
+	
+		<script src="external/bootstrap/js/bootstrap.min.js"
+				th:src="@{/external/bootstrap/js/bootstrap.min.js}" ></script>	
+		<script src="external/jquery/jquery-3.2.1.min.js"
+				th:src="@{/external/jquery/jquery-3.2.1.min.js}" ></script>	
+		<script src="external/bootstrap-select/js/bootstrap-select.min.js"
+			th:src="@{/external/bootstrap-select/js/bootstrap-select.min.js}" ></script>
+		<script src="external/bootstrap-toggle/js/bootstrap-toggle.min.js"
+				th:src="@{/external/bootstrap-toggle/js/bootstrap-toggle.min.js}" ></script>
+
+	</head>  
+  
+  <body>
+  	<div th:fragment="bodytop">
+  	</div>
+  
+<div th:fragment="nav-private">  
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Dareon</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="/">Home</a></li>
+					<li><a href="/repo/list">Repositories</a></li>
+					<li><a href="/callforproposals/list">Call for Proposals</a></li>
+				</ul>
+				<div class="navbar-text navbar-right">
+
+					<form sec:authorize="isAuthenticated()" id="frmlogout"
+						th:action="@{/logout}" method="post" class="form-inline">
+						<span class="glyphicon glyphicon-user"></span> <span
+							sec:authentication="name">Guest</span> | <a href="javascript:{}"
+							onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</nav>  
+</div>  
+	
+  	<div th:fragment="bodybottom">
+
+	</div>
+
+	<footer th:fragment="footer">
+		<p class="copyright">
+		<div>
+			Copyright 2017 <strong>Dareon.org</strong> | Disclaimer | Terms | Privacy |
+			Feedback
+		</div>
+		This is a project of the eResearch Office, RMIT University
+
+		</p>
+	</footer>
+
+	
+  </body>
+</html>
