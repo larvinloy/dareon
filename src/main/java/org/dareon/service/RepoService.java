@@ -26,12 +26,18 @@ public class RepoService
 
     public Repo save(Repo repo)
     {
-	return repoRepository.saveAndFlush(repo);
+	return repoRepository.save(repo);
     }
     
-    public void delete(Repo post)
+    public void delete(Repo repo)
     {
-	repoRepository.delete(post.getId());
+	repoRepository.delete(repo.getId());
+    }
+    
+    public void delete(Long id)
+    {
+	System.out.println(id);
+	repoRepository.delete(id);
     }
 
     public List<Repo> list()

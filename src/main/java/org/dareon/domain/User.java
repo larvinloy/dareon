@@ -57,10 +57,10 @@ public class User
 	    @JoinColumn(name = "role_id") })
     private Collection<Role> roles;
 
-    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "creator", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     private Set<Repo> createdRepos = new HashSet<Repo>();
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     private Set<Repo> ownedRepos = new HashSet<Repo>();
 
     public User()

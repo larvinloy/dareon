@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -117,6 +118,23 @@ public class HomeController
     {
 	model.addAttribute("repo", repoService.findById(id));
 	return "repo/read";
+    }
+    
+    @PreAuthorize("hasAuthority('REPO_DELETE_PRIVILEGE')")
+    @RequestMapping("/repo/delete/{id}")
+    public String repoDelete(@PathVariable Long id, Model model)
+    {
+	model.addAttribute("repo", repoService.findById(id));
+	return "repo/delete";
+    }
+    
+    @PreAuthorize("hasAuthority('REPO_DELETE_PRIVILEGE')")
+    @RequestMapping("/repo/deleteconfirmed/{id}")
+    public RedirectView repoDeleteConfirmed(@PathVariable Long id, Model model)
+    {
+	System.out.println(id);
+	repoService.delete(id);
+	 return new RedirectView("/repo/list");
     }
     
     @PreAuthorize("hasAuthority('REPO_READ_PRIVILEGE')")

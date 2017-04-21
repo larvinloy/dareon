@@ -63,7 +63,7 @@ public class Repo
     @Type(type="true_false")
     private Boolean status = true;
     
-    @OneToMany(mappedBy="repo", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="repo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<CFP> cFPs = new HashSet<CFP>();
 
     public Repo()
