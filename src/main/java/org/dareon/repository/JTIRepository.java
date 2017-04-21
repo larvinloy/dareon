@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface JTIRepository extends JpaRepository<JTI, Long>
 {
 
-    JTI findById(String jti);
+    JTI findByJti(String jti);
 
 }

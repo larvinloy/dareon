@@ -27,14 +27,14 @@ public class JTIService
 	this.jTIRepository = jTIRepository;
     }
     
-    public JTI save(String id)
+    public JTI save(String jti)
     {
-	return jTIRepository.save(new JTI(id));
+	return jTIRepository.save(new JTI(jti));
     }
     
-    public boolean exists(String id)
+    public boolean exists(String jti)
     {
-	if(jTIRepository.findById(id).equals(null))
+	if(jTIRepository.findByJti(jti).equals(null))
 	    return false;
 	return true;
     }

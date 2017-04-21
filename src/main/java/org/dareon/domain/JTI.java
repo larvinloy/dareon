@@ -12,37 +12,51 @@ import javax.persistence.ManyToMany;
 public class JTI
 {
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private String id;
+    private long id;
+    
+    private String jti;
 
+    
     public JTI()
     {
 	super();
     }
 
-    public JTI(final String name)
+    public JTI(final String jti)
     {
 	super();
-	this.id = name;
+	this.jti = jti;
     }
 
     //
-
-    public String getId()
+    public long getId()
     {
-	return id;
+        return id;
     }
 
-    public void setId(final String id)
+    public void setId(long id)
     {
-	this.id = id;
+        this.id = id;
     }
+
+    public String getJti()
+    {
+        return jti;
+    }
+
+    public void setJti(String jti)
+    {
+        this.jti = jti;
+    }
+  
 
     @Override
     public String toString()
     {
 	final StringBuilder builder = new StringBuilder();
-	builder.append("Privilege [name=").append(id).append("]").append("[id=").append(id).append("]");
+	builder.append("Privilege [name=").append(jti).append("]").append("[id=").append(jti).append("]");
 	return builder.toString();
     }
 }
