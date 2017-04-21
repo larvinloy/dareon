@@ -7,6 +7,7 @@ import javax.validation.ValidationException;
 
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
+import org.dareon.service.JTIService;
 import org.dareon.service.RoleService;
 import org.dareon.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class AuthenticationController {
 	@Autowired
 	private RoleService roleService;
 	
+	@Autowired
+	private JTIService jtiService;
+	
 	
     @RequestMapping("/auth/jwt")
     public String authenticateFromAAF(@RequestParam(value="assertion", required=true) String assertion) {
@@ -65,26 +69,31 @@ public class AuthenticationController {
 				String lastname = (String)(json.get("surname"));
 				String email = (String)(json.get("mail"));
 				String affiliation = (String)(json.get("edupersonscopedaffiliation"));
-				String jti = (String)(json.get("jti"));
-							
-				if (userService.findByEmail(email) == null) {
-					final Role role = roleService.findByName("ROLE_RO");
-					final User user = new User();
-					user.setFirstName(firstname);
-					user.setLastName(lastname);
-					user.setPassword("");
-					user.setEmail(email);
-					user.setInstitution(affiliation);
-					user.setRoles(Arrays.asList(role));
-					userService.save(user);
+				String jti = claimsSet.getJWTID();
+				System.out.println(jti + " " + email);
+				if (jtiService.exists(jti))
+					throw new ValidationException("Error: JTI already existing!!!");
+				else {
+					
+					jtiService.save(jti);
+					
+					if (userService.findByEmail(email) == null) {
+						final Role role = roleService.findByName("ROLE_RO");
+						final User user = new User();
+						user.setFirstName(firstname);
+						user.setLastName(lastname);
+						user.setPassword("");
+						user.setEmail(email);
+						user.setInstitution(affiliation);
+						user.setRoles(Arrays.asList(role));
+						userService.save(user);
+					}
+					User userDetails = userService.findByEmail(email);
+					
+					// Authenticate the user with Spring Security
+					Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getEmail(), userDetails.getPassword());
+					SecurityContextHolder.getContext().setAuthentication(auth);
 				}
-				
-				User userDetails = userService.findByEmail(email);
-				
-				// Authenticate the user with Spring Security
-				Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getEmail(), userDetails.getPassword());
-				SecurityContextHolder.getContext().setAuthentication(auth);
-			
 			}
 			    
 		}  catch (ParseException | JOSEException | ValidationException e) {
@@ -118,6 +127,6 @@ public class AuthenticationController {
     	
      	return true;
     }
-    
+  
     
 }
