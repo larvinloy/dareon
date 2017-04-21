@@ -18,10 +18,11 @@ public class WebConfig extends WebMvcConfigurerAdapter
 	registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry)
-    {
-	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
+    
+    //@Override
+    //public void addResourceHandlers(ResourceHandlerRegistry registry)
+    //{
+	//registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").resourceChain(false);
+	//}
 
 }
