@@ -95,7 +95,7 @@ public class HomeController
 	Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), auth.getAuthorities());
 	SecurityContextHolder.getContext().setAuthentication(newAuth);
 	
-	return "redirect:list";
+	return "redirect:read/" + savedRepo.getId();
     }
     
     @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#id)")
@@ -166,7 +166,7 @@ public class HomeController
 	// return callForProposals.getRepo().toString();
 	CFP savedCallForProposals = cFPService.save(cFP);
 
-	return "redirect:list";
+	return "redirect:read/" + savedCallForProposals.getTitle();
     }
 
     @PreAuthorize("hasAuthority('CFP_EDIT_PRIVILEGE')")

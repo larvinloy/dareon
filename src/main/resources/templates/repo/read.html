@@ -5,72 +5,84 @@
 
 <body>
 
-	<div th:replace="layouts/fragments :: nav-private"></div>
+	<div th:replace="layouts/navigation :: nav-private"></div>
 
-	    <!-- Page Content -->
+	<!-- Page Content -->
     <div class="container">
-
+		
 		<div class="col-lg-12">
-			<h1 class="page-header">Repository:</h1>
-		</div>
-
-
-		<div>
-			<label class="col-sm-2 control-label">Title:</label>
-			<div class="col-md-10">
-				<p th:text="${repo.title}" />
-			</div>
-		</div>
-		
-		<div>
-			<label class="col-sm-2 control-label">Date Created:</label>
-			<div class="col-md-10">
-				<p th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
-			</div>
-		</div>
-
-		<div>
-			<label class="col-sm-2 control-label">Institution:</label>
-			<div class="col-md-10">
-				<p th:text="${repo.institution}" />
-			</div>
-		</div>
-		<div>
-			<label class="col-sm-2 control-label">Definition:</label>
-			<div class="col-md-10">
-				<p th:text="${repo.definition}" />
-			</div>
-		</div>
-		<div>
-			<label class="col-sm-2 control-label">Description:</label>
-			<div class="col-md-10">
-				<p th:text="${repo.description}" />
-			</div>
-		</div>
-
-		<!-- Need better implementation -->
-		
-		<th:block th:if="${repo.status} == true">
-		<div>
-			<label class="col-sm-2 control-label"> Activity Status:</label> 
-			<div class="col-md-10">
-			<p>True </p>
-			</div>
-		</div>
-		</th:block>
-		<th:block th:if="${repo.status} == false">
-		<div>
-			<label class="col-sm-2 control-label"> Activity Status:</label> 
-			<div class="col-md-10">
-			<p>False </p>
-			</div>
-		</div>
-		</th:block>
-		
+			<h2 class="page-header">Repository Details</h2>
+				
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4><p th:text="${repo.title}" /></h4>
+				</div>
+				
+				<div class="panel-body">
 	
+					<div>
+						<label class="col-sm-2 control-label">Description:</label>
+						<div class="col-md-10">
+							<p th:text="${repo.description}" />
+						</div>
+					</div>
+			
+					<div>
+						<label class="col-sm-2 control-label">Definition:</label>
+						<div class="col-md-10">
+							<p th:text="${repo.definition}" />
+						</div>
+					</div>
+					
+					<div>
+						<label class="col-sm-2 control-label">Institution:</label>
+						<div class="col-md-10">
+							<p th:text="${repo.institution}" />
+						</div>
+					</div>
+		
+					<div>
+						<label class="col-sm-2 control-label">Date Created:</label>
+						<div class="col-md-10">
+							<p th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
+						</div>
+					</div>
+
+					<div>
+						<label class="col-sm-2 control-label">Created by:</label>
+						<div class="col-md-10">
+							<p th:text="|${repo.creator.firstName} ${repo.creator.lastName}|" />
+						</div>
+					</div>
+			
+					<div>
+						<label class="col-sm-2 control-label">Owner:</label>
+						<div class="col-md-10">
+							<p th:text="|${repo.owner.firstName} ${repo.owner.lastName}|" />
+						</div>
+					</div>
+					
+					<div>
+						<label class="col-sm-2 control-label">Status:</label>
+						<div class="col-md-10">
+							<p th:if="${repo.status} == true" >Online</p>
+							<p th:if="${repo.status} == false" >Offline</p>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<a type="button" class="btn btn-default" th:href="|@{/repo/list}"><span class="glyphicon glyphicon-backward"/> Close</a>
+			</div>
+
+		</div>
+		
 	</div>
 	
-	<head th:replace="layouts/fragments :: footer"></head>	
+	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>	
+	<footer th:replace="layouts/fragments :: footer"></footer>
 
 </body>
 

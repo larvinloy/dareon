@@ -20,6 +20,8 @@ footer {
 }
 
 
+
+/* Login form */
 #login-dp{
     min-width: 250px;
     padding: 20px;
@@ -29,6 +31,13 @@ footer {
     margin-bottom: 10px;
 }
 
+/* Labels */
+#label-create {
+	text-align: left;
+}
+
+
+/* Banner */
 .jumbotron {
   background-color: #e60028;
   color: #fff;

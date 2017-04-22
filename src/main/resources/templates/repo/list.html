@@ -1,84 +1,82 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-	<head th:replace="layouts/fragments :: head-list"></head>
+	<head th:replace="layouts/fragments :: head-all"></head>
 
 <body>
 
-	<div th:replace="layouts/fragments :: nav-private"></div>
+	<div th:replace="layouts/navigation :: nav-private"></div>
 
-	    <!-- Page Content -->
+	<!-- Page Content -->
     <div class="container">
-
 		<div class="col-lg-12">
-			<h1 class="page-header">
+			<h2 class="page-header">
 				Repositories <a href="/repo/create" class="btn btn-danger btn-lg"
-					role="button">Create a Repository</a>
-			</h1>
+					role="button">Create</a>
+			</h2>
 
+			<div class="well well-lg">
 
-			<table class="table table-hover table-responsive" id="repoTable">
-				<thead>
-					<tr>
-						<th style="text-align: center">Title</th>
-						<th style="text-align: center">Created On</th>
-						<th style="text-align: center">Creator</th>
-						<th style="text-align: center">Owner</th>
-						<th style="text-align: center">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:each="repo : ${repos}">
-						<tr>
-							<td style="text-align: center" th:text="${repo.title}" />
-							<td style="text-align: center"
-								th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
-							<td style="text-align: center;cursor:pointer"  onclick="location.href='/repo/create'"
-									th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
-							<th:block th:if="${repo.owner} != null">
-								<td style="text-align: center;cursor:pointer"  onclick="location.href='/repo/create'"
-									th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
+					<table class="table table-hover table-responsive cell-border" id="repoTable">
+						<thead>
+							<tr>
+								<th style="text-align: center">Title</th>
+								<th style="text-align: center">Created On</th>
+								<th style="text-align: center">Creator</th>
+								<th style="text-align: center">Owner</th>
+								<th style="text-align: center">Status</th>
+								<th style="text-align: center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="repo : ${repos}">
+								<tr>
+									<td th:text="${repo.title}" />
+									<td th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
+									<td th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
+									<th:block th:if="${repo.owner} != null">
+										<td th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
+									</th:block>
+									<td th:if="${repo.status} == true" >Online</td>
+									<td th:if="${repo.status} == false" >Offline</td>
+																	
+									<th:block th:if="${repo.owner} == null">
+										<td >Not assigned</td>
+									</th:block>
+									<td style="text-align: center">
+										<div class="btn-group btn-group-sm">
+											<a th:href="|@{/repo/read/}${repo.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> <a
+												th:href="|@{/repo/edit/}${repo.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> <a
+												th:href="|@{/repo/delete/}${repo.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-trash" /> Delete</a> <a
+												th:href="|@{/callforproposals/create/}|"
+												class="btn btn-primary"><span class="glyphicon glyphicon-file"/> Create CFP</a>
+										</div>
+									</td>
+								</tr>
 							</th:block>
-							<th:block th:if="${repo.owner} == null">
-								<td style="text-align: center">Not assigned</td>
-							</th:block>
-							<td style="text-align: center">
-								<div class="btn-group btn-group-sm">
-									<a th:href="|@{/repo/read/}${repo.id}|"
-										class="btn btn-default">View</a> <a
-										th:href="|@{/repo/edit/}${repo.id}|"
-										class="btn btn-default">Edit</a> <a
-										th:href="|@{/repo/delete/}${repo.id}|"
-										class="btn btn-default">Delete</a> <a
-										th:href="|@{/callforproposals/create/}|"
-										class="btn btn-primary">Create CFP</a>
-								</div>
-							</td>
+						</tbody>
+		
+					</table>
 
-						</tr>
-					</th:block>
-				</tbody>
+					<script>
+						$(document).ready(function() {
+							$('#repoTable').DataTable()
+						});
+					</script>
+					<p th:if="${repos.size() == 0}">
+						<div class="alert alert-warning" role="alert">No Repositories found.</div>
+					</p>
 
-			</table>
-
-
-
-
-			<script>
-				$(document).ready(function() {
-					$('#repoTable').DataTable()
-				});
-			</script>
-			<p th:if="${repos.size() == 0}">
-			<div class="alert alert-warning" role="alert">No Repositories
-				Found.</div>
-			</p>
+			</div>
 
 		</div>
-
 	</div>
 
-	<head th:replace="layouts/fragments :: footer"></head>
+	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
+	<footer th:replace="layouts/fragments :: footer"></footer>
 
 </body>
 </html>

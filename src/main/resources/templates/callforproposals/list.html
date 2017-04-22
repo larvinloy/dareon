@@ -1,75 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	layout:decorator="layouts/main">
-<head>
-<title>Dareon: Call For Proposals</title>
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
-<script
-	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script> 
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="layouts/fragments :: head-all"></head>
+
 <body>
 
-	<div layout:fragment="content">
+	<div th:replace="layouts/navigation :: nav-private"></div>
 
-		<div class="row">
-
-			<div class="col-lg-12">
-				<h1 class="page-header">
+	<!-- Page Content -->
+    <div class="container">
+		<div class="col-lg-12">
+				<h2 class="page-header">
 					Call for Proposals <a href="/callforproposals/create"
-						class="btn btn-danger btn-lg" role="button">Create a Call for
-						Proposal</a>
-				</h1>
+						class="btn btn-danger btn-lg" role="button">Create</a>
+				</h2>
+
+				<div class="well well-lg">
+
+					<table class="table  table-hover table-responsive  cell-border" id="cfpTable">
+						<thead>
+							<tr>
+								<th style="text-align: center">Title</th>
+								<th style="text-align: center">Created On</th>
+								<th style="text-align: center">Associated Repository</th>
+								<th style="text-align: center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="callForProposals : ${callsForProposals}">
+								<tr>
+									<td th:text="${callForProposals.title}" />
+									<td th:text="${#calendars.format(callForProposals.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
+									<td th:text="${callForProposals.repo.title}" />
+									<td style="text-align: center">
+										<div class="btn-group btn-group-sm">
+											<a
+												th:href="|@{/callforproposals/read/}${callForProposals.title}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> <a
+												th:href="|@{/callforproposals/edit/}${callForProposals.title}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> <a
+												th:href="|@{/callforproposals/delete/}${callForProposals.title}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-trash" /> Delete</a>
+										</div>
+									</td>
+		
+								</tr>
+							</th:block>
+						</tbody>
+		
+					</table>
+					
+					<script>
+						$(document).ready(function() {
+							$('#cfpTable').DataTable()
+						});
+					</script>
+					<p th:if="${callsForProposals.size() == 0}">
+						<div class="alert alert-warning" role="alert">No Call for Proposals found.</div>
+					</p>
+		
 			</div>
-
-
-
-			<table class="table  table-hover table-responsive" id="cfpTable">
-				<thead>
-					<tr>
-						<th style="text-align: center">Title</th>
-						<th style="text-align: center">Created On</th>
-						<th style="text-align: center">Associated Repository</th>
-						<th style="text-align: center">Manage Proposal</th>
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:each="callForProposals : ${callsForProposals}">
-						<tr>
-							<td style="text-align: center"
-								th:text="${callForProposals.title}" />
-							<td style="text-align: center"
-								th:text="${#calendars.format(callForProposals.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
-							<td style="text-align: center"
-								th:text="${callForProposals.repo.title}" />
-							<td style="text-align: center">
-								<div class="btn-group btn-group-sm">
-									<a
-										th:href="|@{/callforproposals/read/}${callForProposals.title}|"
-										class="btn btn-default">View</a> <a
-										th:href="|@{/callforproposals/edit/}${callForProposals.title}|"
-										class="btn btn-default">Edit</a> <a
-										th:href="|@{/callforproposals/edit/}${callForProposals.title}|"
-										class="btn btn-default">Delete</a>
-								</div>
-							</td>
-
-						</tr>
-					</th:block>
-				</tbody>
-
-			</table>
-			<script>
-				$(document).ready(function() {
-					$('#cfpTable').DataTable()
-				});
-			</script>
-			<p th:if="${callsForProposals.size() == 0}">
-			<div class="alert alert-warning" role="alert">No Call for
-				Proposals Found.</div>
-			</p>
-		</div>
+			
+		</div>		
 	</div>
+	
+	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
+	<footer th:replace="layouts/fragments :: footer"></footer>
 
 </body>
 </html>
