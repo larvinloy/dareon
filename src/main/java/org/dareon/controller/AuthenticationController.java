@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import javax.validation.ValidationException;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
 import org.dareon.service.JTIService;
@@ -49,16 +50,19 @@ public class AuthenticationController {
     public String authenticateFromAAF(@RequestParam(value="assertion", required=true) String assertion) {
     	
 		try {
+			
+			//Verify token validity, throw exception if invalid
 			SignedJWT jwt = SignedJWT.parse(assertion);
 			
+			//Compare secret key, throw exception if not matched
 	    	JWSVerifier verifier = new MACVerifier(aafSecretKey);
 			if (!jwt.verify(verifier))
-				throw new ValidationException("Error: Invalid token signature!!!");
+				throw new ValidationException("Warning: Invalid token signature!!!");
 			
 			JWTClaimsSet claimsSet = jwt.getJWTClaimsSet();
 			JSONObject json = claimsSet.getJSONObjectClaim(aafAttributes);
 			
-
+			//Verify claims, throw exception if invalid
 			if (validateJWTClaims(claimsSet) == true) {
 
 				String edupersontargetedid = (String)(json.get("edupersontargetedid"));
@@ -71,18 +75,21 @@ public class AuthenticationController {
 				String affiliation = (String)(json.get("edupersonscopedaffiliation"));
 				String jti = claimsSet.getJWTID();
 				System.out.println(jti + " " + email);
+				
+				//Check if JTI has never been used before - replay attack
 				if (jtiService.exists(jti))
-					throw new ValidationException("Error: JTI already existing!!!");
+					throw new ValidationException("Warning: JTI has already been used!!!");
 				else {
 					
 					jtiService.save(jti);
 					
 					if (userService.findByEmail(email) == null) {
+						String password = RandomStringUtils.randomAlphanumeric(25);
 						final Role role = roleService.findByName("ROLE_RO");
 						final User user = new User();
 						user.setFirstName(firstname);
 						user.setLastName(lastname);
-						user.setPassword("");
+						user.setPassword(password);
 						user.setEmail(email);
 						user.setInstitution(affiliation);
 						user.setRoles(Arrays.asList(role));
@@ -99,9 +106,9 @@ public class AuthenticationController {
 		}  catch (ParseException | JOSEException | ValidationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 			return "redirect:/login";
 		} 
-
 		
 		return "redirect:/";
     }
@@ -111,22 +118,21 @@ public class AuthenticationController {
     private boolean validateJWTClaims(JWTClaimsSet claimsSet) throws ValidationException {
         
     	if (!claimsSet.getIssuer().equals(this.aafIssuer))
-    		throw new ValidationException("Error: Invalid token Issuer!!!");
+    		throw new ValidationException("Warning: Invalid token Issuer!!!");
     	
     	if (claimsSet.getAudience().isEmpty() || !claimsSet.getAudience().contains(this.aafAudience))
-    		throw new ValidationException("Error: Invalid token Audience!!!");
+    		throw new ValidationException("Warning: Invalid token Audience!!!");
     	
     	Date now = new Date();
     	Date notBefore = claimsSet.getNotBeforeTime();
     	if (now.getTime() < notBefore.getTime())
-    		throw new ValidationException("Error: Invalid token Before Time!!!");
+    		throw new ValidationException("Warning: Invalid token Before Time!!!");
     	
     	Date expDate = claimsSet.getExpirationTime();
     	if (now.getTime() >= expDate.getTime())
-    		throw new ValidationException("Error: Invalid token Expiration Time!!!");
+    		throw new ValidationException("Warning: Invalid token Expiration Time!!!");
     	
      	return true;
     }
-  
     
 }
