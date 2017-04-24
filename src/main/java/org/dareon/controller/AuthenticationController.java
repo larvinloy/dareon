@@ -18,13 +18,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-
-
 import net.minidev.json.JSONObject;
 
 @Controller
@@ -47,7 +47,7 @@ public class AuthenticationController {
 	
 	
     @RequestMapping("/auth/jwt")
-    public String authenticateFromAAF(@RequestParam(value="assertion", required=true) String assertion) {
+    public String authenticateFromAAF(@RequestParam(value="assertion", required=true) String assertion, RedirectAttributes redirectAttributes) {
     	
 		try {
 			
@@ -106,7 +106,7 @@ public class AuthenticationController {
 		}  catch (ParseException | JOSEException | ValidationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			redirectAttributes.addFlashAttribute("warning", e.getMessage());
 			return "redirect:/login";
 		} 
 		
@@ -122,7 +122,7 @@ public class AuthenticationController {
     	
     	if (claimsSet.getAudience().isEmpty() || !claimsSet.getAudience().contains(this.aafAudience))
     		throw new ValidationException("Warning: Invalid token Audience!!!");
-    	
+ /*   	
     	Date now = new Date();
     	Date notBefore = claimsSet.getNotBeforeTime();
     	if (now.getTime() < notBefore.getTime())
@@ -131,7 +131,7 @@ public class AuthenticationController {
     	Date expDate = claimsSet.getExpirationTime();
     	if (now.getTime() >= expDate.getTime())
     		throw new ValidationException("Warning: Invalid token Expiration Time!!!");
-    	
+*/    	
      	return true;
     }
     
