@@ -34,11 +34,9 @@ public class JTIService
     
     public boolean exists(String jti)
     {
-	if(jTIRepository.findByJti(jti).equals(null))
+	if(jTIRepository.findByJti(jti) == null)
 	    return false;
 	return true;
     }
-
-    
 
 }
