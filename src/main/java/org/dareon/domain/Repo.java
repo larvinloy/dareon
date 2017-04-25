@@ -70,6 +70,20 @@ public class Repo
     {
     }
 
+    public Repo(String title, String institution, String definition, String description, User creator, User owner,
+	    Boolean status, Set<CFP> cFPs)
+    {
+	super();
+	this.title = title;
+	this.institution = institution;
+	this.definition = definition;
+	this.description = description;
+	this.creator = creator;
+	this.owner = owner;
+	this.status = status;
+	this.cFPs = cFPs;
+    }
+
     public User getOwner()
     {
         return owner;

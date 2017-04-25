@@ -43,6 +43,21 @@ public class Proposal
     @JoinColumn(name = "cfp_id")
     private CFP cfp;
 
+    public Proposal()
+    {
+	
+    }
+        
+    public Proposal(String title, String description, String details, CFP cfp)
+    {
+	super();
+	this.title = title;
+	this.description = description;
+	this.details = details;
+	this.cfp = cfp;
+    }
+
+
     public long getId()
     {
 	return id;

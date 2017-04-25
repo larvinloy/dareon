@@ -50,6 +50,21 @@ public class CFP
     private Set<Proposal> proposals = new HashSet<Proposal>();
 
    
+    public CFP()
+    {
+	
+    }
+    
+    public CFP(String title, String description, String details, Repo repo, Set<Proposal> proposals)
+    {
+	super();
+	this.title = title;
+	this.description = description;
+	this.details = details;
+	this.repo = repo;
+	this.proposals = proposals;
+    }
+
     public long getId()
     {
         return id;
