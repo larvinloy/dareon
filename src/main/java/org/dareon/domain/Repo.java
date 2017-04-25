@@ -46,10 +46,10 @@ public class Repo
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "TEXT")
     private String definition;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne()

@@ -1,6 +1,8 @@
 package org.dareon.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,16 +36,20 @@ public class CFP
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
     
-    @Column (nullable= false)
+    @Column (nullable= false,columnDefinition = "TEXT")
     private String description;
     
-    @Column (nullable= false)
+    @Column (nullable= false,columnDefinition = "TEXT")
     private String details;
     
     @ManyToOne()
     @JoinColumn(name="repo_id")
     private Repo repo;
+    
+    @OneToMany(mappedBy="cfp", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    private Set<Proposal> proposals = new HashSet<Proposal>();
 
+   
     public long getId()
     {
         return id;
@@ -103,6 +110,15 @@ public class CFP
         this.repo = repo;
     }
 
-    
+    public Set<Proposal> getProposals()
+    {
+        return proposals;
+    }
+
+    public void setProposals(Set<Proposal> proposals)
+    {
+        this.proposals = proposals;
+    }
+
     
 }

@@ -33,10 +33,10 @@ public class Proposal
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "TEXT")
     private String details;
 
     @ManyToOne()

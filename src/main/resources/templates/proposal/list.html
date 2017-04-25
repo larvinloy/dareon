@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="layouts/fragments :: head-all"></head>
+
+<body>
+
+	<div th:replace="layouts/navigation :: nav-private"></div>
+
+	<!-- Page Content -->
+    <div class="container">
+		<div class="col-lg-12">
+				<h2 class="page-header">
+					Proposals <a href="/proposal/create"
+						class="btn btn-primary btn-lg" role="button">Create</a>
+				</h2>
+
+				<div class="well well-lg">
+
+					<table class="table  table-hover table-responsive  cell-border" id="proposalTable">
+						<thead>
+							<tr>
+								<th style="text-align: center">Title</th>
+								<th style="text-align: center">Created On</th>
+								<th style="text-align: center">Associated CFP</th>
+								<th style="text-align: center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="proposal : ${proposals}">
+								<tr>
+									<td th:text="${proposal.title}" />
+									<td th:text="${#calendars.format(proposal.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
+									<td th:text="${proposal.cfp.title}" />
+									<td style="text-align: center">
+										<div class="btn-group btn-group-sm">
+											<a
+												th:href="|@{/proposal/read/}${proposal.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> <a
+												th:href="|@{/proposal/edit/}${proposal.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> <a
+												th:href="|@{/proposal/delete/}${proposal.id}|"
+												class="btn btn-danger"><span class="glyphicon glyphicon-trash" /> Delete</a>
+										</div>
+									</td>
+		
+								</tr>
+							</th:block>
+						</tbody>
+		
+					</table>
+					
+					<script>
+						$(document).ready(function() {
+							$('#proposalTable').DataTable()
+						});
+					</script>
+					<p th:if="${proposals.size() == 0}">
+						<div class="alert alert-warning" role="alert">No Proposals found.</div>
+					</p>
+		
+			</div>
+			
+		</div>		
+	</div>
+	
+	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
+	<footer th:replace="layouts/fragments :: footer"></footer>
+
+</body>
+</html>

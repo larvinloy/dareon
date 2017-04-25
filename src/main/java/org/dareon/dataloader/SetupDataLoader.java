@@ -58,7 +58,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	final Privilege cfpEditPrivilege = createPrivilegeIfNotFound("CFP_EDIT_PRIVILEGE");
 	final Privilege cfpDeletePrivilege = createPrivilegeIfNotFound("CFP_DELETE_PRIVILEGE");
 
-	// == create cfp privileges
+	// == create proposal privileges
+	final Privilege proposalReadPrivilege = createPrivilegeIfNotFound("PROPOSAL_READ_PRIVILEGE");
+	final Privilege proposalCreatePrivilege = createPrivilegeIfNotFound("PROPOSAL_CREATE_PRIVILEGE");
+	final Privilege proposalEditPrivilege = createPrivilegeIfNotFound("PROPOSAL_EDIT_PRIVILEGE");
+	final Privilege proposalDeletePrivilege = createPrivilegeIfNotFound("PROPOSAL_DELETE_PRIVILEGE");
+
+	// == create sysadmin privileges
 	final Privilege sysAdminCretePrivilege = createPrivilegeIfNotFound("SYSADMIN_CREATE_PRIVILEGE");
 	final Privilege userReadPrivilege = createPrivilegeIfNotFound("USER_READ_PRIVILEGE");
 
@@ -66,7 +72,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	final List<Privilege> sdPrivileges = Arrays.asList(sysAdminCretePrivilege);
 
 	final List<Privilege> saPrivileges = Arrays.asList(repoReadPrivilege, repoCreatePrivilege, repoEditPrivilege,
-		repoDeletePrivilege, cfpReadPrivilege, cfpCreatePrivilege, cfpEditPrivilege, cfpDeletePrivilege);
+		repoDeletePrivilege, cfpReadPrivilege, cfpCreatePrivilege, cfpEditPrivilege, cfpDeletePrivilege,
+		proposalCreatePrivilege, proposalDeletePrivilege, proposalEditPrivilege, proposalReadPrivilege);
 
 	final List<Privilege> roPrivileges = Arrays.asList(cfpReadPrivilege, cfpCreatePrivilege, cfpEditPrivilege,
 		cfpDeletePrivilege, repoReadPrivilege);

@@ -54,7 +54,7 @@ public class CFPService
 	return cFPRepository.findByTitle(title);
     }
 
-    public Object findById(Long id)
+    public CFP findById(Long id)
     {
 	// TODO Auto-generated method stub
 	return cFPRepository.findById(id);

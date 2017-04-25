@@ -103,17 +103,16 @@ public class CFPController
     public String cFPEdit(@PathVariable Long id, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	model.addAttribute("repos", userService.findByEmail(auth.getName()).getOwnedRepos());
+	model.addAttribute("repos", Arrays.asList((cFPService.findById(id)).getRepo()));
 	model.addAttribute("callForProposals", cFPService.findById(id));
 	return "callforproposals/create";
     }
     
-    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('CFP_READ_PRIVILEGE')")
     @RequestMapping("/callforproposals/read/{id}")
     public String cFPRead(@PathVariable Long id, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	model.addAttribute("repos", userService.findByEmail(auth.getName()).getCreatedRepos());
 	model.addAttribute("callForProposals", cFPService.findById(id));
 	return "callforproposals/read";
     }
