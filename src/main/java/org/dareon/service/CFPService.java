@@ -28,7 +28,20 @@ public class CFPService
 
     public CFP save(CFP proposal)
     {
-	return cFPRepository.save(proposal);
+	CFP tempCFP = cFPRepository.findById(proposal.getId());
+	if(tempCFP == null)
+	    return cFPRepository.save(proposal);
+	else
+	{
+	    CFP editCFP = new CFP();
+	    editCFP.setId(proposal.getId());
+	    editCFP.setDescription(proposal.getDescription());
+	    editCFP.setDetails(proposal.getDetails());
+	    editCFP.setRepo(tempCFP.getRepo());
+	    editCFP.setCreatedOn(tempCFP.getCreatedOn());
+	    editCFP.setTitle(proposal.getTitle());
+	    return cFPRepository.save(editCFP);
+	}
     }
 
     public List<CFP> list()
@@ -39,5 +52,18 @@ public class CFPService
     public CFP findByTitle(String title)
     {
 	return cFPRepository.findByTitle(title);
+    }
+
+    public Object findById(Long id)
+    {
+	// TODO Auto-generated method stub
+	return cFPRepository.findById(id);
+    }
+
+    public void delete(Long id)
+    {
+	// TODO Auto-generated method stub
+	cFPRepository.delete(id);
+	
     }
 }

@@ -11,7 +11,7 @@
     <div class="container">
 		<div class="col-lg-12">
 			<h2 class="page-header">
-				Repositories <a href="/repo/create" class="btn btn-danger btn-lg"
+				Repositories <a href="/repo/create" class="btn btn-primary btn-lg"
 					role="button">Create</a>
 			</h2>
 
@@ -32,7 +32,7 @@
 							<th:block th:each="repo : ${repos}">
 								<tr>
 									<td th:text="${repo.title}" />
-									<td th:text="${#calendars.format(repo.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
+									<td th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
 									<td th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
 									<th:block th:if="${repo.owner} != null">
 										<td th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
@@ -50,8 +50,8 @@
 												th:href="|@{/repo/edit/}${repo.id}|"
 												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> <a
 												th:href="|@{/repo/delete/}${repo.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-trash" /> Delete</a> <a
-												th:href="|@{/callforproposals/create/}|"
+												class="btn btn-danger"><span class="glyphicon glyphicon-trash" /> Delete</a> <a
+												th:href="|@{/callforproposals/create/}${repo.id}|"
 												class="btn btn-primary"><span class="glyphicon glyphicon-file"/> Create CFP</a>
 										</div>
 									</td>

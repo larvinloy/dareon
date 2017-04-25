@@ -28,7 +28,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     private RepoRepository repoRepository;
-    
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -57,20 +57,20 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	final Privilege cfpCreatePrivilege = createPrivilegeIfNotFound("CFP_CREATE_PRIVILEGE");
 	final Privilege cfpEditPrivilege = createPrivilegeIfNotFound("CFP_EDIT_PRIVILEGE");
 	final Privilege cfpDeletePrivilege = createPrivilegeIfNotFound("CFP_DELETE_PRIVILEGE");
-	
+
 	// == create cfp privileges
 	final Privilege sysAdminCretePrivilege = createPrivilegeIfNotFound("SYSADMIN_CREATE_PRIVILEGE");
 	final Privilege userReadPrivilege = createPrivilegeIfNotFound("USER_READ_PRIVILEGE");
-	
+
 	// == create initial roles
 	final List<Privilege> sdPrivileges = Arrays.asList(sysAdminCretePrivilege);
-	
-	final List<Privilege> saPrivileges = Arrays.asList(repoReadPrivilege, repoCreatePrivilege,
-		repoEditPrivilege,repoDeletePrivilege, cfpReadPrivilege, cfpCreatePrivilege,
-		cfpEditPrivilege,cfpDeletePrivilege);
-	
-	final List<Privilege> roPrivileges = Arrays.asList(cfpReadPrivilege,repoReadPrivilege);
-	
+
+	final List<Privilege> saPrivileges = Arrays.asList(repoReadPrivilege, repoCreatePrivilege, repoEditPrivilege,
+		repoDeletePrivilege, cfpReadPrivilege, cfpCreatePrivilege, cfpEditPrivilege, cfpDeletePrivilege);
+
+	final List<Privilege> roPrivileges = Arrays.asList(cfpReadPrivilege, cfpCreatePrivilege, cfpEditPrivilege,
+		cfpDeletePrivilege, repoReadPrivilege);
+
 	createRoleIfNotFound("ROLE_SD", sdPrivileges);
 	createRoleIfNotFound("ROLE_SA", saPrivileges);
 	createRoleIfNotFound("ROLE_RO", roPrivileges);
@@ -83,11 +83,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	user.setInstitution("Dareon");
 	user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_SD")));
 	userRepository.save(user);
-	
-	InitUsersRepos initUsersRepos = new InitUsersRepos(roleRepository,userRepository, repoRepository);
+
+	InitUsersRepos initUsersRepos = new InitUsersRepos(roleRepository, userRepository, repoRepository);
 	initUsersRepos.initUsers();
 	initUsersRepos.initRepos();
-	
 
 	alreadySetup = true;
     }

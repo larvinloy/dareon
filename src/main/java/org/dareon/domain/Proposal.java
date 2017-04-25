@@ -18,91 +18,91 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table (name = "cfp")
-public class CFP
+@Table(name = "proposals")
+public class Proposal
 {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
-    
-    @Column (nullable= false, unique = true)
+
+    @Column(nullable = false, unique = true)
     private String title;
-    
+
     @Basic(optional = false)
-    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
-    
-    @Column (nullable= false)
+
+    @Column(nullable = false)
     private String description;
-    
-    @Column (nullable= false)
+
+    @Column(nullable = false)
     private String details;
-    
+
     @ManyToOne()
-    @JoinColumn(name="repo_id")
-    private Repo repo;
+    @JoinColumn(name = "cfp_id")
+    private CFP cfp;
 
     public long getId()
     {
-        return id;
+	return id;
     }
 
     public void setId(long id)
     {
-        this.id = id;
+	this.id = id;
     }
 
     public Date getCreatedOn()
     {
-        return createdOn;
+	return createdOn;
     }
 
     public void setCreatedOn(Date createdOn)
     {
-        this.createdOn = createdOn;
+	this.createdOn = createdOn;
     }
-    
+
     public String getTitle()
     {
-        return title;
+	return title;
     }
 
     public void setTitle(String title)
     {
-        this.title = title;
+	this.title = title;
     }
 
     public String getDescription()
     {
-        return description;
+	return description;
     }
 
     public void setDescription(String description)
     {
-        this.description = description;
+	this.description = description;
     }
 
     public String getDetails()
     {
-        return details;
+	return details;
     }
 
     public void setDetails(String details)
     {
-        this.details = details;
+	this.details = details;
     }
 
-    public Repo getRepo()
+    public CFP getCfp()
     {
-        return repo;
+        return cfp;
     }
 
-    public void setRepo(Repo repo)
+    public void setCfp(CFP cfp)
     {
-        this.repo = repo;
+        this.cfp = cfp;
     }
 
-    
-    
+  
+
 }

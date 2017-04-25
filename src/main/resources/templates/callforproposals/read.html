@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-	<head th:replace="layouts/fragments :: head-min"></head>
+<head th:replace="layouts/fragments :: head-min"></head>
 
 <body>
 
 	<div th:replace="layouts/navigation :: nav-private"></div>
 
 	<!-- Page Content -->
-    <div class="container">
+	<div class="container">
 
 		<div class="col-lg-12">
 			<h2 class="page-header">Call For Proposal Details</h2>
@@ -16,11 +16,13 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4><p th:text="${callForProposals.title}" /></h4>
+					<h4>
+						<p th:text="${callForProposals.title}" />
+					</h4>
 				</div>
-				
+
 				<div class="panel-body">
-	
+
 					<div>
 						<label class="col-sm-2 control-label">Description:</label>
 						<div class="col-md-10">
@@ -35,23 +37,18 @@
 						</div>
 					</div>
 
-					<div>
-						<label class="col-sm-2 control-label">Institution:</label>
-						<div class="col-md-10">
-							<p th:text="${callForProposals.institution}" />
-						</div>
-					</div>
+
 
 					<div>
 						<label class="col-sm-2 control-label">Date Created:</label>
 						<div class="col-md-10">
-							<p th:text="${#calendars.format(callForProposals.createdOn,'M/dd/yyyy hh:mm:ss a')}" />
+							<p
+								th:text="${#calendars.format(callForProposals.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
 						</div>
 					</div>
 
 					<div>
-						<label class="col-sm-2 control-label">Repository:
-						</label>
+						<label class="col-sm-2 control-label">Repository: </label>
 						<div class="col-md-10">
 							<p th:text="${callForProposals.repo.title}" />
 						</div>
@@ -61,13 +58,15 @@
 			</div>
 
 			<div class="col-sm-6">
-				<a type="button" class="btn btn-default" th:href="|@{/callforproposals/list}"><span class="glyphicon glyphicon-backward"/> Close</a>
+				<a type="button" class="btn btn-default"
+					th:href="|@{/callforproposals/list}"><span
+					class="glyphicon glyphicon-backward" /> Close</a>
 			</div>
 
 		</div>
 	</div>
 
-	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>	
+	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
 
 </body>
