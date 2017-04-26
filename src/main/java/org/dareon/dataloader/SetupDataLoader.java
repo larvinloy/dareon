@@ -7,7 +7,9 @@ import java.util.List;
 import org.dareon.domain.Privilege;
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
+import org.dareon.repository.CFPRepository;
 import org.dareon.repository.PrivilegeRepository;
+import org.dareon.repository.ProposalRepository;
 import org.dareon.repository.RepoRepository;
 import org.dareon.repository.RoleRepository;
 import org.dareon.repository.UserRepository;
@@ -28,6 +30,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     private RepoRepository repoRepository;
+    
+    @Autowired
+    private CFPRepository cfpRepository;  
+    
+    @Autowired
+    private ProposalRepository proposalRepository;   
 
     @Autowired
     private RoleRepository roleRepository;
@@ -91,9 +99,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_SD")));
 	userRepository.save(user);
 
-	InitUsersRepos initUsersRepos = new InitUsersRepos(roleRepository, userRepository, repoRepository);
+	InitUsersRepos initUsersRepos = new InitUsersRepos(roleRepository, userRepository, repoRepository, cfpRepository, proposalRepository);
 	initUsersRepos.initUsers();
 	initUsersRepos.initRepos();
+	initUsersRepos.initCFPs();
+	initUsersRepos.initProposals();
 
 	alreadySetup = true;
     }

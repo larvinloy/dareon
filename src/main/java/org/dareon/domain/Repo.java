@@ -71,7 +71,7 @@ public class Repo
     }
 
     public Repo(String title, String institution, String definition, String description, User creator, User owner,
-	    Boolean status, Set<CFP> cFPs)
+	    Boolean status)
     {
 	super();
 	this.title = title;
