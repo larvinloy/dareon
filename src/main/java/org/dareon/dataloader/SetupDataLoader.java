@@ -84,11 +84,15 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		proposalCreatePrivilege, proposalDeletePrivilege, proposalEditPrivilege, proposalReadPrivilege);
 
 	final List<Privilege> roPrivileges = Arrays.asList(cfpReadPrivilege, cfpCreatePrivilege, cfpEditPrivilege,
-		cfpDeletePrivilege, repoReadPrivilege);
+		cfpDeletePrivilege, proposalDeletePrivilege, proposalReadPrivilege, repoReadPrivilege);
+	
+	final List<Privilege> doPrivileges = Arrays.asList(proposalReadPrivilege, proposalCreatePrivilege, proposalEditPrivilege,
+			proposalDeletePrivilege, cfpReadPrivilege);
 
 	createRoleIfNotFound("ROLE_SD", sdPrivileges);
 	createRoleIfNotFound("ROLE_SA", saPrivileges);
 	createRoleIfNotFound("ROLE_RO", roPrivileges);
+	createRoleIfNotFound("ROLE_DO", doPrivileges);
 
 	final User user = new User();
 	user.setFirstName("System");

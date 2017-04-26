@@ -44,6 +44,9 @@ public class InitUsersRepos
 	userRepository.save(user1);
 	final User user2 = new User("repoowner@rmit.edu.au","repoowner","Repository","Owner","RMIT University",Arrays.asList(roleRepository.findByName("ROLE_RO")));
 	userRepository.save(user2);
+	final User user3 = new User("dataowner@rmit.edu.au","dataowner","Data","Owner","RMIT University",Arrays.asList(roleRepository.findByName("ROLE_DO")));
+	userRepository.save(user3);
+	
     }
     
     public void initRepos()
