@@ -64,6 +64,7 @@ public class authorizeDeauthorizeROWebLayerTest
     {
     	long numberOfRepositories = repoService.list().size();
     	
+    	//Admin edits a repository
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
@@ -88,6 +89,7 @@ public class authorizeDeauthorizeROWebLayerTest
 		
 		//number of repositories should have not increased
 		assertEquals("failure - repository increased", numberOfRepositories, repoService.list().size());
+		//check if the same repo
 		assertEquals("failure - ID attribute not match", rv.getId(), 1);
 		//Owner should have changed from admin@dareon.org to repoowner@rmit.edu.au
 		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "repoowner@rmit.edu.au");	
@@ -125,6 +127,7 @@ public class authorizeDeauthorizeROWebLayerTest
 		
 		//number of repositories should have not increased
 		assertEquals("failure - repository increased", numberOfRepositories, repoService.list().size());
+		//check if the same repo
 		assertEquals("failure - ID attribute not match", rv.getId(), 1);
 		//Owner should have changed from repoowner@rmit.edu.au to admin@dareon.org
 		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "admin@dareon.org");	

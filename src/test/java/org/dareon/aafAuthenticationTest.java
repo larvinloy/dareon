@@ -49,7 +49,7 @@ public class aafAuthenticationTest
 		.apply(springSecurity())
         .build();
     }
-    
+
     
     /* Note: The AuthenticationController requires fresh token therefore there's a need to
      * 		 temporarily disable the BeforeTime and ExpirationTime validation for the
@@ -58,7 +58,7 @@ public class aafAuthenticationTest
   
     
     
-    @Test
+	@Test
     public void aafAuthenticationWithNoAssertionTest() throws Exception {
 
 		mockMvc.perform(get("/auth/jwt"))
