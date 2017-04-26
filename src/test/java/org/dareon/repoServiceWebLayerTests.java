@@ -1,19 +1,17 @@
 package org.dareon;
 
+import org.dareon.domain.CFP;
 import org.dareon.domain.Repo;
-import org.dareon.domain.User;
+import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserService;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,7 +37,12 @@ public class repoServiceWebLayerTests
 {
 
 	@Autowired
+	CFPService cFPService; 
+	
+	@Autowired
 	RepoService repoService;
+	
+	@Autowired
 	UserService userService;
 	
     @Resource
@@ -53,36 +56,30 @@ public class repoServiceWebLayerTests
         .build();
     }
 
-    @After
-    public void tearDown()
-    {
-	// clean up after each test method
-    	
-    }
-
 
     
     @Test
     @WithUserDetails("admin@dareon.org")
-    public void RepoCreateAndReadWebTest() throws Exception
+    public void RepoCreateAndReadTest() throws Exception
     {
-    	long numberOfRepositories = repoService.list().size();
+    	long numberOfRepositoriesPriorToCreate = repoService.list().size();
     	
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-		.param("title", "sample repository 2")
-		.param("institution", "Sample institution for repository 2")
-		.param("definition", "Sample definition for repository 2")
-		.param("description", "Sample description for repository 2")
+		.param("title", "sample repository 3")
+		.param("institution", "Sample institution for repository 3")
+		.param("definition", "Sample definition for repository 3")
+		.param("description", "Sample description for repository 3")
 		.param("owner", "3"))
-     	//check if redirected to repository list page - /repo/list
+     	//check if redirected to repository details page
 		.andExpect(status().is3xxRedirection())
-		.andExpect(redirectedUrl("list"))
-		.andReturn();
-	
+		.andExpect(redirectedUrl("read/3"));
+
+    	long numberOfRepositoriesAfterCreate = repoService.list().size();
+    	
 		// check if the repository was created 
-		MvcResult response = mockMvc.perform(get("/repo/read/sample repository 2"))
+		MvcResult response = mockMvc.perform(get("/repo/read/3"))
 		        .andExpect(status().isOk()).andExpect(view().name("repo/read"))
 		        .andExpect(model().attributeExists("repo"))
 		        .andReturn();
@@ -92,98 +89,107 @@ public class repoServiceWebLayerTests
 		
 		assertNotNull("failure - not null", repoValue);
 		//number of repositories should have increased
-		assertNotEquals("failure - repository did not increased", numberOfRepositories, repoService.list().size());
+		assertEquals("failure - repository did not increased", numberOfRepositoriesPriorToCreate+1, numberOfRepositoriesAfterCreate);
 		//The ID should be automatically created with an incremental value
 		assertEquals("failure - ID attribute not match", rv.getId(), 3);
-		assertEquals("failure - Repository attribute not match", rv.getTitle(), "sample repository 2");
-		assertEquals("failure - Definition attribute not match", rv.getDefinition(), "Sample definition for repository 2");
-		assertEquals("failure - Description attribute not match", rv.getDescription(), "Sample description for repository 2");
-		assertEquals("failure - Institution attribute not match", rv.getInstitution(), "Sample institution for repository 2");
+		assertEquals("failure - Title attribute not match", "sample repository 3", rv.getTitle());
+		assertEquals("failure - Definition attribute not match", "Sample definition for repository 3", rv.getDefinition());
+		assertEquals("failure - Description attribute not match", "Sample description for repository 3", rv.getDescription());
+		assertEquals("failure - Institution attribute not match", "Sample institution for repository 3", rv.getInstitution());
 		//The Status should be automatically created with the default: true
-		assertEquals("failure - Status attribute not match", rv.getStatus(), true);
-		//The Delete Status should be automatically created with the default: false		
-		assertEquals("failure - Delete Status attribute not match", rv.getDeleteStatus(), false);
-		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "repoowner@rmit.edu.au");	
+		assertEquals("failure - Status attribute not match", true, rv.getStatus());
+		assertEquals("failure - Owner attribute not match", "repoowner@rmit.edu.au", rv.getOwner().getEmail());	
 		//The Creator should be automatically created with the name of the currently logged-in user
-		assertEquals("failure - Creator attribute not match", rv.getCreator().getEmail(), "admin@dareon.org");    
+		assertEquals("failure - Creator attribute not match", "admin@dareon.org", rv.getCreator().getEmail());    
     }
 
 
     @Test
     @WithUserDetails("admin@dareon.org")
-    public void RepoUpdateDeleteAndReadWeb() throws Exception
+    public void RepoUpdateAndReadTest() throws Exception
     {
-    	long numberOfRepositories = repoService.list().size();
+    	long numberOfRepositoriesPriorToUpdate = repoService.list().size();
     	
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
                 .param("id", "1") //search for repository to edit
-		.param("title", "test_repo1")
-		.param("institution", "test_institution1")
+		.param("title", "Test Repo 1")
+		.param("institution", "Test Institution 1")
 		.param("definition", "Modified definition") //modified contents
-		.param("description", "test_description1")
+		.param("description", "Test Description 1")
 		.param("status", "true")
-		.param("deleteStatus", "true") //modified as deleted
-		.param("creator", "1")
+		.param("creator", "2")
     	.param("owner", "2"))
-     	//check if redirected to repository list page - /repo/list
 		.andExpect(status().is3xxRedirection())
-		.andExpect(redirectedUrl("list"))
-		.andReturn();
- 
-	
-		// check if the repository was created 
-		MvcResult response = mockMvc.perform(get("/repo/read/test_repo1"))
-		        .andExpect(status().isOk()).andExpect(view().name("repo/read"))
-		        .andExpect(model().attributeExists("repo"))
+		.andExpect(redirectedUrl("read/1"));
+
+    	long numberOfRepositoriesAfterUpdate = repoService.list().size();
+    	
+		// check if the repository was updated 
+		MvcResult response = mockMvc.perform(get("/repo/read/1"))
 		        .andReturn();
 		Object repoValue = response.getModelAndView().getModel().get("repo");
-		assertTrue(repoValue instanceof Repo);
 		Repo rv = (Repo)repoValue;
 		
 		assertNotNull("failure - not null", repoValue);
 		//number of repositories should have not increased
-		assertEquals("failure - repository increased", numberOfRepositories, repoService.list().size());
-		assertEquals("failure - ID attribute not match", rv.getId(), 1);
-		assertEquals("failure - Repository attribute not match", rv.getTitle(), "test_repo1");
-		assertEquals("failure - Definition attribute not match", rv.getDefinition(), "Modified definition");
-		assertEquals("failure - Description attribute not match", rv.getDescription(), "test_description1");
-		assertEquals("failure - Institution attribute not match", rv.getInstitution(), "test_institution1");
-		assertEquals("failure - Status attribute not match", rv.getStatus(), true);
-		assertEquals("failure - Delete Status attribute not match", rv.getDeleteStatus(), true);
-		assertEquals("failure - Creator attribute not match", rv.getCreator().getEmail(), "admin@dareon.org");
-		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "admin@dareon.org");	
+		assertEquals("failure - repository increased", numberOfRepositoriesPriorToUpdate, numberOfRepositoriesAfterUpdate);
+		assertEquals("failure - ID attribute not match", 1, rv.getId());
+		assertEquals("failure - Repository attribute not match", "Test Repo 1", rv.getTitle());
+		//the definition should have changed
+		assertEquals("failure - Definition attribute not match", "Modified definition", rv.getDefinition());
+		assertEquals("failure - Description attribute not match", "Test Description 1", rv.getDescription());
+		assertEquals("failure - Institution attribute not match", "Test Institution 1", rv.getInstitution());
+		assertEquals("failure - Status attribute not match", true, rv.getStatus());
+		assertEquals("failure - Creator attribute not match", "admin@dareon.org", rv.getCreator().getEmail());
+		assertEquals("failure - Owner attribute not match", "admin@dareon.org", rv.getOwner().getEmail());	
     }
+
+    
+    @Test
+    @WithUserDetails("admin@dareon.org")
+    public void RepoDeleteTest() throws Exception
+    {
+    	long numberOfRepositoriesPriorToDelete = repoService.list().size();
+    	
+		// check if the repository is existing 
+		MvcResult responseRepo = mockMvc.perform(get("/repo/read/2"))
+		        .andReturn();
+		Object repoValue = responseRepo.getModelAndView().getModel().get("repo");
+		Repo rv = (Repo)repoValue;
+		assertNotNull("failure - repo not existing", repoValue);
+		assertEquals("failure - repo not existing", "Test Repo 2", rv.getTitle());
+ 
+		// check for the associated CFP
+		MvcResult responseCFP = mockMvc.perform(get("/callforproposals/read/2"))
+		        .andReturn();
+		Object cfpValue = responseCFP.getModelAndView().getModel().get("callForProposals");
+		CFP cv = (CFP)cfpValue;
+		assertNotNull("failure - CFP not existing", cfpValue);
+		assertEquals("failure - CFP not existing", "Test CFP 2", cv.getTitle());
+		//validate association with the repo
+		assertEquals("failure - CFP not associated with the repo", "Test Repo 2", cv.getRepo().getTitle());
+		
+		
+		// delete repository 2
+		this.mockMvc.perform(get("/repo/deleteconfirmed/2"))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/repo/list"));
+
+		long numberOfRepositoriesAfterDelete = repoService.list().size();
+		
+		//check if the repository was deleted
+		Repo repository = repoService.findByTitle("Test Repo 2");
+		CFP cfp = cFPService.findByTitle("Test CFP 2");
+		//number of repositories should have decreased
+		assertEquals("failure - repositories did not decreased", numberOfRepositoriesPriorToDelete-1, numberOfRepositoriesAfterDelete);
+		//repository should not be found
+		assertNull("failure - repository is still existing", repository);
+		//associated CFP should not be found
+		assertNull("failure - CFP is still existing", cfp);		
+
+    }    
+  
     
 }
-
-
-
-
-
-
-/*    @Test
-@WithUserDetails("admin@dareon.org")
-public void testRepoReadWeb() throws Exception
-{
-	MvcResult response = mockMvc.perform(get("/repo/read/test_repo1"))
-	        .andExpect(status().isOk()).andExpect(view().name("repo/read"))
-	        .andExpect(model().attributeExists("repo"))
-	        .andReturn();
-	Object repoValue = response.getModelAndView().getModel().get("repo");
-	
-	assertTrue(repoValue instanceof Repo);
-	assertNotNull("failure - not null", repoValue);
-	assertEquals("failure - ID attribute not match", ((Repo)repoValue).getId(), 1);
-	assertEquals("failure - Repository attribute not match", ((Repo)repoValue).getTitle(), "test_repo1");
-	assertEquals("failure - Definition attribute not match", ((Repo)repoValue).getDefinition(), "test_definition1");
-	assertEquals("failure - Description attribute not match", ((Repo)repoValue).getDescription(), "test_description1");
-	assertEquals("failure - Institution attribute not match", ((Repo)repoValue).getInstitution(), "test_institution1");
-	assertEquals("failure - Status attribute not match", ((Repo)repoValue).getStatus(), true);
-	assertEquals("failure - Delete Status attribute not match", ((Repo)repoValue).getDeleteStatus(), false);
-	assertEquals("failure - Creator attribute not match", ((Repo)repoValue).getCreator().getEmail(), "s3562412@student.rmit.edu.au");
-	assertEquals("failure - Owner attribute not match", ((Repo)repoValue).getOwner().getEmail(), "admin@dareon.org");		
-}
-*/  
-
