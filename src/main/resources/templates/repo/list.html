@@ -32,7 +32,7 @@
 							<th:block th:each="repo : ${repos}">
 								<tr>
 									<td th:text="${repo.title}" />
-									<td th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
+									<td th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy')}" />
 									<td th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
 									<th:block th:if="${repo.owner} != null">
 										<td th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>

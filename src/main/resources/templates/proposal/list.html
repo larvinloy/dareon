@@ -23,6 +23,7 @@
 								<th style="text-align: center">Title</th>
 								<th style="text-align: center">Created On</th>
 								<th style="text-align: center">Associated CFP</th>
+								<th style="text-align: center">Associated Repository</th>
 								<th style="text-align: center">Action</th>
 							</tr>
 						</thead>
@@ -30,8 +31,9 @@
 							<th:block th:each="proposal : ${proposals}">
 								<tr>
 									<td th:text="${proposal.title}" />
-									<td th:text="${#calendars.format(proposal.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
+									<td th:text="${#calendars.format(proposal.createdOn,'dd/MM/yyyy')}" />
 									<td th:text="${proposal.cfp.title}" />
+									<td th:text="${proposal.cfp.repo.title}" />
 									<td style="text-align: center">
 										<div class="btn-group btn-group-sm">
 											<a

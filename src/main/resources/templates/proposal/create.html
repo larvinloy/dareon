@@ -37,19 +37,19 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Title:</label>
 						<div class="col-md-10">
-							<input type="text" class="form-control" th:field="*{title}" />
+							<input type="text" class="form-control" th:field="*{title}" required="true" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Description:</label>
 						<div class="col-md-10">
-							<textarea class="form-control" rows="5" th:field="*{description}">body</textarea>
+							<textarea class="form-control" rows="5" th:field="*{description}" required="true" >body</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Details:</label>
 						<div class="col-md-10">
-							<textarea class="form-control" rows="5" th:field="*{details}">body</textarea>
+							<textarea class="form-control" rows="5" th:field="*{details}" required="true" >body</textarea>
 						</div>
 					</div>
 

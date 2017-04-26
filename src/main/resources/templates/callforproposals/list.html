@@ -30,7 +30,7 @@
 							<th:block th:each="callForProposals : ${callsForProposals}">
 								<tr>
 									<td th:text="${callForProposals.title}" />
-									<td th:text="${#calendars.format(callForProposals.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
+									<td th:text="${#calendars.format(callForProposals.createdOn,'dd/MM/yyyy')}" />
 									<td th:text="${callForProposals.repo.title}" />
 									<td style="text-align: center">
 										<div class="btn-group btn-group-sm">
