@@ -60,7 +60,7 @@ public class RoUpdatesRepoMetadataWebLayerTests
 
     @Test
     @WithUserDetails("repoowner@rmit.edu.au")
-    public void roCanUpdateRepoMetadataTest() throws Exception
+    public void roCanUpdateOwnedRepoMetadataTest() throws Exception
     {
     	long numberOfRepositories = repoService.list().size();
     	
@@ -100,5 +100,26 @@ public class RoUpdatesRepoMetadataWebLayerTests
 		assertEquals("failure - Creator attribute not match", rv.getCreator().getEmail(), "admin@dareon.org");
 		assertEquals("failure - Owner attribute not match", rv.getOwner().getEmail(), "repoowner@rmit.edu.au");	
     }
+
     
+    @Test
+    @WithUserDetails("repoowner@rmit.edu.au")
+    public void roCannotUpdateRepoHeDoesntOwnMetadataTest() throws Exception
+    {
+    	
+    	this.mockMvc.perform(post("/repo/create")
+		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON)
+                .param("id", "1") //search for repository to edit
+		.param("title", "Test Repository 1")
+		.param("institution", "Test Institution 1")
+		.param("definition", "Modified definition") //modified contents
+		.param("description", "Test Description 1")
+		.param("status", "true")
+		.param("creator", "2")
+    	.param("owner", "2"))
+		.andExpect(status().is4xxClientError());
+ 
+	}
+
 }

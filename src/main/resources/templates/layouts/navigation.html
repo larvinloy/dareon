@@ -6,60 +6,125 @@
 </head>
  
  <body>
-  
-	<div th:fragment="nav-private">  
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Dareon</a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse"
-					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-left">
-						<li><a href="/"><span class="glyphicon glyphicon-home"/> Home</a></li>
-						<li><a href="/repo/list"><span class="glyphicon glyphicon-folder-open"/>  Repositories</a></li>
-						<li><a href="/callforproposals/list"><span class="glyphicon glyphicon-list"/> Call for Proposals</a></li>
-						<li><a href="/proposal/list"><span class="glyphicon glyphicon-file"/> Proposals</a></li>
-					</ul>
-					<div class="navbar-text navbar-right">
-	
-						<form sec:authorize="isAuthenticated()" id="frmlogout"
-							th:action="@{/logout}" method="post" class="form-inline">
-							<span class="glyphicon glyphicon-user"></span> <span
-								sec:authentication="name">Guest</span> | <a href="javascript:{}"
-								onclick="document.getElementById('frmlogout').submit(); return false;">
-								<span class="glyphicon glyphicon-log-out"/> Logout</a>
-						</form>
-					</div>
-				</div>
-			</div>
-		</nav>  
-	</div>  
-	
 
+	<div th:fragment="nav-private"> 
+		<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+		  <div class="container">
+		
+		    <!-- Title -->
+		    <div class="navbar-header pull-left">
+		      <a href="/" class="navbar-brand">Dareon</a>
+		    </div>
+		
+		    <!-- 'Sticky' (non-collapsing) right-side menu item(s) -->
+		    <div class="navbar-header pull-right">
+		      <ul class="nav pull-left">
+		      <!-- <li class="navbar-text pull-left"><span th:text ="${#authentication.getPrincipal().getUser().getFirstName()}"></span></li>  -->
+		
+		        <li class="dropdown pull-right">
+		          <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 5px;" href="#" >
+		          	<span class="glyphicon glyphicon-user" /> <span th:text ="${#authentication.getPrincipal().getUser().getFirstName()}" /> <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <li> <a href="#">My Profile</a> </li>
+					<li> <a href="#">My Dashboard</a> </li>
+					<li class="divider"></li>
+		               <li> <a href="#">Change Password</a> </li>
+		               <li class="divider"></li>
+					<li>
+						<div class="col-md-12">
+							<form sec:authorize="isAuthenticated()" id="frmlogout"
+								th:action="@{/logout}" method="post" class="form-inline">
+								<button class="btn btn-primary btn-block" href="javascript:{}"
+									onclick="document.getElementById('frmlogout').submit(); return false;">
+									<span class="glyphicon glyphicon-log-out"/> Logout
+								</button>
+							</form>
+						</div>
+					</li>
+		          </ul>
+		        </li>
+		      </ul>
+		
+		      <!-- Required bootstrap placeholder for the collapsed menu -->
+		      <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+		      </button>
+		    </div>
+		
+		    <!-- The Collapsing items            navbar-left or navbar-right -->
+		    <div class="collapse navbar-collapse navbar-left">
+		      <!--                      pull-right keeps the drop-down in line -->
+		      <ul class="nav navbar-nav pull-right">
+				<li><a href="/"><span class="glyphicon glyphicon-home"/> Home</a></li>
+				<li><a href="/repo/list"><span class="glyphicon glyphicon-folder-open"/>  Repositories</a></li>
+				<li><a href="/callforproposals/list"><span class="glyphicon glyphicon-list"/> Call for Proposals</a></li>
+				<li><a href="/proposal/list"><span class="glyphicon glyphicon-file"/> Proposals</a></li>
+		      </ul>
+		    </div>
+		    
+		  </div>
+		</nav>
+	</div>
+ 
 
 	<div th:fragment="nav-public">  
 	    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	        <div class="container">
 	      
-	            <!-- Brand and toggle get grouped for better mobile display -->
-	            <div class="navbar-header">
-	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	                    <span class="sr-only">Toggle navigation</span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                </button>
-	                <a class="navbar-brand" href="#">Dareon</a>
-	            </div>
+		    <!-- Title -->
+		    <div class="navbar-header pull-left">
+		      <a href="/" class="navbar-brand">Dareon</a>
+		    </div>
+	            
+		    <!-- 'Sticky' (non-collapsing) right-side menu item(s) -->
+		    <div class="navbar-header pull-right">
+		      <ul class="nav pull-left">
+		      <!-- <li class="navbar-text pull-left"><span th:text ="${#authentication.getPrincipal().getUser().getFirstName()}"></span></li>  -->
+		
+		        <li class="dropdown pull-right">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 5px;">
+						<span class="glyphicon glyphicon-log-in" /><b> Login</b> <span class="caret"></span></a>
+					<ul id="login-dp" class="dropdown-menu">
+						<li>
+						    <h4 class="form-signin-heading">Login via</h4>
+							<div class="row">
+								<a href="https://rapid.test.aaf.edu.au/jwt/authnrequest/research/SAaWlfVa_TEfjcz4TisRFw"> 
+								<img src="https://rapid.test.aaf.edu.au/aaf_service_439x105.png" class="img-responsive" alt="Australia Access Federation" width="100%" /> 
+								</a>
+							</div>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<div class="row">
+								<div class="col-md-12">
+									<form name="f" th:action="@{/login}" method="post" class="form-signin">
+						            	Or through your local account...
+							            <div class="form-group">
+									    	<label for="email" class="sr-only">Username</label>
+									    	<input type="text" id="email" name="email" class="form-control" placeholder="Email Address" required="true" />
+								    	</div>
+									    <div class="form-group">	
+										    <label for="password" class="sr-only">Password</label>
+										    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true" />
+									    </div>
+									    <div class="checkbox">
+									        <label>
+									            <input id="remember-me" name="remember-me" type="checkbox" /> Remember me
+									        </label>
+									    </div>
+									    <button class="btn btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-log-in" /> Login</button>
+									</form>
+								</div>
+							</div>
+						</li>
+					</ul>	
+		        </li>
+		      </ul>
+		
+		      <!-- Required bootstrap placeholder for the collapsed menu -->
+		      <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+		      </button>
+		    </div>
+	            
 	            <!-- Collect the nav links, forms, and other content for toggling -->
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav navbar-right">
@@ -75,51 +140,6 @@
 	                            <li> <a href="#">Sub-menu item 3</a> </li>
 	                        </ul>
 	                    </li>
-			
-						<!--Login menu -->
-						<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> Login</b> <span class="caret"></span></a>
-							<ul id="login-dp" class="dropdown-menu">
-								<li>
-									<div class="row">
-										<div class="col-md-12">
-											<form name="f" th:action="@{/login}" method="post" class="form-signin">
-											    <h3 class="form-signin-heading">Login via</h3>
-												<div class="row">
-												
-													<a href="https://rapid.test.aaf.edu.au/jwt/authnrequest/research/SAaWlfVa_TEfjcz4TisRFw"> 
-													<img src="https://rapid.test.aaf.edu.au/aaf_service_439x105.png" class="img-responsive" alt="Australia Access Federation" width="100%" /> 
-													</a>
-   											
-												</div>
-									            <div class = "row">	
-									            	<hr />
-									            	<p style="text-align: center">Or through your local account...</p>
-										            <div class="form-group">
-												    	<label for="email" class="sr-only">Username</label>
-												    	<input type="text" id="email" name="email" class="form-control" placeholder="Email Address" required="true" />
-											    	</div>
-												    <div class="form-group">	
-													    <label for="password" class="sr-only">Password</label>
-													    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true" />
-												    </div>
-									            </div>	    
-											    <div class="checkbox">
-											        <label>
-											            <input id="remember-me" name="remember-me" type="checkbox" /> Remember me
-											        </label>
-											    </div>
-											    <button class="btn btn-sm btn-primary btn-block" type="submit">Sign in</button>
-											</form>
-	
-										</div>
-										
-									</div>
-								</li>
-						
-							</ul>
-						</li>
-	
 	                </ul>
 	            </div>
 	            <!-- /.navbar-collapse -->
