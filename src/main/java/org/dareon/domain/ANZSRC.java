@@ -1,5 +1,6 @@
 package org.dareon.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -39,6 +41,9 @@ public abstract class ANZSRC
     private ANZSRC parent;
 
     private String name;
+    
+    @ManyToMany(mappedBy = "domains")
+    private Set<Repo> repos = new HashSet<Repo>();
 
     @Transient()
     public boolean isLeaf()

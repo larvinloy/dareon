@@ -1,5 +1,6 @@
 package org.dareon.domain;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.dareon.json.JsonDateSerializer;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -65,6 +68,12 @@ public class Repo
     
     @OneToMany(mappedBy="repo", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Set<CFP> cFPs = new HashSet<CFP>();
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "repos_anzsrcs", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
+	    @JoinColumn(name = "anzsrc_id") })
+    private Collection<ANZSRC> domains;
 
     public Repo()
     {
@@ -82,6 +91,7 @@ public class Repo
 	this.owner = owner;
 	this.status = status;
 	this.cFPs = cFPs;
+	this.domains = domains;
     }
 
     public User getOwner()
@@ -172,12 +182,12 @@ public class Repo
 	this.description = description;
     }
     
-    public Set<CFP> getCFPs()
+    public Set<CFP> getcFPs()
     {
         return cFPs;
     }
 
-    public void setCFPs(Set<CFP> cFP)
+    public void setcFPs(Set<CFP> cFP)
     {
         this.cFPs = cFP;
     }
