@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Inheritance
 @DiscriminatorValue("DIVISION")
-public class Division extends anzsrc
+public class Division extends ANZSRC
 {
 
 }

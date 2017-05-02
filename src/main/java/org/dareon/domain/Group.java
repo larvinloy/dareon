@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @DiscriminatorValue("GROUP")
 @Inheritance
-public class Group extends anzsrc
+public class Group extends ANZSRC
 {
 
 }

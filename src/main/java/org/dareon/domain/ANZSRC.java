@@ -23,7 +23,7 @@ import org.hibernate.annotations.GeneratorType;
 @Entity()
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="LEVEL", discriminatorType=DiscriminatorType.STRING)
-public abstract class anzsrc
+public abstract class ANZSRC
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,11 +32,11 @@ public abstract class anzsrc
     private String code;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<anzsrc> children;
+    private Set<ANZSRC> children;
 
     @ManyToOne()
     @JoinColumn()
-    private anzsrc parent;
+    private ANZSRC parent;
 
     private String name;
 
@@ -52,12 +52,12 @@ public abstract class anzsrc
 	return (parent == null);
     }
 
-    public Set<anzsrc> getChildren()
+    public Set<ANZSRC> getChildren()
     {
 	return children;
     }
 
-    public void setChildren(Set<anzsrc> children)
+    public void setChildren(Set<ANZSRC> children)
     {
 	this.children = children;
     }
@@ -72,12 +72,12 @@ public abstract class anzsrc
 	this.name = name;
     }
 
-    public anzsrc getParent()
+    public ANZSRC getParent()
     {
 	return parent;
     }
 
-    public void setParent(anzsrc parent)
+    public void setParent(ANZSRC parent)
     {
 	this.parent = parent;
     }

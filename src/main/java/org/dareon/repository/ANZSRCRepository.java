@@ -4,16 +4,17 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+import org.dareon.domain.ANZSRC;
 import org.dareon.domain.CFP;
 import org.dareon.domain.Division;
 import org.dareon.domain.Field;
 import org.dareon.domain.Repo;
 
-public interface DivisionRepository extends CrudRepository<Division, Long>
+public interface ANZSRCRepository extends CrudRepository<ANZSRC, Long>
 {
 
-    Division findById(Long id);
-    Division findByName(String name);
-    List<Division> findAllByOrderById();
+    ANZSRC findById(Long id);
+    ANZSRC findByName(String name);
+    List<ANZSRC> findAllByOrderById();
 
 }

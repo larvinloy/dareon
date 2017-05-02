@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Inheritance
 @DiscriminatorValue("FIELD")
-public class Field extends anzsrc
+public class Field extends ANZSRC
 {
 
 }
