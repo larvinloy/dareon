@@ -107,4 +107,15 @@ public abstract class ANZSRC
 	this.code = code;
     }
 
+    public Set<Repo> getRepos()
+    {
+        return repos;
+    }
+
+    public void setRepos(Set<Repo> repos)
+    {
+        this.repos = repos;
+    }
+    
+
 }

@@ -202,6 +202,17 @@ public class Repo
         this.status = status;
     }
     
+    
+    public Collection<ANZSRC> getDomains()
+    {
+        return domains;
+    }
+
+    public void setDomains(Collection<ANZSRC> domains)
+    {
+        this.domains = domains;
+    }
+
     @Override
     public String toString()
     {
