@@ -71,6 +71,12 @@ public class Repo
     
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "repos_proposalreviewers", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
+	    @JoinColumn(name = "user_id") })
+    private Collection<ANZSRC> proposalReviewers;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "repos_anzsrcs", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
 	    @JoinColumn(name = "anzsrc_id") })
     private Collection<ANZSRC> domains;
@@ -211,6 +217,16 @@ public class Repo
     public void setDomains(Collection<ANZSRC> domains)
     {
         this.domains = domains;
+    }
+
+    public Collection<ANZSRC> getProposalReviewers()
+    {
+        return proposalReviewers;
+    }
+
+    public void setProposalReviewers(Collection<ANZSRC> proposalReviewers)
+    {
+        this.proposalReviewers = proposalReviewers;
     }
 
     @Override

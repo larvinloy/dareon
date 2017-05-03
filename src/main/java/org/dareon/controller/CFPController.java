@@ -74,7 +74,7 @@ public class CFPController
 	return "callforproposals/create";
     }
     
-    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#id)")
     @RequestMapping("/callforproposals/create/{id}")
     public String cFPCreateWithPreselectedRepo(Model model,@PathVariable Long id)
     {
@@ -84,7 +84,7 @@ public class CFPController
 	return "callforproposals/create";
     }
 
-    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#cFP)")
     @RequestMapping(value = "/callforproposals/create", method = RequestMethod.POST)
     public String cFPSave(@ModelAttribute CFP cFP)
     {
@@ -98,7 +98,7 @@ public class CFPController
 	return "redirect:read/" + savedCallForProposals.getId();
     }
 
-    @PreAuthorize("hasAuthority('CFP_EDIT_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('CFP_EDIT_PRIVILEGE') AND isCFPOwner(#id)")
     @RequestMapping("/callforproposals/edit/{id}")
     public String cFPEdit(@PathVariable Long id, Model model)
     {

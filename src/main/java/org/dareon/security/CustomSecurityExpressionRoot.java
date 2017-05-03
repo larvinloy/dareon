@@ -8,8 +8,10 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.dareon.domain.CFP;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
+import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
@@ -45,8 +47,9 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
     private Object returnObject;
 
     private RepoService repoService;
+    private CFPService cFPService;
 
-    public CustomSecurityExpressionRoot(Authentication authentication, RepoService repoService)
+    public CustomSecurityExpressionRoot(Authentication authentication, RepoService repoService, CFPService cFPService)
     {
 	if (authentication == null)
 	{
@@ -54,6 +57,7 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 	}
 	this.authentication = authentication;
 	this.repoService = repoService;
+	this.cFPService = cFPService;
     }
 
     @Override
@@ -81,6 +85,25 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
     {
 	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
 	if (repo.getOwner().getEmail().equals(user.getEmail()))
+	    return true;
+	return false;
+    }
+    
+    @Transactional
+    public boolean isRepoOwner(CFP cFP)
+    {
+	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
+	if (cFP.getRepo().getOwner().getEmail().equals(user.getEmail()))
+	    return true;
+	return false;
+    }
+    
+    @Transactional
+    public boolean isCFPOwner(Long id)
+    {
+	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
+	CFP cFP = cFPService.findById(id);
+	if (cFP.getRepo().getOwner().getEmail().equals(user.getEmail()))
 	    return true;
 	return false;
     }

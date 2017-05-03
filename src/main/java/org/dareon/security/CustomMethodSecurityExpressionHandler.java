@@ -1,6 +1,7 @@
 package org.dareon.security;
 
 import org.aopalliance.intercept.MethodInvocation;
+import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
@@ -14,7 +15,10 @@ import org.springframework.stereotype.Component;
 public class CustomMethodSecurityExpressionHandler extends DefaultMethodSecurityExpressionHandler
 {
     @Autowired
-    RepoService repoService;
+    private RepoService repoService;
+    
+    @Autowired
+    private CFPService cFPService;
     
     private final AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
 
@@ -26,7 +30,7 @@ public class CustomMethodSecurityExpressionHandler extends DefaultMethodSecurity
 	    System.out.println("ERROR");
 	// final CustomMethodSecurityExpressionRoot root = new
 	// CustomMethodSecurityExpressionRoot(authentication);
-	final CustomSecurityExpressionRoot root = new CustomSecurityExpressionRoot(authentication,repoService);
+	final CustomSecurityExpressionRoot root = new CustomSecurityExpressionRoot(authentication,repoService,cFPService);
 	root.setPermissionEvaluator(getPermissionEvaluator());
 	root.setTrustResolver(this.trustResolver);
 	root.setRoleHierarchy(getRoleHierarchy());

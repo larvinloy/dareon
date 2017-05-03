@@ -62,6 +62,9 @@ public class User
 
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     private Set<Repo> ownedRepos = new HashSet<Repo>();
+    
+    @ManyToMany(mappedBy = "proposalReviewers")
+    private Set<Repo> reviewedRepos = new HashSet<Repo>();
 
     public User()
     {
@@ -182,8 +185,19 @@ public class User
     {
         this.createdOn = createdOn;
     }
-
     
+    public Set<Repo> getReviewedRepos()
+    {
+        return reviewedRepos;
+    }
+
+
+    public void setReviewedRepos(Set<Repo> reviewedRepos)
+    {
+        this.reviewedRepos = reviewedRepos;
+    }
+
+
     @Override
     public String toString()
     {
