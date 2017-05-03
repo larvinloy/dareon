@@ -70,7 +70,7 @@ public class cfpServiceWebLayerTests
 		.param("institution", "Sample institution for cfp 3")
 		.param("details", "Sample details for cfp 3")
 		.param("description", "Sample description for cfp 3")
-		.param("repo", "1")) // assign to repository: Test Repo 1
+		.param("repo", "2")) // assign to repository: Test Repo 1
      	//check if redirected to CFP read page
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("read/3"))
@@ -94,7 +94,7 @@ public class cfpServiceWebLayerTests
 		assertEquals("failure - Title attribute not match", "sample cfp 3", cv.getTitle());
 		assertEquals("failure - Details attribute not match", "Sample details for cfp 3", cv.getDetails());
 		assertEquals("failure - Description attribute not match", "Sample description for cfp 3", cv.getDescription());
-		assertEquals("failure - Repository attribute not match", "Test Repo 1", cv.getRepo().getTitle());
+		assertEquals("failure - Repository attribute not match", "Test Repo 2", cv.getRepo().getTitle());
     }
 
 
