@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+			
+ 	  	<title>Data Reviews Online</title>
+ 	  	
+ 	  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+				
+	  	<link rel="stylesheet" href="external/bootstrap/css/bootstrap.min.css" 
+				th:href="@{/external/bootstrap/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="css/custom.css" th:href="@{/css/custom.css}" />
+		
+		<style>
+		html {
+		  position: relative;
+		  min-height: 100%;
+		}
+		body {
+		  /* Margin bottom by footer height */
+		  margin-bottom: 60px;
+		  padding-top: 50px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+		}
+		.jumbotron {
+		  background-color: #535559;
+		  color: #fff;
+		} 
+		</style>		
+
+
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Main Section -->
+  
+            <div class="col-lg-12">
+            
+				 <div class="jumbotron text-center" id="jumbo-error">
+				    <h1><span class="glyphicon glyphicon-exclamation-sign" /></h1> 
+				    <h2>Access denied!</h2>
+				    <h4>Error 403</h4>
+				  
+                  <div class="row text-center">
+	                <h5>
+	                You are not authorized to access this resource. If you think otherwise, please contact your system administrator.
+	                </h5>
+                </div>
+               
+                <br />
+                <div class="row text-center">
+					<a href="/" class="btn btn-default">Back to Home Page</a>
+					<a onClick="history.go(-1);return true;" class="btn btn-default">Back to Previous Page</a>
+                </div> 
+                
+                </div>               
+            </div>
+ 
+     </div>
+    <!-- /.container -->	
+ 	
+
+</body>
+
+
+</html>
