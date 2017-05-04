@@ -22,6 +22,16 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GeneratorType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+
 @Entity()
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="LEVEL", discriminatorType=DiscriminatorType.STRING)
@@ -34,16 +44,26 @@ public abstract class ANZSRC
     private String code;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonBackReference
     private Set<ANZSRC> children;
 
     @ManyToOne()
     @JoinColumn()
+//    @JsonManagedReference
+    @JsonIgnore
     private ANZSRC parent;
 
     private String name;
     
     @ManyToMany(mappedBy = "domains")
     private Set<Repo> repos = new HashSet<Repo>();
+    
+//    public ANZSRC(String code, String name)
+//    {
+//	super();
+//	this.code = code;
+//	this.name = name;
+//    }
 
     @Transient()
     public boolean isLeaf()

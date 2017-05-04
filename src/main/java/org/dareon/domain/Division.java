@@ -11,4 +11,16 @@ import javax.persistence.Table;
 public class Division extends ANZSRC
 {
 
+    public Division()
+    {
+	
+    }
+    public Division(String code, String name)
+    {
+	this.setCode(code);
+	this.setName(name);
+	// TODO Auto-generated constructor stub
+    }
+
+   
 }

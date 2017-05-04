@@ -1,5 +1,7 @@
 package org.dareon.service;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.util.List;
 
 import org.dareon.domain.ANZSRC;
@@ -34,7 +36,16 @@ public class ANZSRCService
 
     public List<ANZSRC> list()
     {
-	return aNZSRCRepository.findAllByOrderById();
+	List<ANZSRC> data = aNZSRCRepository.findAllByOrderById();
+	
+
+	for(int i = 0 ; i < data.size();i++)
+	{
+	    if(data.get(i).isLeaf())
+		data.remove(i);
+	}
+	return data;
+
     }
 
 

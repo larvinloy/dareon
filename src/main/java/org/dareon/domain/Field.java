@@ -11,4 +11,16 @@ import javax.persistence.Table;
 public class Field extends ANZSRC
 {
 
+    public Field()
+    {
+	
+    }
+    
+    public Field(String code, String name)
+    {
+	this.setCode(code);
+	this.setName(name);
+	// TODO Auto-generated constructor stub
+    }
+
 }

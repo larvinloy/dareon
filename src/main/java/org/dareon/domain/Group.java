@@ -11,4 +11,16 @@ import javax.persistence.Table;
 public class Group extends ANZSRC
 {
 
+    public Group()
+    {
+	
+    }
+    
+    public Group(String code, String name)
+    {
+	this.setCode(code);
+	this.setName(name);
+	// TODO Auto-generated constructor stub
+    }
+
 }

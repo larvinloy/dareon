@@ -1,12 +1,19 @@
 package org.dareon.dataloader;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.dareon.domain.ANZSRC;
+import org.dareon.domain.Division;
+import org.dareon.domain.Group;
 import org.dareon.domain.Privilege;
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
+import org.dareon.repository.ANZSRCRepository;
 import org.dareon.repository.CFPRepository;
 import org.dareon.repository.PrivilegeRepository;
 import org.dareon.repository.ProposalRepository;
@@ -42,6 +49,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     private PrivilegeRepository privilegeRepository;
+    
+    @Autowired
+    private ANZSRCRepository aNZSRCRepository;
 
     // API
 
@@ -108,6 +118,20 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	initUsersRepos.initRepos();
 	initUsersRepos.initCFPs();
 	initUsersRepos.initProposals();
+	
+	// WARNING!
+	Division div1 = new Division("RMIT02","Advanced Materials");
+	Division div2 = new Division("RMIT08", "Urban Futures");
+	Group gr1 = new Group("RMIT","RMIT Groups");
+	gr1.setChildren(new HashSet<ANZSRC>(Arrays.asList(div1,div2)));
+	div1.setParent(gr1);
+	div2.setParent(gr1);
+	aNZSRCRepository.save(div1);
+	aNZSRCRepository.save(div2);
+	aNZSRCRepository.save(gr1);
+	
+	
+	//
 
 	alreadySetup = true;
     }
