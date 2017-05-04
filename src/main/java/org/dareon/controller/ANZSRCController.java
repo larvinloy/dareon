@@ -47,7 +47,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@RestController
+@Controller
 public class ANZSRCController
 {
 
@@ -92,8 +92,8 @@ public class ANZSRCController
 	    obj = new JSONObject();
 	}
 	model.addAttribute("message", arr.toString());
-//	return "treeview/sample-checkable";
-	return arr.toString();
+	return "repo/treeview";
+//	return arr.toString();
 //	
 //	List<User> users = userService.list();
 //	users.remove((userService.findByEmail(auth.getName())));
