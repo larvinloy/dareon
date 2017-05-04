@@ -1,7 +1,5 @@
 package org.dareon.service;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.util.List;
 
 import org.dareon.domain.Group;
