@@ -7,13 +7,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.dareon.domain.ANZSRC;
-import org.dareon.domain.Division;
-import org.dareon.domain.Group;
+import org.dareon.domain.FOR;
+import org.dareon.domain.Level;
 import org.dareon.domain.Privilege;
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
-import org.dareon.repository.ANZSRCRepository;
+import org.dareon.repository.FORRepository;
+import org.dareon.repository.LevelRepository;
 import org.dareon.repository.CFPRepository;
 import org.dareon.repository.PrivilegeRepository;
 import org.dareon.repository.ProposalRepository;
@@ -51,7 +51,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private PrivilegeRepository privilegeRepository;
     
     @Autowired
-    private ANZSRCRepository aNZSRCRepository;
+    private FORRepository fORRepository;
+    
+    @Autowired
+    private LevelRepository levelRepository;
 
     // API
 
@@ -120,77 +123,34 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	initUsersRepos.initProposals();
 	
 	// WARNING!
-	Division div11 = new Division("RMIT02","Advanced Materials");
-	Division div12 = new Division("RMIT08", "Urban Futures");
 	
-	Division div21 = new Division("RMIT02","Advanced Materials");
-	Division div22 = new Division("RMIT08", "Urban Futures");
-
-	Division div31 = new Division("RMIT02","Advanced Materials");
-	Division div32 = new Division("RMIT08", "Urban Futures");
-
-	Division div41 = new Division("RMIT02","Advanced Materials");
-	Division div42 = new Division("RMIT08", "Urban Futures");
-
-	Division div51 = new Division("RMIT02","Advanced Materials");
-	Division div52 = new Division("RMIT08", "Urban Futures");
-
-	Division div61 = new Division("RMIT02","Advanced Materials");
-	Division div62 = new Division("RMIT08", "Urban Futures");
-
-	Group gr1 = new Group("RMIT1","RMIT Groups 1");
-	Group gr2 = new Group("RMIT2","RMIT Groups 2");
-	Group gr3 = new Group("RMIT3","RMIT Groups 3");
-	Group gr4 = new Group("RMIT4","RMIT Groups 4");
-	Group gr5 = new Group("RMIT5","RMIT Groups 5");
-	Group gr6 = new Group("RMIT6","RMIT Groups 6");
-
+	Level group = new Level("GROUP");
+	levelRepository.save(group);
 	
-	gr1.setChildren(new HashSet<ANZSRC>(Arrays.asList(div11,div12)));
-	div11.setParent(gr1);
-	div12.setParent(gr1);
-	aNZSRCRepository.save(div11);
-	aNZSRCRepository.save(div12);
-	aNZSRCRepository.save(gr1);
+	Level division = new Level("DIVISION");
+	levelRepository.save(division);
 	
-	gr2.setChildren(new HashSet<ANZSRC>(Arrays.asList(div21,div22)));
-	div21.setParent(gr2);
-	div22.setParent(gr2);
-	aNZSRCRepository.save(div21);
-	aNZSRCRepository.save(div22);
-	aNZSRCRepository.save(gr2);
-	
-	gr3.setChildren(new HashSet<ANZSRC>(Arrays.asList(div31,div32)));
-	div31.setParent(gr3);
-	div32.setParent(gr3);
-	aNZSRCRepository.save(div31);
-	aNZSRCRepository.save(div32);
-	aNZSRCRepository.save(gr3);	
-	
-	gr4.setChildren(new HashSet<ANZSRC>(Arrays.asList(div41,div42)));
-	div41.setParent(gr4);
-	div42.setParent(gr4);
-	aNZSRCRepository.save(div41);
-	aNZSRCRepository.save(div42);
-	aNZSRCRepository.save(gr4);
-	
-	gr5.setChildren(new HashSet<ANZSRC>(Arrays.asList(div51,div52)));
-	div51.setParent(gr5);
-	div52.setParent(gr5);
-	aNZSRCRepository.save(div51);
-	aNZSRCRepository.save(div52);
-	aNZSRCRepository.save(gr5);
-	
-	gr6.setChildren(new HashSet<ANZSRC>(Arrays.asList(div61,div62)));
-	div61.setParent(gr6);
-	div62.setParent(gr6);
-	aNZSRCRepository.save(div61);
-	aNZSRCRepository.save(div62);
-	aNZSRCRepository.save(gr6);
+	Level field = new Level("FIELD");
+	levelRepository.save(field);
 	
 	
-	
-	
+	FOR for1 = new FOR("RMIT02","Advanced Materials",levelRepository.findByName("DIVISION"));
+	FOR for2 = new FOR("RMIT08", "Urban Futures",levelRepository.findByName("DIVISION"));
+	FOR for3 = new FOR("RMIT","RMIT Group",levelRepository.findByName("GROUP"));
+	FOR for4 = new FOR("RMITG","Another RMIT Group",levelRepository.findByName("GROUP"));
+	FOR for5 = new FOR("RMITD","Another RMIT DIVISION",levelRepository.findByName("DIVISION"));
+	FOR for6 = new FOR("RMITF","Another RMIT FILED",levelRepository.findByName("FIELD"));
+	for3.setChildren(new HashSet<FOR>(Arrays.asList(for1,for2)));
+	for1.setParent(for3);
+	for2.setParent(for3);
+	for6.setParent(for5);
+	for5.setParent(for4);
+	fORRepository.save(for3);
+	fORRepository.save(for1);
+	fORRepository.save(for2);
+	fORRepository.save(for4);
+	fORRepository.save(for5);
+	fORRepository.save(for6);
 	
 	
 	//

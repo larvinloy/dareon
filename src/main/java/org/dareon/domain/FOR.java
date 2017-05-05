@@ -18,7 +18,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GeneratorType;
 
@@ -33,9 +35,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //        property = "id")
 
 @Entity()
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="LEVEL", discriminatorType=DiscriminatorType.STRING)
-public abstract class ANZSRC
+@Table(name = "fors")
+public class FOR
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,27 +44,37 @@ public abstract class ANZSRC
 
     private String code;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    
 //    @JsonBackReference
-    private Set<ANZSRC> children;
-
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    private Set<FOR> children;
+    
     @ManyToOne()
-    @JoinColumn()
-//    @JsonManagedReference
+    @JoinColumn(name="level_id")
+    private Level level;
+
+    //    @JsonManagedReference
     @JsonIgnore
-    private ANZSRC parent;
+    @ManyToOne
+    private FOR parent;
 
     private String name;
     
     @ManyToMany(mappedBy = "domains")
     private Set<Repo> repos = new HashSet<Repo>();
     
-//    public ANZSRC(String code, String name)
-//    {
-//	super();
-//	this.code = code;
-//	this.name = name;
-//    }
+    
+    public FOR()
+    {
+	
+    }
+    public FOR(String code, String name, Level level)
+    {
+	super();
+	this.code = code;
+	this.name = name;
+	this.level = level;
+    }
 
     @Transient()
     public boolean isLeaf()
@@ -77,12 +88,12 @@ public abstract class ANZSRC
 	return (parent == null);
     }
 
-    public Set<ANZSRC> getChildren()
+    public Set<FOR> getChildren()
     {
 	return children;
     }
 
-    public void setChildren(Set<ANZSRC> children)
+    public void setChildren(Set<FOR> children)
     {
 	this.children = children;
     }
@@ -97,12 +108,12 @@ public abstract class ANZSRC
 	this.name = name;
     }
 
-    public ANZSRC getParent()
+    public FOR getParent()
     {
 	return parent;
     }
 
-    public void setParent(ANZSRC parent)
+    public void setParent(FOR parent)
     {
 	this.parent = parent;
     }
@@ -135,6 +146,16 @@ public abstract class ANZSRC
     public void setRepos(Set<Repo> repos)
     {
         this.repos = repos;
+    }
+
+    public Level getLevel()
+    {
+        return level;
+    }
+
+    public void setLevel(Level level)
+    {
+        this.level = level;
     }
     
 

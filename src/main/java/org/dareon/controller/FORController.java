@@ -9,14 +9,13 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import org.dareon.domain.ANZSRC;
+import org.dareon.domain.FOR;
 import org.dareon.domain.CFP;
-import org.dareon.domain.Group;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
-import org.dareon.service.ANZSRCService;
+import org.dareon.service.FORService;
 import org.dareon.service.CFPService;
-import org.dareon.service.GroupService;
+import org.dareon.service.LevelService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
@@ -47,12 +46,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Controller
-public class ANZSRCController
+@RestController
+public class FORController
 {
 
-    private ANZSRCService aNZSRCService;
-    private GroupService groupService;
+    private FORService fORService;
+    private LevelService levelService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -64,11 +63,11 @@ public class ANZSRCController
     }
 
     @Autowired
-    public ANZSRCController(ANZSRCService aNZSRCService,GroupService groupService)
+    public FORController(FORService fORService,LevelService levelService)
     {
 	super();
-	this.aNZSRCService = aNZSRCService;
-	this.groupService = groupService;
+	this.fORService = fORService;
+	this.levelService = levelService;
     }
 
 //    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
@@ -81,7 +80,7 @@ public class ANZSRCController
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
-	for(ANZSRC a : groupService.list())
+	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
@@ -92,8 +91,8 @@ public class ANZSRCController
 	    obj = new JSONObject();
 	}
 	model.addAttribute("message", arr.toString());
-	return "repo/treeview";
-//	return arr.toString();
+//	return "treeview/sample-checkable";
+	return arr.toString();
 //	
 //	List<User> users = userService.list();
 //	users.remove((userService.findByEmail(auth.getName())));
@@ -102,11 +101,11 @@ public class ANZSRCController
 	
     }
     
-    public JSONObject addChildren(JSONObject obj, Set<ANZSRC> children)
+    public JSONObject addChildren(JSONObject obj, Set<FOR> children)
     {
 	System.out.println(obj);
 	JSONArray ch = new JSONArray();
-	for(ANZSRC a : children)
+	for(FOR a : children)
 	{
 	    JSONObject o = new JSONObject();
 	    o.put("text", a.getCode() + " | " + a.getName());
