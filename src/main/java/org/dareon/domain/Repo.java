@@ -73,13 +73,13 @@ public class Repo
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "repos_proposalreviewers", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
 	    @JoinColumn(name = "user_id") })
-    private Collection<ANZSRC> proposalReviewers;
+    private Collection<FOR> proposalReviewers;
     
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(name = "repos_anzsrcs", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
-	    @JoinColumn(name = "anzsrc_id") })
-    private Collection<ANZSRC> domains;
+    @JoinTable(name = "repos_fors", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
+	    @JoinColumn(name = "for_id") })
+    private Collection<FOR> domains;
 
     public Repo()
     {
@@ -209,22 +209,22 @@ public class Repo
     }
     
     
-    public Collection<ANZSRC> getDomains()
+    public Collection<FOR> getDomains()
     {
         return domains;
     }
 
-    public void setDomains(Collection<ANZSRC> domains)
+    public void setDomains(Collection<FOR> domains)
     {
         this.domains = domains;
     }
 
-    public Collection<ANZSRC> getProposalReviewers()
+    public Collection<FOR> getProposalReviewers()
     {
         return proposalReviewers;
     }
 
-    public void setProposalReviewers(Collection<ANZSRC> proposalReviewers)
+    public void setProposalReviewers(Collection<FOR> proposalReviewers)
     {
         this.proposalReviewers = proposalReviewers;
     }
