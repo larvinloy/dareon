@@ -15,6 +15,7 @@ import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
+import org.dareon.wrappers.RepoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
@@ -94,6 +95,16 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
     {
 	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
 	if (cFP.getRepo().getOwner().getEmail().equals(user.getEmail()))
+	    return true;
+	return false;
+    }
+    
+    @Transactional
+    public boolean isRepoOwner(RepoForm repoForm)
+    {
+	Repo repo = repoForm.getRepo();
+	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
+	if (repo.getOwner().getEmail().equals(user.getEmail()))
 	    return true;
 	return false;
     }

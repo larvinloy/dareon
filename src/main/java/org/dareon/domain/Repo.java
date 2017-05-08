@@ -80,6 +80,7 @@ public class Repo
     @JoinTable(name = "repos_fors", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
 	    @JoinColumn(name = "for_id") })
     private Collection<FOR> domains;
+    
 
     public Repo()
     {
@@ -228,6 +229,7 @@ public class Repo
     {
         this.proposalReviewers = proposalReviewers;
     }
+
 
     @Override
     public String toString()
