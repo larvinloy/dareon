@@ -137,20 +137,53 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	FOR for1 = new FOR("RMIT02","Advanced Materials",levelRepository.findByName("DIVISION"));
 	FOR for2 = new FOR("RMIT08", "Urban Futures",levelRepository.findByName("DIVISION"));
 	FOR for3 = new FOR("RMIT","RMIT Group",levelRepository.findByName("GROUP"));
-	FOR for4 = new FOR("RMITG","Another RMIT Group",levelRepository.findByName("GROUP"));
+	FOR for4 = new FOR("RMITG","Another RMIT GROUP",levelRepository.findByName("GROUP"));
 	FOR for5 = new FOR("RMITD","Another RMIT DIVISION",levelRepository.findByName("DIVISION"));
-	FOR for6 = new FOR("RMITF","Another RMIT FILED",levelRepository.findByName("FIELD"));
+	FOR for6 = new FOR("RMITF","Another RMIT FIELD",levelRepository.findByName("FIELD"));
 	for3.setChildren(new HashSet<FOR>(Arrays.asList(for1,for2)));
 	for1.setParent(for3);
 	for2.setParent(for3);
 	for6.setParent(for5);
 	for5.setParent(for4);
+	
+	FOR for7 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for8 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for10 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for11 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for12 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for13 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for14 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for15 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for16 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for17 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for18 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for19 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for9 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	
+	
+	fORRepository.save(for7);
+	fORRepository.save(for8);
+	fORRepository.save(for9);
+	fORRepository.save(for10);
+	fORRepository.save(for11);
+	fORRepository.save(for12);
+	fORRepository.save(for13);
+	fORRepository.save(for14);
+	fORRepository.save(for15);
+	fORRepository.save(for16);
+	fORRepository.save(for17);
+	fORRepository.save(for18);
+	fORRepository.save(for19);
+	
 	fORRepository.save(for3);
 	fORRepository.save(for1);
 	fORRepository.save(for2);
 	fORRepository.save(for4);
 	fORRepository.save(for5);
 	fORRepository.save(for6);
+	
+	
+	
 	
 	
 	//

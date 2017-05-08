@@ -38,7 +38,7 @@
         </div>
         <div class="col-sm-4">
           <h2>Tree</h2>
-          <div id="treeview-selectable" class=""></div>
+          <div id="treeview-selectable" class="pre-scrollable"></div>
         </div>
         <div class="col-sm-4">
           <h2>Events</h2>
@@ -74,10 +74,10 @@
   			data: defaultData,
               multiSelect: true,
               onNodeSelected: function(event, node) {
-                $('#selectable-output').prepend('<p>' + node.text + ' was selected</p>');
+                $('#selectable-output').prepend('<p>' + node.text + ' id: ' + node.id + ' was selected</p>');
               },
               onNodeUnselected: function (event, node) {
-                $('#selectable-output').prepend('<p>' + node.text + ' was unselected</p>');
+                $('#selectable-output').prepend('<p>' + node.text + ' id: ' + node.id + ' was unselected</p>');
               }
             });
           };
