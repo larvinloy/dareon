@@ -102,7 +102,7 @@ public class RepoController
 	}
 	model.addAttribute("message", arr.toString());
 	model.addAttribute("domains", new String());
-	
+	model.addAttribute("pre", new String());
 	return "repo/create";
     }
 
@@ -141,9 +141,36 @@ public class RepoController
 	model.addAttribute("repo", new Repo());
 	List<User> users = userService.list();
 	users.remove((userService.findByEmail(auth.getName())));
-	model.addAttribute("repo", repoService.findById(id));
+	RepoForm repoForm = new RepoForm();
+	repoForm.setRepo(repoService.findById(id));
+	
 	users.add(0,userService.findByEmail(auth.getName()));
 	model.addAttribute("users",users);
+	
+	JSONObject obj = new JSONObject();
+	JSONArray arr = new JSONArray();
+//	return aNZSRCService.list();
+	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+	{
+	    obj.put("text", a.getCode() + " | " + a.getName());
+	    obj.put("id", a.getId());
+	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
+	    if(a.getChildren().size() > 0)
+		obj = JsonFORTree.addChildren(obj, a.getChildren());
+	    arr.put(obj);
+	    obj = new JSONObject();
+	}
+	model.addAttribute("message", arr.toString());
+	
+	
+	JSONArray pre = new JSONArray();
+	for(FOR a : repoService.findById(id).getDomains())
+	{
+	    pre.put(a.getId().toString());
+	}
+	repoForm.setPre(pre.toString());
+	model.addAttribute("repoForm", repoForm);
+	System.out.println(pre);
 	return "repo/create";
     }
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-	<head th:replace="layouts/fragments :: head-all"></head>
+<head th:replace="layouts/fragments :: head-all"></head>
 
 <body>
 
@@ -75,64 +75,63 @@
 								th:field="*{status}" />
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label" id="label-create">Classifications:</label>
-						<div class="col-md-10">
-							<input type="hidden" id="selectable-output-id"
-								class="form-control" th:field="${repoForm.domains}" />
-							<textarea id="selectable-output-text" class="form-control" readonly="readonly" wrap="virtual" />
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a data-toggle="collapse" href="#collapse1">Add/Remove
-												Classifications</a>
-										</h4>
-									</div>
-									
-									<!-- TREEVIEW PANEL -->
-									<div id="collapse1" class="panel-collapse collapse">
-										<div class="panel-body">
-											<!-- TREEVIEW SEARCH -->
-											<div class="col-sm-4">
-												<h4>Search:</h4>
-												<div class="form-group">
-													<label for="input-select-node" class="sr-only">Search
-														Tree:</label> <input type="input" class="form-control"
-														id="input-select-node"
-														placeholder="Input classification..." />
-												</div>
-												<div class="form-group">
-													<button type="button"
-														class="btn btn-primary btn-block select-node"
-														id="btn-select-node">Select Node</button>
-												</div>
-												<div class="form-group">
-													<button type="button"
-														class="btn btn-primary btn-block select-node"
-														id="btn-unselect-node">Unselect Node</button>
-												</div>
-												<div class="form-group">
-													<button type="button"
-														class="btn btn-primary btn-block select-node"
-														id="btn-toggle-selected">Toggle Node</button>
-												</div>
-											</div>
-											<!-- TREEVIEW SELECT -->
-											<div class="col-md-8">
-												<h4>Classifications:</h4>
-												<div id="treeview-selectable" class="pre-scrollable" />
-											</div>
-										</div>
-									</div>
-									<!-- END OF TREEVIEW PANEL -->
+
+
+
+
+
+					<div class="row">
+						<hr />
+						<h3>Classification:</h3>
+						<div class="col-sm-4">
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" id="label-create">Added:</label>
+								<div>
+									<input id="selectable-output-id" class="form-control"
+										type="hidden" th:field="${repoForm.domains}" />
+									<textarea id="selectable-output-text" style="max-width: 90%"
+										class="col-sm-4 form-control" disabled="true" />
+
+
 								</div>
 							</div>
-
-
 						</div>
+						<div class="col-sm-4">
+							<label class="control-label" id="label-create">Search
+								Classification Tree:</label>
+							<div class="form-group">
+								<label for="input-select-node" class="sr-only">Search
+									Tree:</label> <input type="input" class="form-control"
+									id="input-select-node" placeholder="Search" />
+							</div>
+							<div class="form-group">
+								<button type="button"
+									class="btn btn-default btn-success select-node"
+									id="btn-select-node">Add</button>
+
+								<button type="button"
+									class="btn btn-default btn-danger select-node"
+									id="btn-unselect-node">Remove</button>
+
+								<button type="button"
+									class="btn btn-default btn-primary select-node"
+									id="btn-toggle-selected">Toggle</button>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<label class="control-label" id="label-create">Classification
+								Tree:</label>
+							<div id="treeview-selectable" class="pre-scrollable"></div>
+						</div>
+
 					</div>
+
+
 				</div>
+
+
+
 
 				<div class="form-group">
 					<div class="col-sm-4">
@@ -152,8 +151,7 @@
 			</form>
 
 		</div>
-
-
+		<div class="col-lg-12"></div>
 	</div>
 
 
@@ -163,70 +161,92 @@
 	<footer th:replace="layouts/fragments :: footer"></footer>
 
 
-  	<script th:inline="javascript">
+	<script th:inline="javascript">
 
   		$(function() {
   			
         var defaultData = [[${message}]];
+        
+        
 
 
         var initSelectableTree = function() {
             return $('#treeview-selectable').treeview({
               levels: 1,
-          	  data: defaultData,
+  			data: defaultData,
               multiSelect: true,
-
               onNodeSelected: function(event, node) {
-            	  //Add node id
             	  $('#selectable-output-id').val(function(i, v) {
             		    var arr = v.split(',');
             		    arr.push(node.id);
             		    return arr.join(',').replace(/(^,)|(,$)/g, "");
+            		    // or actually easier in this case:
+            		    // return v ? v + ',' + value : value;
             		});
-				//Add node text
+              //  $('#selectable-output').val($('#selectable-output').val() +  node.text + ' id: ' + node.id + ', ');
+     
+              
             	  $('#selectable-output-text').val(function(i, v) {
-          		    var arr = v.split(', ');
+          		    var arr = v.split(',');
           		    arr.push(node.text);
-          		    return arr.join(', ').replace(/(^, )|(,$)/g, "");
-
+          		    return arr.join(',').replace(/(^,)|(,$)/g, "");
+          		    // or actually easier in this case:
+          		    // return v ? v + ',' + value : value;
           		});
               
+              
+              
               },
-				//Remove node id
               onNodeUnselected: function (event, node) {
                 $('#selectable-output-id').val(function(i, v) {
-              		var arr = v.split(',');
-              		arr.splice($.inArray(node.id, arr),1);
-            		return arr.join(',')        
+                    return $.grep(v.split(','), function(v) { 
+                        return v != node.id; 
+                    }).join(',');        
                 });
-				//Remove node text
-          	  	$('#selectable-output-text').val(function(i, v) {
-          		var arr = v.split(', ');
-          		arr.splice($.inArray(node.text, arr),1);
-        		    return arr.join(', ')       
-                });       
+                
+                $('#selectable-output-text').val(function(i, v) {
+                    return $.grep(v.split(','), function(v) { 
+                        return v != node.text; 
+                    }).join(',');        
+                });
+                
+                
               }
             });
           };
           var $selectableTree = initSelectableTree();
 
           var findSelectableNodes = function() {
-            return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: true, exactMatch: false } ]);
+            return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: false, exactMatch: false } ]);
           };
           var selectableNodes = findSelectableNodes();
- 
+
+          //$selectableTree.treeview('selectNode', [9]);
+          var pre = $.parseJSON([[${repoForm.pre}]]);
+          //<![CDATA[
+                     
+           $selectableTree.treeview('expandAll');
+          for(i=0;i<pre.length;i++) 
+          {
+        	  var element = $('li[data-for="'+pre[i]+'"]');  
+        	  $selectableTree.treeview('selectNode', [element.data('nodeid')]);
+          }
+          $selectableTree.treeview('collapseAll');
+        	 
+          
+        //]]>
+          //var test = $selectableTree.treeview('search', [pre[0]]);
+          //$selectableTree.treeview('selectNode', test);
+         // var test = $selectableTree.treeview('search', ['RMIT08']);
+          //$selectableTree.treeview('selectNode', test);
            // Select/unselect/toggle nodes
           $('#input-select-node').on('keyup', function (e) {
             selectableNodes = findSelectableNodes();
             $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
+            var element = document.getElementsByClassName('search-result');
+            document.getElementById('treeview-selectable').scrollTop = element[0].offsetTop;
           });
 
-          $('#btn-clear-node').on('click', function (e) {
-              $selectableTree.treeview('clearSearch');
-              $('#input-select-node').val('');
-            });
-           
-           
           $('#btn-select-node.select-node').on('click', function (e) {
             $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
           });
@@ -238,9 +258,12 @@
           $('#btn-toggle-selected.select-node').on('click', function (e) {
             $selectableTree.treeview('toggleNodeSelected', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
           });
-          
-		//Not yet working
-	      // Check/uncheck all
+
+
+
+   
+
+          // Check/uncheck all
           $('#btn-check-all').on('click', function (e) {
             $checkableTree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
           });
@@ -251,6 +274,8 @@
 
   		});
   	</script>
+
+
 
 </body>
 </html>

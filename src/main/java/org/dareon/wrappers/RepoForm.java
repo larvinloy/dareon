@@ -14,6 +14,7 @@ public class RepoForm
 {
     private Repo repo;
     private String domains;
+    private String pre;
   
     public RepoForm(FORService fORService)
     {
@@ -31,6 +32,16 @@ public class RepoForm
 	// TODO Auto-generated constructor stub
     }
     
+    public String getPre()
+    {
+        return pre;
+    }
+
+    public void setPre(String pre)
+    {
+        this.pre = pre;
+    }
+
     public Repo getRepo()
     {
         return repo;

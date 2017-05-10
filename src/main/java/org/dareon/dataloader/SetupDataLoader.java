@@ -147,18 +147,18 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	for5.setParent(for4);
 	
 	FOR for7 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for8 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for10 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for11 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for12 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for13 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for14 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for15 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for16 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for17 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for18 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for19 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for9 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for8 = new FOR("RMIT4","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for10 = new FOR("RMIT5","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for11 = new FOR("RMIT6","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for12 = new FOR("RMIT7","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for13 = new FOR("RMIT8","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for14 = new FOR("RMIT9","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for15 = new FOR("RMIT10","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for16 = new FOR("RMIT11","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for17 = new FOR("RMIT12","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for18 = new FOR("RMIT13","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for19 = new FOR("RMIT14","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for9 = new FOR("RMIT15","GROUP 3",levelRepository.findByName("GROUP"));
 	
 	
 	fORRepository.save(for7);

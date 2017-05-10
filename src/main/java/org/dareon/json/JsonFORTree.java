@@ -25,7 +25,7 @@ public class JsonFORTree
 	{
 	    JSONObject fORChildObject = new JSONObject();
 	    fORChildObject.put("text", a.getCode() + " | " + a.getName());
-	    fORChildObject.put("id", a.getId());
+	    fORChildObject.put("id", a.getId().toString());
 	    fORChildObject.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
 	    if(a.getChildren().size() > 0)
 		addChildren(fORChildObject, a.getChildren());
