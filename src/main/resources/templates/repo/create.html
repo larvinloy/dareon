@@ -225,13 +225,17 @@
           var pre = $.parseJSON([[${repoForm.pre}]]);
           //<![CDATA[
                      
-           $selectableTree.treeview('expandAll');
-          for(i=0;i<pre.length;i++) 
-          {
-        	  var myElement = $('li[data-for="'+pre[i]+'"]');  
-        	  $selectableTree.treeview('selectNode', [myElement.data('nodeid')]);
-          }
-          $selectableTree.treeview('collapseAll');
+          if(pre != null)
+        	  {
+        	  $selectableTree.treeview('expandAll');
+              for(i=0;i<pre.length;i++) 
+              {
+            	  var myElement = $('li[data-for="'+pre[i]+'"]');  
+            	  $selectableTree.treeview('selectNode', [myElement.data('nodeid')]);
+              }
+              $selectableTree.treeview('collapseAll');
+        	  }
+           
         	 
           
         //]]>
