@@ -90,7 +90,7 @@
 								<div>
 									<input id="selectable-output-id" class="form-control"
 										type="hidden" th:field="${repoForm.domains}" />
-									<textarea id="selectable-output-text" style="max-width: 90%"
+									<textarea id="selectable-output-text"
 										class="col-sm-4 form-control" disabled="true" />
 
 
@@ -228,8 +228,8 @@
            $selectableTree.treeview('expandAll');
           for(i=0;i<pre.length;i++) 
           {
-        	  var element = $('li[data-for="'+pre[i]+'"]');  
-        	  $selectableTree.treeview('selectNode', [element.data('nodeid')]);
+        	  var myElement = $('li[data-for="'+pre[i]+'"]');  
+        	  $selectableTree.treeview('selectNode', [myElement.data('nodeid')]);
           }
           $selectableTree.treeview('collapseAll');
         	 
@@ -243,8 +243,8 @@
           $('#input-select-node').on('keyup', function (e) {
             selectableNodes = findSelectableNodes();
             $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
-            var element = document.getElementsByClassName('search-result');
-            document.getElementById('treeview-selectable').scrollTop = element[0].offsetTop;
+            var x = document.getElementsByClassName('search-result');
+            document.getElementById('treeview-selectable').scrollTop = x[0].offsetTop;
           });
 
           $('#btn-select-node.select-node').on('click', function (e) {
