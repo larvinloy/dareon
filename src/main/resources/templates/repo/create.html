@@ -79,13 +79,15 @@
 						<label class="col-sm-2 control-label" id="label-create">Classifications:</label>
 						<div class="col-md-10 container">
 							<div class="child col-md-5 pre-scrollable panel panel-default"
-								style="min-height: 200px; max-height: 500px; padding:2%">
+								style="min-height: 200px; max-height: 500px; padding: 2%">
 
 
 								<table id="selectable-tags" class="table">
 									<tr>
-										
-										<th colspan="2" style="background:whitesmoke;border-bottom:solid;border-color:grey">Added Classifications:</th>
+
+										<th colspan="2"
+											style="background: whitesmoke; border-bottom: solid; border-color: grey">
+											Classifications Added:</th>
 									</tr>
 								</table>
 
@@ -95,15 +97,7 @@
 							<div class="child col-md-7 panel panel-default"
 								style="min-height: 500px; max-height: 500px; background-color: lightslategray">
 
-								<!-- PANEL BUTTON -->
 
-
-
-
-								<!-- TREEVIEW PANEL -->
-
-
-								<!-- TREEVIEW SEARCH -->
 
 								<div>
 
@@ -117,32 +111,40 @@
 
 
 								<!-- TREEVIEW SELECT -->
-								<div style="padding: 2%">
+								<div style="padding: 2%; height: 100%">
 
 
-									<div class="form-group">
-										<label for="input-select-node" class="sr-only" /> <input
-											type="input" class="form-control" id="input-select-node"
-											placeholder="Search for classification..." />
+									<div class="form-group" style="text-align: center">
+									<a class="col-md-12">
+									
+									<input class="inputlg" id="input-select-node"
+											placeholder="Search for classification..." /> 
+									
+									
+											 <span id="badge-search-size" class="badge" style="background:black;">-</span>
+									</a>
+										
 
-
-										<div class="btn-group">
+										<div class="btn-group centre">
 											<button type="button" class="btn btn-default select-node"
 												id="btn-select-node">
-												<span class="glyphicon glyphicon-backward" /> Add
+												<span class="glyphicon glyphicon-ok-sign" /> Add
 												highlighted
 											</button>
 											<button type="button" class="btn btn-default select-node"
 												id="btn-unselect-node">
-												Remove highlighted <span class="glyphicon glyphicon-forward" />
+												Remove highlighted <span
+													class="glyphicon glyphicon-remove-sign" />
 											</button>
 
 										</div>
-
+										<div>
+											<br />
+										</div>
 										<!-- TREE VIEW -->
-										<div id="treeview-selectable" class="pre-scrollable"
-											style="overflow-x: scroll"></div>
-
+										<div id="treeview-selectable"
+											style="text-align: left; overflow-x: scroll; height: 390px"></div>
+										<!-- END OF TREEVIEW PANEL -->
 
 									</div>
 
@@ -150,7 +152,7 @@
 
 								</div>
 
-								<!-- END OF TREEVIEW PANEL -->
+
 
 
 
@@ -264,12 +266,13 @@
             });
           };
           var $selectableTree = initSelectableTree();
-
+        
           var findSelectableNodes = function() {
             return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: true, exactMatch: false } ]);
           };
           var selectableNodes = findSelectableNodes();
-
+          
+          $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
           //$selectableTree.treeview('selectNode', [9]);
           var pre = $.parseJSON([[${repoForm.pre}]]);
           //<![CDATA[
@@ -292,7 +295,18 @@
             selectableNodes = findSelectableNodes();
             $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
             var x = document.getElementsByClassName('search-result');
-            document.getElementById('treeview-selectable').scrollTop = x[0].offsetTop;
+            var parent = document.getElementById('treeview-selectable');
+            
+            parent.scrollTop = x[0].offsetTop - parent.offsetTop;
+            
+            $('#badge-search-size').text(selectableNodes.length+ " found");
+         
+           // $('#select-count').val('disabled', !(selectableNodes.length >= 1));
+           
+            
+            	
+            
+            
           });
 
           $('#btn-select-node.select-node').on('click', function (e) {
