@@ -82,7 +82,7 @@
 								style="min-height: 200px; max-height: 500px; padding:2%">
 
 
-								<table id="selectable-tags" class="table table-bordered" >
+								<table id="selectable-tags" class="table">
 									<tr>
 										
 										<th colspan="2" style="background:whitesmoke;border-bottom:solid;border-color:grey">Added Classifications:</th>
@@ -223,13 +223,15 @@
             	  var table = document.getElementById("selectable-tags");
             	  var row=table.insertRow(table.rows.length);
             	  row.setAttribute("id","tag-"+node.id);
-            	  row.setAttribute("style","border:solid;border-color:grey")
+            	  row.setAttribute("style","background:#c1dff1")
                   var cell1=row.insertCell(0);
-            	  cell1.setAttribute("style","max-width:95%;min-width:95%")
+            	  cell1.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thin;border-left:solid thin;border-color:#6bb3dd");
                   var t1=document.createElement("span");
                       t1.innerHTML = node.text;
                       cell1.appendChild(t1);
+                      
                   var cell2=row.insertCell(1);
+                  cell2.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thin;border-right:solid thin;border-color:#6bb3dd");
                   var t2=document.createElement("button");
                       t2.setAttribute("class","btn btn-default btn-xs glyphicon glyphicon-remove");
                       t2.onclick = function(){
