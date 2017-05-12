@@ -2,7 +2,9 @@ package org.dareon.json;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.dareon.domain.FOR;
@@ -17,9 +19,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 public class JsonFORTree
 {
 
-    public static JSONObject addChildren(JSONObject fOR, Set<FOR> fORChildren)
+    public static JSONObject addChildren(JSONObject fOR, List<FOR> fORChildren)
     {
-	System.out.println(fOR);
+//	System.out.println(fOR);
 	JSONArray fORChildrenArray = new JSONArray();
 	for(FOR a : fORChildren)
 	{
@@ -29,7 +31,7 @@ public class JsonFORTree
 	    fORChildObject.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
 	    if(a.getChildren().size() > 0)
 		addChildren(fORChildObject, a.getChildren());
-	    System.out.println(fORChildObject);
+//	    System.out.println(fORChildObject);
 	    fORChildrenArray.put(fORChildObject);
 	}
 	

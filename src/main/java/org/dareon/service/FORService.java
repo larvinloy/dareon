@@ -37,12 +37,6 @@ public class FORService
     {
 	List<FOR> data = fORRepository.findAllByOrderById();
 	
-
-	for(int i = 0 ; i < data.size();i++)
-	{
-	    if(data.get(i).isLeaf())
-		data.remove(i);
-	}
 	return data;
 
     }
@@ -51,12 +45,6 @@ public class FORService
     {
 	List<FOR> data = fORRepository.findAllByLevel(level);
 	
-
-	for(int i = 0 ; i < data.size();i++)
-	{
-	    if(data.get(i).isLeaf())
-		data.remove(i);
-	}
 	return data;
 
     }

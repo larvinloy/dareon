@@ -662,7 +662,11 @@
 	Tree.prototype.buildStyle = function () {
 
 		var style = '.node-' + this.elementId + '{';
-
+		
+		style += 'white-space: nowrap;';
+		style += 'display: inline-block;';
+		style += 'min-width: 1000px;';
+		
 		if (this.options.color) {
 			style += 'color:' + this.options.color + ';';
 		}
@@ -689,8 +693,8 @@
 	};
 
 	Tree.prototype.template = {
-		list: '<ul class="list-group"></ul>',
-		item: '<li class="list-group-item"></li>',
+		list: '<ul class="list-group .d-inline-block" style="white-space:no-wrap;"></ul>',
+		item: '<li class="list-group-item .d-inline-block"></li>',
 		indent: '<span class="indent"></span>',
 		icon: '<span class="icon"></span>',
 		link: '<a href="#" style="color:inherit;"></a>',

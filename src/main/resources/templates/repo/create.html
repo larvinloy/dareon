@@ -77,57 +77,84 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Classifications:</label>
-						<div class="col-md-10">
-							
-							<!-- PANEL BUTTON -->
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									
-									
-									<!-- TREEVIEW PANEL -->
-								
-										<div class="panel-body">
-											<!-- TREEVIEW SEARCH -->
-											
-											<div class="col-sm-5">
-												
-												<input id="selectable-output-id" type="hidden"
-													class="form-control" th:field="${repoForm.domains}" />
-												<textarea id="selectable-output-text" class="form-control" rows="12" readonly="readonly" wrap="virtual" />
-											</div>
-											
+						<div class="col-md-10 container">
+							<div class="child col-md-5 pre-scrollable panel panel-default"
+								style="min-height: 200px; max-height: 500px; padding:2%">
 
-											<!-- TREEVIEW SELECT -->
-											<div class="col-md-6">
-											
-												
-												<div class="form-group">
-													<label for="input-select-node" class="sr-only" />
-														<input type="input" class="form-control"
-														id="input-select-node"
-														placeholder="Search for classification..." />
-														
-														<div class="btn-group">
-															<button type="button"
-																class="btn btn-default select-node"
-																id="btn-select-node"><span class="glyphicon glyphicon-backward" /></button>
-															<button type="button"
-																class="btn btn-default select-node"
-																id="btn-unselect-node"><span class="glyphicon glyphicon-forward" /></button>
-														</div>
-														<!-- TREE VIEW -->
-												<div id="treeview-selectable" class="pre-scrollable" />
 
-												</div>
-											
-												
-											</div>
-										</div>
-									
-									<!-- END OF TREEVIEW PANEL -->
-								</div>
+								<table id="selectable-tags" class="table table-bordered" >
+									<tr>
+										
+										<th colspan="2" style="background:whitesmoke;border-bottom:solid;border-color:grey">Added Classifications:</th>
+									</tr>
+								</table>
+
+
+
 							</div>
+							<div class="child col-md-7 panel panel-default"
+								style="min-height: 500px; max-height: 500px; background-color: lightslategray">
 
+								<!-- PANEL BUTTON -->
+
+
+
+
+								<!-- TREEVIEW PANEL -->
+
+
+								<!-- TREEVIEW SEARCH -->
+
+								<div>
+
+									<input id="selectable-output-id" type="hidden"
+										class="form-control" th:field="${repoForm.domains}" />
+
+
+
+
+								</div>
+
+
+								<!-- TREEVIEW SELECT -->
+								<div style="padding: 2%">
+
+
+									<div class="form-group">
+										<label for="input-select-node" class="sr-only" /> <input
+											type="input" class="form-control" id="input-select-node"
+											placeholder="Search for classification..." />
+
+
+										<div class="btn-group">
+											<button type="button" class="btn btn-default select-node"
+												id="btn-select-node">
+												<span class="glyphicon glyphicon-backward" /> Add
+												highlighted
+											</button>
+											<button type="button" class="btn btn-default select-node"
+												id="btn-unselect-node">
+												Remove highlighted <span class="glyphicon glyphicon-forward" />
+											</button>
+
+										</div>
+
+										<!-- TREE VIEW -->
+										<div id="treeview-selectable" class="pre-scrollable"
+											style="overflow-x: scroll"></div>
+
+
+									</div>
+
+
+
+								</div>
+
+								<!-- END OF TREEVIEW PANEL -->
+
+
+
+							</div>
 
 						</div>
 					</div>
@@ -193,7 +220,24 @@
           		    // return v ? v + ',' + value : value;
           		});
               
-              
+            	  var table = document.getElementById("selectable-tags");
+            	  var row=table.insertRow(table.rows.length);
+            	  row.setAttribute("id","tag-"+node.id);
+            	  row.setAttribute("style","border:solid;border-color:grey")
+                  var cell1=row.insertCell(0);
+            	  cell1.setAttribute("style","max-width:95%;min-width:95%")
+                  var t1=document.createElement("span");
+                      t1.innerHTML = node.text;
+                      cell1.appendChild(t1);
+                  var cell2=row.insertCell(1);
+                  var t2=document.createElement("button");
+                      t2.setAttribute("class","btn btn-default btn-xs glyphicon glyphicon-remove");
+                      t2.onclick = function(){
+                    	  $selectableTree.treeview('unselectNode', [node.nodeId]);
+                    	  var row = document.getElementById("tag-"+node.id);
+                    	    row.parentNode.removeChild(row);
+                      }
+                      cell2.appendChild(t2);
               
               },
               onNodeUnselected: function (event, node) {
@@ -209,14 +253,18 @@
                     }).join(',');        
                 });
                 
-                
+                $selectableTree.treeview('unselectNode', [node.nodeId]);
+          	  var row = document.getElementById("tag-"+node.id);
+          	    row.parentNode.removeChild(row);
+          	    
+          	    
               }
             });
           };
           var $selectableTree = initSelectableTree();
 
           var findSelectableNodes = function() {
-            return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: false, exactMatch: false } ]);
+            return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: true, exactMatch: false } ]);
           };
           var selectableNodes = findSelectableNodes();
 
@@ -238,11 +286,6 @@
         	 
           
         //]]>
-          //var test = $selectableTree.treeview('search', [pre[0]]);
-          //$selectableTree.treeview('selectNode', test);
-         // var test = $selectableTree.treeview('search', ['RMIT08']);
-          //$selectableTree.treeview('selectNode', test);
-           // Select/unselect/toggle nodes
           $('#input-select-node').on('keyup', function (e) {
             selectableNodes = findSelectableNodes();
             $('.select-node').prop('disabled', !(selectableNodes.length >= 1));

@@ -124,43 +124,66 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	
 	// WARNING!
 	
-	Level group = new Level("GROUP");
-	levelRepository.save(group);
-	
 	Level division = new Level("DIVISION");
 	levelRepository.save(division);
+	
+	Level group = new Level("GROUP");
+	levelRepository.save(group);
 	
 	Level field = new Level("FIELD");
 	levelRepository.save(field);
 	
 	
-	FOR for1 = new FOR("RMIT02","Advanced Materials",levelRepository.findByName("DIVISION"));
-	FOR for2 = new FOR("RMIT08", "Urban Futures",levelRepository.findByName("DIVISION"));
-	FOR for3 = new FOR("RMIT","RMIT Group",levelRepository.findByName("GROUP"));
-	FOR for4 = new FOR("RMITG","Another RMIT GROUP",levelRepository.findByName("GROUP"));
-	FOR for5 = new FOR("RMITD","Another RMIT DIVISION",levelRepository.findByName("DIVISION"));
-	FOR for6 = new FOR("RMITF","Another RMIT FIELD",levelRepository.findByName("FIELD"));
-	for3.setChildren(new HashSet<FOR>(Arrays.asList(for1,for2)));
-	for1.setParent(for3);
-	for2.setParent(for3);
-	for6.setParent(for5);
-	for5.setParent(for4);
-	
-	FOR for7 = new FOR("RMIT3","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for8 = new FOR("RMIT4","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for10 = new FOR("RMIT5","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for11 = new FOR("RMIT6","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for12 = new FOR("RMIT7","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for13 = new FOR("RMIT8","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for14 = new FOR("RMIT9","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for15 = new FOR("RMIT10","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for16 = new FOR("RMIT11","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for17 = new FOR("RMIT12","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for18 = new FOR("RMIT13","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for19 = new FOR("RMIT14","GROUP 3",levelRepository.findByName("GROUP"));
-	FOR for9 = new FOR("RMIT15","GROUP 3",levelRepository.findByName("GROUP"));
+	FOR for1 = new FOR("01","MATHEMATICAL SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for2 = new FOR("0101", "PURE MATHEMATICS",levelRepository.findByName("GROUP"));
+	FOR for3 = new FOR("0102","APPLIED MATHEMATICS",levelRepository.findByName("GROUP"));
+	FOR for4 = new FOR("0103","NUMERICAL AND COMPUTATIONAL MATHEMATICS",levelRepository.findByName("GROUP"));
+	FOR for5 = new FOR("0104","STATISTICS",levelRepository.findByName("GROUP"));
+	FOR for6 = new FOR("0105","MATHEMATICAL PHYSICS",levelRepository.findByName("GROUP"));
+	FOR for7 = new FOR("0199","OTHER MATHEMATICAL SCIENCES",levelRepository.findByName("GROUP"));
+	for1.setChildren( Arrays.asList(for1,for2,for3,for4,for5,for6,for7));
+	for2.setParent(for1);
+	for3.setParent(for1);
+	for4.setParent(for1);
+	for5.setParent(for1);
+	for6.setParent(for1);
+	for7.setParent(for1);
 	
 	
+	
+	
+	FOR for8 = new FOR("010501","Algebraic Structures in Mathematical Physics",levelRepository.findByName("FIELD"));
+	FOR for9 = new FOR("010502","Integrable Systems (Classical and Quantum)",levelRepository.findByName("FIELD"));
+	FOR for10 = new FOR("010503","Mathematical Aspects of Classical Mechanics, Quantum Mechanics and Quantum Information Theory",levelRepository.findByName("FIELD"));
+	FOR for11 = new FOR("010504","Mathematical Aspects of General Relativity",levelRepository.findByName("FIELD"));
+	FOR for12 = new FOR("010506","Statistical Mechanics, Physical Combinatorics and Mathematical Aspects of Condensed Matter ",levelRepository.findByName("FIELD"));
+	FOR for13 = new FOR("010599","Mathematical Physics not elsewhere classified ",levelRepository.findByName("FIELD"));
+	
+	for6.setChildren(Arrays.asList(for8,for9,for10,for11,for12,for13));
+	for8.setParent(for6);
+	for9.setParent(for6);
+	for10.setParent(for6);
+	for11.setParent(for6);
+	for12.setParent(for6);
+	for13.setParent(for6);
+	
+	
+	FOR for14 = new FOR("02","PHYSICAL SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for15 = new FOR("03","CHEMICAL SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for16 = new FOR("04","EARTH SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for17 = new FOR("05","ENVIRONMENTAL SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for18 = new FOR("06","BIOLOGICAL SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for19 = new FOR("07","AGRICULTURAL AND VETERINARY SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for20 = new FOR("08","INFORMATION AND COMPUTING SCIENCES",levelRepository.findByName("DIVISION"));
+	FOR for21 = new FOR("09","ENGINEERING",levelRepository.findByName("DIVISION"));
+	FOR for22 = new FOR("10","TECHNOLOGY",levelRepository.findByName("DIVISION"));
+	
+	fORRepository.save(for1);
+	fORRepository.save(for2);
+	fORRepository.save(for3);
+	fORRepository.save(for4);
+	fORRepository.save(for5);
+	fORRepository.save(for6);
 	fORRepository.save(for7);
 	fORRepository.save(for8);
 	fORRepository.save(for9);
@@ -174,13 +197,24 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	fORRepository.save(for17);
 	fORRepository.save(for18);
 	fORRepository.save(for19);
+	fORRepository.save(for20);
+	fORRepository.save(for21);
+	fORRepository.save(for22);
+//
+//	fORRepository.save(for8);
+//	fORRepository.save(for9);
+//	fORRepository.save(for10);
+//	fORRepository.save(for11);
+//	fORRepository.save(for12);
+//	fORRepository.save(for13);
+//	fORRepository.save(for14);
+//	fORRepository.save(for15);
+//	fORRepository.save(for16);
+//	fORRepository.save(for17);
+//	fORRepository.save(for18);
+//	fORRepository.save(for19);
 	
-	fORRepository.save(for3);
-	fORRepository.save(for1);
-	fORRepository.save(for2);
-	fORRepository.save(for4);
-	fORRepository.save(for5);
-	fORRepository.save(for6);
+	
 	
 	
 	

@@ -1,6 +1,8 @@
 package org.dareon.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -47,7 +49,7 @@ public class FOR
     
 //    @JsonBackReference
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-    private Set<FOR> children;
+    private List<FOR> children;
     
     @ManyToOne()
     @JoinColumn(name="level_id")
@@ -56,6 +58,7 @@ public class FOR
     //    @JsonManagedReference
     @JsonIgnore
     @ManyToOne
+    @JoinColumn(name="parent_id")
     private FOR parent;
 
     private String name;
@@ -88,12 +91,12 @@ public class FOR
 	return (parent == null);
     }
 
-    public Set<FOR> getChildren()
+    public List<FOR> getChildren()
     {
 	return children;
     }
 
-    public void setChildren(Set<FOR> children)
+    public void setChildren(List<FOR> children)
     {
 	this.children = children;
     }

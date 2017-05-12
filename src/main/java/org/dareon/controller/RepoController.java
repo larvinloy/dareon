@@ -90,8 +90,10 @@ public class RepoController
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
+//	System.out.println(fORService.listByLevel(levelService.findById((long)1)));
 	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
 	{
+	    System.out.println(a.getCode());
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
 	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
