@@ -77,86 +77,86 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Classifications:</label>
-						<div class="col-md-10 container">
+						<div class="col-md-10 ">
+
+							<!-- CLASSIFICATIONS ADDED -->
 							<div class="child col-md-5 pre-scrollable panel panel-default"
 								style="min-height: 200px; max-height: 500px; padding: 2%">
 
-
 								<table id="selectable-tags" class="table">
 									<tr>
-
 										<th colspan="2"
-											style="background: whitesmoke; border-bottom: solid; border-color: grey">
+											style="background: whitesmoke; border: solid thick; border-color: whitesmoke">
 											Classifications Added:</th>
 									</tr>
 								</table>
-
-
-
 							</div>
-							<div class="child col-md-7 panel panel-default"
+							
+							<!-- TREE VIEW PANEL -->
+							<div class="child col-md-7 panel panel-default" 
 								style="min-height: 500px; max-height: 500px; background-color: lightslategray">
 
-
-
-								<div>
-
-									<input id="selectable-output-id" type="hidden"
+								<!-- HIDDEN FIELD -->
+								<input id="selectable-output-id" type="hidden"
 										class="form-control" th:field="${repoForm.domains}" />
-
-
-
-
-								</div>
-
-
-								<!-- TREEVIEW SELECT -->
+								
 								<div style="padding: 2%; height: 100%">
-
-
 									<div class="form-group" style="text-align: center">
-									<a class="col-md-12">
-									
-									<input class="inputlg" id="input-select-node"
-											placeholder="Search for classification..." /> 
-									
-									
-											 <span id="badge-search-size" class="badge" style="background:black;">-</span>
-									</a>
+
+										<div class="input-group">
+											<input type="text" id="input-select-node"
+												class="form-control"
+												placeholder="Search for classification..." /> <span
+												class="input-group-addon" ><span
+												id="badge-search-size" class="badge"
+												style="background: black;"><div>
+														<span class="glyphicon glyphicon-search"></span>
+													</div> </span></span>
+										</div>
+										<p>
+										<div class="btn-group btn-group-justified">
+										<div class="btn-group">
+											<button type="button" class="btn btn-default select-node"
+												id="btn-select-node" >
+												<span class="glyphicon glyphicon-ok" /> Add
+												
+											</button>
+										</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-default select-node"
+												id="btn-unselect-node" >
+												<span class="glyphicon glyphicon-remove" /> Remove 
+											</button>
+											</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-default"
+												id="btn-clear-search" data-toggle="tooltip" >
+												<span class="glyphicon glyphicon-refresh" /> Clear
+											</button>
+											</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-default"
+												id="btn-expand-all" >
+												<span class="glyphicon glyphicon-plus" /> Expand
+											</button>
+											</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-default"
+												id="btn-collapse-all" >
+												<span class="glyphicon glyphicon-minus" /> Collapse
+											</button>
+											</div>
+										</div>
+										</p>
 										
-
-										<div class="btn-group centre">
-											<button type="button" class="btn btn-default select-node"
-												id="btn-select-node">
-												<span class="glyphicon glyphicon-ok-sign" /> Add
-												highlighted
-											</button>
-											<button type="button" class="btn btn-default select-node"
-												id="btn-unselect-node">
-												Remove highlighted <span
-													class="glyphicon glyphicon-remove-sign" />
-											</button>
-
-										</div>
-										<div>
-											<br />
-										</div>
-										<!-- TREE VIEW -->
+										
 										<div id="treeview-selectable"
-											style="text-align: left; overflow-x: scroll; height: 390px"></div>
-										<!-- END OF TREEVIEW PANEL -->
-
+											style="text-align: left; overflow-x: scroll; height: 390px">
+										</div>
 									</div>
-
-
-
 								</div>
-
-
-
-
-
 							</div>
+							<!-- END OF TREEVIEW PANEL -->
 
 						</div>
 					</div>
@@ -182,9 +182,6 @@
 		</div>
 	</div>
 
-
-
-
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
 
@@ -194,32 +191,23 @@
   		$(function() {
   			
         var defaultData = [[${message}]];
-        
-        
-
 
         var initSelectableTree = function() {
             return $('#treeview-selectable').treeview({
               levels: 1,
-  			data: defaultData,
+  			  data: defaultData,
               multiSelect: true,
               onNodeSelected: function(event, node) {
             	  $('#selectable-output-id').val(function(i, v) {
             		    var arr = v.split(',');
             		    arr.push(node.id);
             		    return arr.join(',').replace(/(^,)|(,$)/g, "");
-            		    // or actually easier in this case:
-            		    // return v ? v + ',' + value : value;
             		});
-              //  $('#selectable-output').val($('#selectable-output').val() +  node.text + ' id: ' + node.id + ', ');
-     
               
             	  $('#selectable-output-text').val(function(i, v) {
           		    var arr = v.split(',');
           		    arr.push(node.text);
           		    return arr.join(',').replace(/(^,)|(,$)/g, "");
-          		    // or actually easier in this case:
-          		    // return v ? v + ',' + value : value;
           		});
               
             	  var table = document.getElementById("selectable-tags");
@@ -227,13 +215,13 @@
             	  row.setAttribute("id","tag-"+node.id);
             	  row.setAttribute("style","background:#c1dff1")
                   var cell1=row.insertCell(0);
-            	  cell1.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thin;border-left:solid thin;border-color:#6bb3dd");
+            	  cell1.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thick;border-left:solid thick;border-color:whitesmoke");
                   var t1=document.createElement("span");
                       t1.innerHTML = node.text;
                       cell1.appendChild(t1);
                       
                   var cell2=row.insertCell(1);
-                  cell2.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thin;border-right:solid thin;border-color:#6bb3dd");
+                  cell2.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thick;border-right:solid thick;border-color:whitesmoke");
                   var t2=document.createElement("button");
                       t2.setAttribute("class","btn btn-default btn-xs glyphicon glyphicon-remove");
                       t2.onclick = function(){
@@ -268,15 +256,16 @@
           var $selectableTree = initSelectableTree();
         
           var findSelectableNodes = function() {
-            return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: true, exactMatch: false } ]);
+            return $selectableTree.treeview('search', [ $('#input-select-node').val(), 
+            	{ ignoreCase: true, revealResults: true, exactMatch: false } ]);
           };
-          var selectableNodes = findSelectableNodes();
           
-          $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
-          //$selectableTree.treeview('selectNode', [9]);
+          var selectableNodes = findSelectableNodes();
+                  
+
           var pre = $.parseJSON([[${repoForm.pre}]]);
+
           //<![CDATA[
-                     
           if(pre != null)
         	  {
         	  $selectableTree.treeview('expandAll');
@@ -287,52 +276,50 @@
               }
               $selectableTree.treeview('collapseAll');
         	  }
-           
-        	 
-          
-        //]]>
-          $('#input-select-node').on('keyup', function (e) {
-            selectableNodes = findSelectableNodes();
-            $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
-            var x = document.getElementsByClassName('search-result');
-            var parent = document.getElementById('treeview-selectable');
-            
-            parent.scrollTop = x[0].offsetTop - parent.offsetTop;
-            
-            $('#badge-search-size').text(selectableNodes.length+ " found");
+           //]]>
          
-           // $('#select-count').val('disabled', !(selectableNodes.length >= 1));
-           
-            
-            	
-            
-            
-          });
+          
+          
+			//Process search input key events          
+            $('#input-select-node').on('keyup', function (e) {
 
+            	selectableNodes = findSelectableNodes();
+	            $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
+	            if(!(selectableNodes.length >= 1))
+	            	$('#badge-search-size').text("0 found");
+	            else   
+	            	$('#badge-search-size').text(selectableNodes.length + " found");
+	            var x = document.getElementsByClassName('search-result');
+	            var parent = document.getElementById('treeview-selectable');
+	            parent.scrollTop = x[0].offsetTop - parent.offsetTop;
+	
+			});
+
+			//Select | Unselect All
           $('#btn-select-node.select-node').on('click', function (e) {
-            $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
+            $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') } ]);
           });
 
           $('#btn-unselect-node.select-node').on('click', function (e) {
             $selectableTree.treeview('unselectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
           });
-
-          $('#btn-toggle-selected.select-node').on('click', function (e) {
-            $selectableTree.treeview('toggleNodeSelected', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
+ 
+          $('#btn-clear-search').on('click', function (e) {
+        	  $selectableTree.treeview('clearSearch');
+              $('#input-select-node').val('');
+              $('#badge-search-size').text("0 found");
+          });
+          
+          // Expand | Collapse all
+          $('#btn-expand-all').on('click', function (e) {
+            var levels = $('#select-expand-all-levels').val();
+            $selectableTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
           });
 
-
-
-   
-
-          // Check/uncheck all
-          $('#btn-check-all').on('click', function (e) {
-            $checkableTree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
+          $('#btn-collapse-all').on('click', function (e) {
+        	  $selectableTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
           });
-
-          $('#btn-uncheck-all').on('click', function (e) {
-            $checkableTree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
-          });
+ 
 
   		});
   	</script>
