@@ -71,14 +71,15 @@ public class authorizeDeauthorizeROWebLayerTest
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-                .param("id", "1") //search for repository to edit
-		.param("title", "Test Repository 1")
-		.param("institution", "Test Institution 1")
-		.param("definition", "Test definition 1")
-		.param("description", "Test Description 1")
-		.param("status", "true")
-		.param("creator", "2")
-    	.param("owner", "3")) //Authorize "repoowner@rmit.edu.au" to manage repo
+                .param("repo.id", "1") //search for repository to edit
+		.param("repo.title", "Test Repository 1")
+		.param("repo.institution", "Test Institution 1")
+		.param("repo.definition", "Test definition 1")
+		.param("repo.description", "Test Description 1")
+		.param("repo.status", "true")
+		.param("repo.creator", "2")
+    	.param("repo.owner", "3") //Authorize "repoowner@rmit.edu.au" to manage repo
+    	.param("repoForm.domains", "{3,4}")) 
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("read/1"));
 	
@@ -108,14 +109,15 @@ public class authorizeDeauthorizeROWebLayerTest
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-                .param("id", "1") //search for repository to edit
-		.param("title", "Test Repository 1")
-		.param("institution", "Test Institution 1")
-		.param("definition", "Test definition 1")
-		.param("description", "Test Description 1")
-		.param("status", "true")
-		.param("creator", "2") //Systems Administrator ID
-    	.param("owner", "2")) //De-authorize repoowner@rmit.edu.au, change owner to admin@dareon.org
+                .param("repo.id", "1") //search for repository to edit
+		.param("repo.title", "Test Repository 1")
+		.param("repo.institution", "Test Institution 1")
+		.param("repo.definition", "Test definition 1")
+		.param("repo.description", "Test Description 1")
+		.param("repo.status", "true")
+		.param("repo.creator", "2") //Systems Administrator ID
+    	.param("repo.owner", "2") //De-authorize repoowner@rmit.edu.au, change owner to admin@dareon.org
+    	.param("repoForm.domains", "{3,4}")) 
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("read/1"));
  

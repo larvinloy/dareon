@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -70,15 +71,18 @@ public class repoServiceWebLayerTests
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-		.param("title", "sample repository 3")
-		.param("institution", "Sample institution for repository 3")
-		.param("definition", "Sample definition for repository 3")
-		.param("description", "Sample description for repository 3")
-		.param("owner", "3"))
+		.param("repo.title", "sample repository 3")
+		.param("repo.institution", "Sample institution for repository 3")
+		.param("repo.description", "Sample description for repository 3")
+		.param("repo.definition", "Sample definition for repository 3")
+		.param("repo.owner", "3")
+		.param("repoForm.domains", "{3,4}"))
      	//check if redirected to repository details page
 		.andExpect(status().is3xxRedirection())
-		.andExpect(redirectedUrl("read/3"));
+		.andExpect(redirectedUrl("read/3"))
+		.andDo(print());
 
+    	
     	long numberOfRepositoriesAfterCreate = repoService.list().size();
     	
 		// check if the repository was created 
@@ -104,6 +108,8 @@ public class repoServiceWebLayerTests
 		assertEquals("failure - Owner attribute not match", "repoowner@rmit.edu.au", rv.getOwner().getEmail());	
 		//The Creator should be automatically created with the name of the currently logged-in user
 		assertEquals("failure - Creator attribute not match", "admin@dareon.org", rv.getCreator().getEmail());    
+
+    
     }
 
 
@@ -116,14 +122,15 @@ public class repoServiceWebLayerTests
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-                .param("id", "1") //search for repository to edit
-		.param("title", "Test Repo 1")
-		.param("institution", "Test Institution 1")
-		.param("definition", "Modified definition") //modified contents
-		.param("description", "Test Description 1")
-		.param("status", "true")
-		.param("creator", "2")
-    	.param("owner", "2"))
+                .param("repo.id", "1") //search for repository to edit
+		.param("repo.title", "Test Repo 1")
+		.param("repo.institution", "Test Institution 1")
+		.param("repo.definition", "Modified definition") //modified contents
+		.param("repo.description", "Test Description 1")
+		.param("repo.status", "true")
+		.param("repo.creator", "2")
+    	.param("repo.owner", "2")
+    	.param("repoForm.domains", "{3,4}"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("read/1"));
 
@@ -193,6 +200,6 @@ public class repoServiceWebLayerTests
 		assertNull("failure - CFP is still existing", cfp);		
 
     }    
-  
+ 
     
 }

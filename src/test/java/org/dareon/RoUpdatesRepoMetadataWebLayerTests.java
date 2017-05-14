@@ -70,14 +70,15 @@ public class RoUpdatesRepoMetadataWebLayerTests
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-                .param("id", "2") //search for repository to edit
-		.param("title", "Test Repository 2")
-		.param("institution", "Test Institution 2")
-		.param("definition", "Modified definition") //modified contents
-		.param("description", "Test Description 2")
-		.param("status", "true")
-		.param("creator", "2")
-    	.param("owner", "3"))
+                .param("repo.id", "2") //search for repository to edit
+		.param("repo.title", "Test Repository 2")
+		.param("repo.institution", "Test Institution 2")
+		.param("repo.definition", "Modified definition") //modified contents
+		.param("repo.description", "Test Description 2")
+		.param("repo.status", "true")
+		.param("repo.creator", "2")
+    	.param("repo.owner", "3")
+    	.param("repoForm.domains", "{3,4}"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("read/2"));
  
@@ -113,14 +114,15 @@ public class RoUpdatesRepoMetadataWebLayerTests
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON)
-                .param("id", "1") //search for repository to edit
-		.param("title", "Test Repository 1")
-		.param("institution", "Test Institution 1")
-		.param("definition", "Modified definition") //modified contents
-		.param("description", "Test Description 1")
-		.param("status", "true")
-		.param("creator", "2")
-    	.param("owner", "2"))
+                .param("repo.id", "1") //search for repository to edit
+		.param("repo.title", "Test Repository 1")
+		.param("repo.institution", "Test Institution 1")
+		.param("repo.definition", "Modified definition") //modified contents
+		.param("repo.description", "Test Description 1")
+		.param("repo.status", "true")
+		.param("repo.creator", "2")
+    	.param("repo.owner", "2")
+    	.param("repoForm.domains", "{3,4}"))
 		.andExpect(status().is4xxClientError());
  
 	}
