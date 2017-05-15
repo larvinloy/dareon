@@ -70,80 +70,88 @@ public class FORController
 	this.fORService = fORService;
     }
 
-//    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
+    // @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
     @RequestMapping("/for/create")
     public String repoCreate(Model model) throws JSONException
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
-//	return aNZSRCService.list();
-//	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
-	for(FOR a : fORService.list())
+	// return aNZSRCService.list();
+	// for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+	for (FOR a : fORService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
 	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if(a.getChildren().size() > 0)
+	    if (a.getChildren().size() > 0)
 		obj = JsonFORTree.addChildren(obj, a.getChildren());
 	    arr.put(obj);
 	    obj = new JSONObject();
 	}
-	
+
 	model.addAttribute("fORForm", new FORForm());
 	model.addAttribute("message", arr.toString());
 	model.addAttribute("pre", new String());
-	model.addAttribute("parent", new String());	
-	
+	model.addAttribute("parent", new String());
+
 	return "for/create";
-	
 
     }
-    
+
     @RequestMapping(value = "/for/create", method = RequestMethod.POST)
     public String fORSave(@ModelAttribute FORForm fORForm)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	
-	Long p = Long.valueOf(fORForm.getParent()).longValue(); 
-	FOR parent = fORService.findById((long) p );
-	System.out.println(parent.getName());
-	FOR newFOR = fORForm.getFoR();
-	List<FOR> newChildren = parent.getChildren();
-	newChildren.add(newFOR);
-	System.out.println(newChildren.size());
-	parent.setChildren(newChildren);
-	newFOR.setParent(parent);
 
-//	
-	FOR savedNewFOR = fORService.save(newFOR);
-	FOR savedParent = fORService.save(fORService.findById((long) p ));
+	if (fORForm.getParent() == "")
+	{
+	    FOR newFOR = fORForm.getFoR();
+	    FOR savedNewFOR = fORService.save(newFOR);
+	    System.out.println("Child ===============>" + newFOR.getCode() + " " + newFOR.getCode() + " "
+		    + newFOR.getName() + " " + " " + newFOR.getParent());
+	} 
+	else
+	{
+	    Long p = Long.valueOf(fORForm.getParent()).longValue();
+	    FOR parent = fORService.findById((long) p);
+	    System.out.println(parent.getName());
+	    FOR newFOR = fORForm.getFoR();
+	    List<FOR> newChildren = parent.getChildren();
+	    newChildren.add(newFOR);
+	    System.out.println(newChildren.size());
+	    parent.setChildren(newChildren);
+	    newFOR.setParent(parent);
 
-	System.out.println("Parent ===============>" + parent.getId() + " " +parent.getCode() + " " + parent.getName() + " " + " " + parent.getChildren());
-	System.out.println("Child ===============>" + newFOR.getCode() + " " +newFOR.getCode() + " " + newFOR.getName() + " " + " " + newFOR.getParent());
-	
+	    //
+	    FOR savedNewFOR = fORService.save(newFOR);
+	    FOR savedParent = fORService.save(fORService.findById((long) p));
+
+	    System.out.println("Parent ===============>" + parent.getId() + " " + parent.getCode() + " "
+		    + parent.getName() + " " + " " + parent.getChildren());
+	    System.out.println("Child ===============>" + newFOR.getCode() + " " + newFOR.getCode() + " "
+		    + newFOR.getName() + " " + " " + newFOR.getParent());
+	}
+
 	return "index";
     }
-	
 
-    
-    
     @RequestMapping("/for/edit/{id}")
     public String fOREdit(@PathVariable Long id, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	//model.addAttribute("fOR", new FOR());
+	// model.addAttribute("fOR", new FOR());
 	FORForm fORForm = new FORForm();
-	
+
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 
-	for(FOR a : fORService.list())
+	for (FOR a : fORService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
 	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if(a.getChildren().size() > 0)
+	    if (a.getChildren().size() > 0)
 		obj = JsonFORTree.addChildren(obj, a.getChildren());
 	    arr.put(obj);
 	    obj = new JSONObject();
@@ -152,9 +160,9 @@ public class FORController
 	model.addAttribute("message", arr.toString());
 
 	JSONArray pre = new JSONArray();
-	    
+
 	pre.put(fORService.findById(id).getParent().getId().toString());
-	
+
 	fORForm.setPre(pre.toString());
 	fORForm.setFoR(fORService.findById(id));
 	model.addAttribute("FORForm", fORForm);
@@ -162,10 +170,5 @@ public class FORController
 	System.out.println("FOR =====>" + fORForm.getFoR().getName());
 	return "for/create";
     }
-    
-    
-    
-    
 
-   
 }
