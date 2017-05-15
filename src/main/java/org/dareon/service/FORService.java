@@ -29,6 +29,8 @@ public class FORService
 
     public FOR save(FOR fOR)
     {
+    	if(fOR == null)
+    		System.out.println("ERROR NULL");
 	return fORRepository.save(fOR);
 	
     }

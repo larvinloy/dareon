@@ -20,6 +20,8 @@ import org.dareon.service.LevelService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
+import org.dareon.wrappers.FORForm;
+import org.dareon.wrappers.RepoForm;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,12 +74,10 @@ public class FORController
     }
 
 //    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
-    @RequestMapping("/anzsrc/list")
+    @RequestMapping("/for/create")
     public String repoCreate(Model model) throws JSONException
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	model.addAttribute("repo", new Repo());
-	
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
@@ -91,18 +91,84 @@ public class FORController
 	    arr.put(obj);
 	    obj = new JSONObject();
 	}
-	model.addAttribute("message", arr.toString());
-	return "repo/treeview";
-//	return arr.toString();
-//	
-//	List<User> users = userService.list();
-//	users.remove((userService.findByEmail(auth.getName())));
-//	users.add(0,userService.findByEmail(auth.getName()));
-//	model.addAttribute("users",users);
 	
+	model.addAttribute("fORForm", new FORForm());
+	model.addAttribute("message", arr.toString());
+	model.addAttribute("levels", levelService.list());
+	model.addAttribute("pre", new String());
+	model.addAttribute("parent", new String());	
+	
+	return "for/create";
+	
+
     }
     
-   
+    @RequestMapping(value = "/for/create", method = RequestMethod.POST)
+    public String fORSave(@ModelAttribute FORForm fORForm)
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	
+	Long p = Long.valueOf(fORForm.getParent()).longValue(); 
+	FOR parent = fORService.findById((long) p );
+	System.out.println(parent.getName());
+	FOR newFOR = fORForm.getFoR();
+	List<FOR> newChildren = parent.getChildren();
+	newChildren.add(newFOR);
+	System.out.println(newChildren.size());
+	parent.setChildren(newChildren);
+	newFOR.setParent(parent);
+
+//	
+	FOR savedNewFOR = fORService.save(newFOR);
+	FOR savedParent = fORService.save(fORService.findById((long) p ));
+
+	System.out.println("Parent ===============>" + parent.getId() + " " +parent.getCode() + " " + parent.getName() + " " + parent.getLevel() + " " + parent.getChildren());
+	System.out.println("Child ===============>" + newFOR.getCode() + " " +newFOR.getCode() + " " + newFOR.getName() + " " + newFOR.getLevel() + " " + newFOR.getParent());
+	
+	return "index";
+    }
+	
+
+    
+    
+    @RequestMapping("/for/edit/{id}")
+    public String fOREdit(@PathVariable Long id, Model model)
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	//model.addAttribute("fOR", new FOR());
+	FORForm fORForm = new FORForm();
+	
+	JSONObject obj = new JSONObject();
+	JSONArray arr = new JSONArray();
+
+	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+	{
+	    obj.put("text", a.getCode() + " | " + a.getName());
+	    obj.put("id", a.getId());
+	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
+	    if(a.getChildren().size() > 0)
+		obj = JsonFORTree.addChildren(obj, a.getChildren());
+	    arr.put(obj);
+	    obj = new JSONObject();
+	}
+
+	model.addAttribute("message", arr.toString());
+
+	JSONArray pre = new JSONArray();
+	    
+	pre.put(fORService.findById(id).getParent().getId().toString());
+	
+	fORForm.setPre(pre.toString());
+	fORForm.setFoR(fORService.findById(id));
+	model.addAttribute("FORForm", fORForm);
+	System.out.println("PRE =====>" + pre);
+	System.out.println("FOR =====>" + fORForm.getFoR().getName());
+	return "for/create";
+    }
+    
+    
+    
+    
 
    
 }
