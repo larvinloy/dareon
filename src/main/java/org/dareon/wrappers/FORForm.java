@@ -1,13 +1,11 @@
 package org.dareon.wrappers;
 
 import org.dareon.domain.FOR;
-import org.dareon.domain.Level;
 import org.dareon.service.FORService;
 
 public class FORForm
 {
     private FOR foR;
-    private Level level;
     private String pre;
     private String parent;
   
@@ -15,7 +13,6 @@ public class FORForm
     {
     	super();
     	foR = new FOR();
-    	level = new Level();
     	parent = new String();
     }
  
@@ -23,7 +20,6 @@ public class FORForm
     {
     	super();
     	foR = new FOR();
-    	level = new Level();
     	parent = new String();   	
     }
 
@@ -35,13 +31,6 @@ public class FORForm
 		this.parent = parent;
 	}
 
-	public Level getLevel() {
-		return level;
-	}
-
-	public void setLevel(Level level) {
-		this.level = level;
-	}
 
 	public String getPre() {
 		return pre;

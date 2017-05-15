@@ -51,10 +51,7 @@ public class FOR
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     private List<FOR> children;
     
-    @ManyToOne()
-    @JoinColumn(name="level_id")
-    private Level level;
-
+   
     //    @JsonManagedReference
     @JsonIgnore
     @ManyToOne
@@ -71,12 +68,12 @@ public class FOR
     {
 	
     }
-    public FOR(String code, String name, Level level)
+    public FOR(String code, String name)
     {
 	super();
 	this.code = code;
 	this.name = name;
-	this.level = level;
+	
     }
 
     @Transient()
@@ -151,15 +148,6 @@ public class FOR
         this.repos = repos;
     }
 
-    public Level getLevel()
-    {
-        return level;
-    }
-
-    public void setLevel(Level level)
-    {
-        this.level = level;
-    }
-    
+     
 
 }

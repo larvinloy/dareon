@@ -16,7 +16,6 @@ import org.dareon.domain.User;
 import org.dareon.json.JsonFORTree;
 import org.dareon.service.FORService;
 import org.dareon.service.CFPService;
-import org.dareon.service.LevelService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
@@ -54,7 +53,6 @@ public class FORController
 {
 
     private FORService fORService;
-    private LevelService levelService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -66,11 +64,10 @@ public class FORController
     }
 
     @Autowired
-    public FORController(FORService fORService,LevelService levelService)
+    public FORController(FORService fORService)
     {
 	super();
 	this.fORService = fORService;
-	this.levelService = levelService;
     }
 
 //    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
@@ -81,7 +78,8 @@ public class FORController
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
-	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+//	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+	for(FOR a : fORService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
@@ -94,7 +92,6 @@ public class FORController
 	
 	model.addAttribute("fORForm", new FORForm());
 	model.addAttribute("message", arr.toString());
-	model.addAttribute("levels", levelService.list());
 	model.addAttribute("pre", new String());
 	model.addAttribute("parent", new String());	
 	
@@ -122,8 +119,8 @@ public class FORController
 	FOR savedNewFOR = fORService.save(newFOR);
 	FOR savedParent = fORService.save(fORService.findById((long) p ));
 
-	System.out.println("Parent ===============>" + parent.getId() + " " +parent.getCode() + " " + parent.getName() + " " + parent.getLevel() + " " + parent.getChildren());
-	System.out.println("Child ===============>" + newFOR.getCode() + " " +newFOR.getCode() + " " + newFOR.getName() + " " + newFOR.getLevel() + " " + newFOR.getParent());
+	System.out.println("Parent ===============>" + parent.getId() + " " +parent.getCode() + " " + parent.getName() + " " + " " + parent.getChildren());
+	System.out.println("Child ===============>" + newFOR.getCode() + " " +newFOR.getCode() + " " + newFOR.getName() + " " + " " + newFOR.getParent());
 	
 	return "index";
     }
@@ -141,7 +138,7 @@ public class FORController
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 
-	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+	for(FOR a : fORService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());

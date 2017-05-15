@@ -1,9 +1,9 @@
 package org.dareon.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dareon.domain.FOR;
-import org.dareon.domain.Level;
 import org.dareon.domain.Repo;
 import org.dareon.repository.FORRepository;
 import org.dareon.repository.RepoRepository;
@@ -29,8 +29,7 @@ public class FORService
 
     public FOR save(FOR fOR)
     {
-    	if(fOR == null)
-    		System.out.println("ERROR NULL");
+    	
 	return fORRepository.save(fOR);
 	
     }
@@ -38,18 +37,19 @@ public class FORService
     public List<FOR> list()
     {
 	List<FOR> data = fORRepository.findAllByOrderById();
-	
-	return data;
+	List<FOR> factoredData = new ArrayList<FOR>();
+	for(FOR e : data)
+	{
+	    if(e.getParent() == null)
+	    {
+		factoredData.add(e);
+	    }
+	}
+	return factoredData;
 
     }
     
-    public List<FOR> listByLevel(Level level)
-    {
-	List<FOR> data = fORRepository.findAllByLevel(level);
-	
-	return data;
-
-    }
+   
 
 
     public FOR findById(Long id)

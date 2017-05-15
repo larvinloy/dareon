@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.dareon.domain.FOR;
-import org.dareon.domain.Level;
 import org.dareon.domain.Privilege;
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
 import org.dareon.repository.FORRepository;
-import org.dareon.repository.LevelRepository;
 import org.dareon.repository.CFPRepository;
 import org.dareon.repository.PrivilegeRepository;
 import org.dareon.repository.ProposalRepository;
@@ -53,9 +51,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private FORRepository fORRepository;
     
-    @Autowired
-    private LevelRepository levelRepository;
-
+   
     // API
 
     @Override
@@ -124,23 +120,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	
 	// WARNING!
 	
-	Level division = new Level("DIVISION");
-	levelRepository.save(division);
 	
-	Level group = new Level("GROUP");
-	levelRepository.save(group);
-	
-	Level field = new Level("FIELD");
-	levelRepository.save(field);
-	
-	
-	FOR for1 = new FOR("01","MATHEMATICAL SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for2 = new FOR("0101", "PURE MATHEMATICS",levelRepository.findByName("GROUP"));
-	FOR for3 = new FOR("0102","APPLIED MATHEMATICS",levelRepository.findByName("GROUP"));
-	FOR for4 = new FOR("0103","NUMERICAL AND COMPUTATIONAL MATHEMATICS",levelRepository.findByName("GROUP"));
-	FOR for5 = new FOR("0104","STATISTICS",levelRepository.findByName("GROUP"));
-	FOR for6 = new FOR("0105","MATHEMATICAL PHYSICS",levelRepository.findByName("GROUP"));
-	FOR for7 = new FOR("0199","OTHER MATHEMATICAL SCIENCES",levelRepository.findByName("GROUP"));
+	FOR for1 = new FOR("01","MATHEMATICAL SCIENCES");
+	FOR for2 = new FOR("0101", "PURE MATHEMATICS");
+	FOR for3 = new FOR("0102","APPLIED MATHEMATICS");
+	FOR for4 = new FOR("0103","NUMERICAL AND COMPUTATIONAL MATHEMATICS");
+	FOR for5 = new FOR("0104","STATISTICS");
+	FOR for6 = new FOR("0105","MATHEMATICAL PHYSICS");
+	FOR for7 = new FOR("0199","OTHER MATHEMATICAL SCIENCES");
 	for1.setChildren( Arrays.asList(for1,for2,for3,for4,for5,for6,for7));
 	for2.setParent(for1);
 	for3.setParent(for1);
@@ -152,12 +139,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	
 	
 	
-	FOR for8 = new FOR("010501","Algebraic Structures in Mathematical Physics",levelRepository.findByName("FIELD"));
-	FOR for9 = new FOR("010502","Integrable Systems (Classical and Quantum)",levelRepository.findByName("FIELD"));
-	FOR for10 = new FOR("010503","Mathematical Aspects of Classical Mechanics, Quantum Mechanics and Quantum Information Theory",levelRepository.findByName("FIELD"));
-	FOR for11 = new FOR("010504","Mathematical Aspects of General Relativity",levelRepository.findByName("FIELD"));
-	FOR for12 = new FOR("010506","Statistical Mechanics, Physical Combinatorics and Mathematical Aspects of Condensed Matter ",levelRepository.findByName("FIELD"));
-	FOR for13 = new FOR("010599","Mathematical Physics not elsewhere classified ",levelRepository.findByName("FIELD"));
+	FOR for8 = new FOR("010501","Algebraic Structures in Mathematical Physics");
+	FOR for9 = new FOR("010502","Integrable Systems (Classical and Quantum)");
+	FOR for10 = new FOR("010503","Mathematical Aspects of Classical Mechanics, Quantum Mechanics and Quantum Information Theory");
+	FOR for11 = new FOR("010504","Mathematical Aspects of General Relativity");
+	FOR for12 = new FOR("010506","Statistical Mechanics, Physical Combinatorics and Mathematical Aspects of Condensed Matter ");
+	FOR for13 = new FOR("010599","Mathematical Physics not elsewhere classified ");
 	
 	for6.setChildren(Arrays.asList(for8,for9,for10,for11,for12,for13));
 	for8.setParent(for6);
@@ -168,15 +155,15 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	for13.setParent(for6);
 	
 	
-	FOR for14 = new FOR("02","PHYSICAL SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for15 = new FOR("03","CHEMICAL SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for16 = new FOR("04","EARTH SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for17 = new FOR("05","ENVIRONMENTAL SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for18 = new FOR("06","BIOLOGICAL SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for19 = new FOR("07","AGRICULTURAL AND VETERINARY SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for20 = new FOR("08","INFORMATION AND COMPUTING SCIENCES",levelRepository.findByName("DIVISION"));
-	FOR for21 = new FOR("09","ENGINEERING",levelRepository.findByName("DIVISION"));
-	FOR for22 = new FOR("10","TECHNOLOGY",levelRepository.findByName("DIVISION"));
+	FOR for14 = new FOR("02","PHYSICAL SCIENCES");
+	FOR for15 = new FOR("03","CHEMICAL SCIENCES");
+	FOR for16 = new FOR("04","EARTH SCIENCES");
+	FOR for17 = new FOR("05","ENVIRONMENTAL SCIENCES");
+	FOR for18 = new FOR("06","BIOLOGICAL SCIENCES");
+	FOR for19 = new FOR("07","AGRICULTURAL AND VETERINARY SCIENCES");
+	FOR for20 = new FOR("08","INFORMATION AND COMPUTING SCIENCES");
+	FOR for21 = new FOR("09","ENGINEERING");
+	FOR for22 = new FOR("10","TECHNOLOGY");
 	
 	fORRepository.save(for1);
 	fORRepository.save(for2);

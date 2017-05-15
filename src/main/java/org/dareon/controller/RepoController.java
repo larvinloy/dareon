@@ -15,7 +15,6 @@ import org.dareon.domain.User;
 import org.dareon.json.JsonFORTree;
 import org.dareon.service.CFPService;
 import org.dareon.service.FORService;
-import org.dareon.service.LevelService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
@@ -53,7 +52,6 @@ public class RepoController
     private UserService userService;
     private CFPService cFPService;
     private FORService fORService;
-    private LevelService levelService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -66,14 +64,13 @@ public class RepoController
 
     @Autowired
     public RepoController(RepoService repoService, UserService userService,
-	    CFPService cFPService, FORService fORService, LevelService levelService)
+	    CFPService cFPService, FORService fORService)
     {
 	super();
 	this.repoService = repoService;
 	this.userService = userService;
 	this.cFPService = cFPService;
 	this.fORService = fORService;
-	this.levelService = levelService;
     }
 
     @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
@@ -91,9 +88,8 @@ public class RepoController
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
 //	System.out.println(fORService.listByLevel(levelService.findById((long)1)));
-	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+	for(FOR a : fORService.list())
 	{
-	    System.out.println(a.getCode());
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
 	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
@@ -152,7 +148,7 @@ public class RepoController
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
-	for(FOR a : fORService.listByLevel(levelService.findById((long)1)))
+	for(FOR a : fORService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
