@@ -24,6 +24,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GeneratorType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -63,6 +65,9 @@ public class FOR
     @ManyToMany(mappedBy = "domains")
     private Set<Repo> repos = new HashSet<Repo>();
     
+    @OneToMany(mappedBy="fOR", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Set<Expertise> expertises = new HashSet<Expertise>();
     
     public FOR()
     {
@@ -147,7 +152,17 @@ public class FOR
     {
         this.repos = repos;
     }
-
+    
+    public Set<Expertise> getExpertises()
+    {
+        return expertises;
+    }
+    
+    public void setExpertises(Set<Expertise> expertises)
+    {
+        this.expertises = expertises;
+    }
+    
      
 
 }

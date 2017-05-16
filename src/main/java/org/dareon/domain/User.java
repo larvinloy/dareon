@@ -21,6 +21,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 @Entity
 @Table(name = "users")
@@ -53,6 +56,7 @@ public class User
 
     // Setting relation
     @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "users_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 	    @JoinColumn(name = "role_id") })
     private Collection<Role> roles;
@@ -65,6 +69,10 @@ public class User
     
     @ManyToMany(mappedBy = "proposalReviewers")
     private Set<Repo> reviewedRepos = new HashSet<Repo>();
+    
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Set<Expertise> expertises = new HashSet<Expertise>();
 
     public User()
     {
@@ -195,6 +203,19 @@ public class User
     public void setReviewedRepos(Set<Repo> reviewedRepos)
     {
         this.reviewedRepos = reviewedRepos;
+    }
+    
+    
+
+    public Set<Expertise> getExpertises()
+    {
+        return expertises;
+    }
+
+
+    public void setExpertises(Set<Expertise> expertises)
+    {
+        this.expertises = expertises;
     }
 
 
