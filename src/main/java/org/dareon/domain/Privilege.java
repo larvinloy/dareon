@@ -8,9 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+/**
+ * 
+ * @author Ayush Garg
+ *this is entity class describes privileges and its attributes
+ */
 @Entity
 public class Privilege {
-
+// this variable defines automatically generated value for the primary key
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -29,7 +34,10 @@ public class Privilege {
         this.name = name;
     }
 
-    //
+    /**
+     * 
+     * @return user Id of long type
+     */
 
     public Long getId() {
         return id;
@@ -38,7 +46,10 @@ public class Privilege {
     public void setId(final Long id) {
         this.id = id;
     }
-
+/**
+ * 
+ * @return user name (String type)
+ */
     public String getName() {
         return name;
     }
@@ -47,6 +58,10 @@ public class Privilege {
         this.name = name;
     }
 
+    /**
+     * 
+     * @return collection of different role into roles object
+     */
     public Collection<Role> getRoles() {
         return roles;
     }
@@ -54,7 +69,11 @@ public class Privilege {
     public void setRoles(final Collection<Role> roles) {
         this.roles = roles;
     }
-
+/**
+ * 
+ * Method overides privilege method specified in super class 
+ * with the public method object StringBUilder in with same variables
+ */
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
