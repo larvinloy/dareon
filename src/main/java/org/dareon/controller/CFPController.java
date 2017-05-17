@@ -126,7 +126,7 @@ public class CFPController
     }
     
     
-    @PreAuthorize("hasAuthority('CFP_DELETE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('CFP_DELETE_PRIVILEGE') AND isCFPOwner(#id)")
     @RequestMapping("/callforproposals/delete/{id}")
     public String cFPDelete(@PathVariable Long id, Model model)
     {
@@ -134,7 +134,7 @@ public class CFPController
 	return "callforproposals/delete";
     }
     
-    @PreAuthorize("hasAuthority('CFP_DELETE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('CFP_DELETE_PRIVILEGE') AND isCFPOwner(#id)")
     @RequestMapping("/callforproposals/deleteconfirmed/{id}")
     public RedirectView cFPDeleteConfirmed(@PathVariable Long id, Model model)
     {

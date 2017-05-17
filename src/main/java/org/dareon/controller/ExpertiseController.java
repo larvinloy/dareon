@@ -6,10 +6,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-
 import org.dareon.domain.FOR;
 import org.dareon.domain.CFP;
 import org.dareon.domain.Expertise;
@@ -79,9 +77,8 @@ public class ExpertiseController
 	this.userService = userService;
     }
 
-    // @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
     @RequestMapping("/expertise/add")
-    public String repoCreate(Model model) throws JSONException
+    public String addExpertise(Model model) throws JSONException
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	JSONObject obj = new JSONObject();
@@ -112,13 +109,12 @@ public class ExpertiseController
 	model.addAttribute("addExpertiseForm", addExpertiseForm);
 	model.addAttribute("message", arr.toString());
 
-	return "expertise/create";
+	return "expertise/addexpertise";
 
     }
 
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#repoForm)")
-    @RequestMapping(value = "/expertise/create", method = RequestMethod.POST)
-    public String repoSave(@ModelAttribute AddExpertiseForm addExpertiseForm, Model model)
+    @RequestMapping(value = "/expertise/add", method = RequestMethod.POST)
+    public String addExpertise(@ModelAttribute AddExpertiseForm addExpertiseForm, Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	System.out.println("Controller: "+userService.findByEmail(auth.getName()).getId());
@@ -127,20 +123,18 @@ public class ExpertiseController
 	return "redirect:setvalue";
     }
     
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#repoForm)")
     @RequestMapping(value = "/expertise/setvalue")
-    public String test(Model model)
+    public String setExpertiseValue(Model model)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	AddExpertiseValueForm addExpertiseValueForm = new AddExpertiseValueForm();
 	addExpertiseValueForm.setExpertises(expertiseService.findByUser(userService.findByEmail(auth.getName())));
 	model.addAttribute("addExpertiseValueForm", addExpertiseValueForm);
-	return "expertise/expertise";
+	return "expertise/setexpertisevalue";
     }
     
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#repoForm)")
     @RequestMapping(value = "/expertise/setvalue", method = RequestMethod.POST)
-    public String wuyt(@ModelAttribute AddExpertiseValueForm addExpertiseValueForm, Model model)
+    public String setExpertiseValue(@ModelAttribute AddExpertiseValueForm addExpertiseValueForm, Model model)
     {
 	List<Expertise> expertises = addExpertiseValueForm.getExpertises();
 	expertiseService.setValues(expertises);
