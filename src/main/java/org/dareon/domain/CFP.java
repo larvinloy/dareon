@@ -22,12 +22,22 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table (name = "cfp")
+
+/**
+ * 
+ * @author Ayush Garg
+ *This is domain class for Call For Proposals defining 
+ *objects used in project database and there relation with different objects
+ */
 public class CFP
 {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    
+    // defines CFP Id variable of long type generated automatically 
     private long id;
     
+    // Defines CFP title variable of string type stored in unique table column with default type
     @Column (nullable= false, unique = true)
     private String title;
     
@@ -42,6 +52,7 @@ public class CFP
     @Column (nullable= false,columnDefinition = "TEXT")
     private String details;
     
+    // joining repo_id for table repo with many to one relationship
     @ManyToOne()
     @JoinColumn(name="repo_id")
     private Repo repo;
@@ -54,7 +65,13 @@ public class CFP
     {
 	
     }
-    
+    /**
+     * 
+     * @param title returns CFP title(string type) to the immediate super class
+     * @param description returns  CFP description(string type) to the immediate super class
+     * @param details returns  CFP details(string type) to the immediate super class
+     * @param repo returns associated CFP repository(repo) to the immediate super class
+     */
     public CFP(String title, String description, String details, Repo repo)
     {
 	super();
@@ -63,7 +80,9 @@ public class CFP
 	this.details = details;
 	this.repo = repo;
     }
-
+/**
+ * @return value of Id object immediately of long  data type
+ */
     public long getId()
     {
         return id;
@@ -72,8 +91,10 @@ public class CFP
     public void setId(long id)
     {
         this.id = id;
-    }
-
+   }
+/**
+ * @return value of createdOn object immediately of Date type
+ */
     public Date getCreatedOn()
     {
         return createdOn;
@@ -84,6 +105,9 @@ public class CFP
         this.createdOn = createdOn;
     }
     
+    /**
+     * @return the Title object immediately of String data type 
+     */
     public String getTitle()
     {
         return title;
@@ -94,6 +118,10 @@ public class CFP
         this.title = title;
     }
 
+    /**
+     * 
+     * @return the Description object immediately of String data type
+     */
     public String getDescription()
     {
         return description;
@@ -104,6 +132,11 @@ public class CFP
         this.description = description;
     }
 
+    /**
+     * 
+     * @return the Details object immediately of String data type
+     */
+    
     public String getDetails()
     {
         return details;
@@ -114,6 +147,9 @@ public class CFP
         this.details = details;
     }
 
+    /**
+     * @return the Repo object immediately of Repo data type
+     */
     public Repo getRepo()
     {
         return repo;
@@ -123,12 +159,20 @@ public class CFP
     {
         this.repo = repo;
     }
-
+/**
+ * 
+ * @return the Proposals in the form of proposal set
+ */
     public Set<Proposal> getProposals()
     {
         return proposals;
     }
 
+/**
+ * 
+ * @param proposals store the set of proposals in proposal object
+ */
+    
     public void setProposals(Set<Proposal> proposals)
     {
         this.proposals = proposals;
