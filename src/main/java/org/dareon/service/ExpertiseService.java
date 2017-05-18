@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.dareon.domain.Expertise;
-import org.dareon.domain.FOR;
+import org.dareon.domain.Classification;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
 import org.dareon.repository.ExpertiseRepository;
@@ -18,13 +18,13 @@ public class ExpertiseService
 {
 
     private ExpertiseRepository expertiseRepository;
-    private FORService fORService;
+    private ClassificationService classificationService;
 
     @Autowired
-    public ExpertiseService(ExpertiseRepository ExpertiseRepository, FORService fORService)
+    public ExpertiseService(ExpertiseRepository ExpertiseRepository, ClassificationService classificationService)
     {
 	this.expertiseRepository = ExpertiseRepository;
-	this.fORService = fORService;
+	this.classificationService = classificationService;
     }
 
     public Expertise get(Long id)
@@ -44,7 +44,7 @@ public class ExpertiseService
     	
 	for(Expertise e : expertises)
 	{
-	    expertiseRepository.delete(expertiseRepository.findByFOR(e.getfOR()));
+	    expertiseRepository.delete(expertiseRepository.findByClassification(e.getClassification()));
 	    expertiseRepository.save(e);
 	}
 	
@@ -55,14 +55,14 @@ public class ExpertiseService
     	List<Expertise> old = expertiseRepository.findAllByUser(user);
     	for(Expertise e : old)
     	{
-    	    if(!ids.contains(e.getfOR().getId()))
+    	    if(!ids.contains(e.getClassification().getId()))
     		expertiseRepository.delete(e);
     	    else
-    		ids.remove(e.getfOR().getId());
+    		ids.remove(e.getClassification().getId());
     	}
     	for(Long id : ids)
     	{
-    	   expertiseRepository.save(new Expertise(user,fORService.findById(id),0));
+    	   expertiseRepository.save(new Expertise(user,classificationService.findById(id),0));
     	}
 	
     }
@@ -75,9 +75,9 @@ public class ExpertiseService
 	return expertiseRepository.findById(id);
     }
     
-    public Expertise findByFOR(FOR fOR)
+    public Expertise findByFOR(Classification classification)
     {
-	return expertiseRepository.findByFOR(fOR);
+	return expertiseRepository.findByClassification(classification);
     }
     
     public List<Expertise> findByUser(User user)

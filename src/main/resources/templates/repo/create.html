@@ -271,7 +271,7 @@
         	  $selectableTree.treeview('expandAll');
               for(i=0;i<pre.length;i++) 
               {
-            	  var myElement = $('li[data-for="'+pre[i]+'"]');  
+            	  var myElement = $('li[data-classification="'+pre[i]+'"]');  
             	  $selectableTree.treeview('selectNode', [myElement.data('nodeid')]);
               }
               $selectableTree.treeview('collapseAll');

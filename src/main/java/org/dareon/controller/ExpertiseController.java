@@ -8,21 +8,21 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.dareon.domain.FOR;
+import org.dareon.domain.Classification;
 import org.dareon.domain.CFP;
 import org.dareon.domain.Expertise;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
 import org.dareon.json.JsonFORTree;
 import org.dareon.service.ExpertiseService;
-import org.dareon.service.FORService;
+import org.dareon.service.ClassificationService;
 import org.dareon.service.CFPService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
 import org.dareon.wrappers.AddExpertiseForm;
 import org.dareon.wrappers.AddExpertiseValueForm;
-import org.dareon.wrappers.FORForm;
+import org.dareon.wrappers.ClassificationForm;
 import org.dareon.wrappers.RepoForm;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +56,7 @@ public class ExpertiseController
 {
 
     private ExpertiseService expertiseService;
-    private FORService fORService;
+    private ClassificationService classificationService;
     private UserService userService;
 
     @Autowired
@@ -69,11 +69,11 @@ public class ExpertiseController
     }
 
     @Autowired
-    public ExpertiseController(ExpertiseService expertiseService, FORService fORService, UserService userService)
+    public ExpertiseController(ExpertiseService expertiseService, ClassificationService classificationService, UserService userService)
     {
 	super();
 	this.expertiseService = expertiseService;
-	this.fORService = fORService;
+	this.classificationService = classificationService;
 	this.userService = userService;
     }
 
@@ -85,7 +85,7 @@ public class ExpertiseController
 	JSONArray arr = new JSONArray();
 	// return aNZSRCService.list();
 	// for(FOR a : expertiseService.listByLevel(levelService.findById((long)1)))
-	for (FOR a : fORService.list())
+	for (Classification a : classificationService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
@@ -101,7 +101,7 @@ public class ExpertiseController
 	JSONArray pre = new JSONArray();
 	for(Expertise a : expertiseService.findByUser(userService.findByEmail(auth.getName())))
 	{
-	    pre.put(a.getfOR().getId());
+	    pre.put(a.getClassification().getId());
 	}
 	
 	AddExpertiseForm addExpertiseForm = new AddExpertiseForm();
@@ -128,6 +128,8 @@ public class ExpertiseController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	AddExpertiseValueForm addExpertiseValueForm = new AddExpertiseValueForm();
+	if(expertiseService.findByUser(userService.findByEmail(auth.getName())).size() == 0)
+	    return "redirect:add";
 	addExpertiseValueForm.setExpertises(expertiseService.findByUser(userService.findByEmail(auth.getName())));
 	model.addAttribute("addExpertiseValueForm", addExpertiseValueForm);
 	return "expertise/setexpertisevalue";

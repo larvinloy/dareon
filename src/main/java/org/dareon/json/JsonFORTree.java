@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import org.dareon.domain.FOR;
+import org.dareon.domain.Classification;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,11 +19,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 public class JsonFORTree
 {
 
-    public static JSONObject addChildren(JSONObject fOR, List<FOR> fORChildren)
+    public static JSONObject addChildren(JSONObject fOR, List<Classification> fORChildren)
     {
 //	System.out.println(fOR);
 	JSONArray fORChildrenArray = new JSONArray();
-	for(FOR a : fORChildren)
+	for(Classification a : fORChildren)
 	{
 	    JSONObject fORChildObject = new JSONObject();
 	    fORChildObject.put("text", a.getCode() + " | " + a.getName());

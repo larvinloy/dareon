@@ -23,15 +23,15 @@
 						<div th:each="index : ${#numbers.sequence(0,(#object.expertises.size() - 1))}">					
 							<div class="panel col-md-12">
 								<div class="col-md-1" >
-									<label class="control-label" style=" text-align: left; " th:text = "*{expertises[__${index}__].fOR.code}"/>
+									<label class="control-label" style=" text-align: left; " th:text = "*{expertises[__${index}__].classification.code}"/>
 								</div>
-								<div class="col-md-6" >
-									<label class="control-label" style=" text-align: left;" th:text = "*{expertises[__${index}__].fOR.name}"/>
-									<input type="hidden" th:field="*{expertises[__${index}__].fOR}" />
+								<div class="col-md-5" >
+									<label class="control-label" style=" text-align: left;" th:text = "*{expertises[__${index}__].classification.name}"/>
+									<input type="hidden" th:field="*{expertises[__${index}__].classification}" />
 									<input type="hidden" th:field="*{expertises[__${index}__].user}" />
 								</div>
 							
-								<div class="col-md-5">
+								<div class="col-md-6">
 									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="1" th:text="Novice" /></label>
 									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="2" th:text="Decent" /></label>
 									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="3" th:text="Good" /></label>

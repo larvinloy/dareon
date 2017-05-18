@@ -1,0 +1,186 @@
+package org.dareon.controller;
+
+
+import java.util.List;
+
+import org.dareon.domain.Classification;
+import org.dareon.json.JsonFORTree;
+import org.dareon.service.ClassificationService;
+import org.dareon.wrappers.ClassificationForm;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Controller;
+import org.springframework.security.authentication.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.view.RedirectView;
+
+
+@Controller
+public class ClassificationController
+{
+
+    private ClassificationService classificationService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    public void configureAuth(AuthenticationManagerBuilder auth) throws Exception
+    {
+	auth.userDetailsService(userDetailsService);
+    }
+
+    @Autowired
+    public ClassificationController(ClassificationService classificationService)
+    {
+	super();
+	this.classificationService = classificationService;
+    }
+
+    // @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
+    @RequestMapping("/classification/create")
+    public String forCreate(Model model) throws JSONException
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	JSONObject obj = new JSONObject();
+	JSONArray arr = new JSONArray();
+
+	for (Classification a : classificationService.list())
+	{
+	    obj.put("text", a.getCode() + " | " + a.getName());
+	    obj.put("id", a.getId());
+	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
+	    if (a.getChildren().size() > 0)
+		obj = JsonFORTree.addChildren(obj, a.getChildren());
+	    arr.put(obj);
+	    obj = new JSONObject();
+	}
+
+	model.addAttribute("classificationForm", new ClassificationForm());
+	model.addAttribute("message", arr.toString());
+	model.addAttribute("pre", new String());
+	model.addAttribute("parent", new String());
+
+	return "classification/create";
+    }
+
+
+    
+    @RequestMapping(value = "/classification/create", method = RequestMethod.POST)
+    public String forSave(@ModelAttribute ClassificationForm classificationForm)
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	if (classificationForm.getParent() == "")
+	{
+	    Classification newFOR = classificationForm.getClassification();
+	    Classification savedNewFOR = classificationService.save(newFOR);
+	} 
+	else
+	{
+	    Long p = Long.valueOf(classificationForm.getParent()).longValue();
+	    Classification parent = classificationService.findById((long) p);
+	    System.out.println(parent.getName());
+	    Classification newFOR = classificationForm.getClassification();
+	    List<Classification> newChildren = parent.getChildren();
+	    newChildren.add(newFOR);
+	    System.out.println(newChildren.size());
+	    parent.setChildren(newChildren);
+	    newFOR.setParent(parent);
+
+	    Classification savedNewFOR = classificationService.save(newFOR);
+	    Classification savedParent = classificationService.save(parent);
+	}
+
+	return "redirect:list";
+    }
+
+    
+
+    @RequestMapping("/classification/edit/{id}")
+    public String forEdit(@PathVariable Long id, Model model)
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	ClassificationForm classificationForm = new ClassificationForm();
+	classificationForm.setClassification(classificationService.findById(id));
+	
+	JSONObject obj = new JSONObject();
+	JSONArray arr = new JSONArray();
+
+	for (Classification a : classificationService.list())
+	{
+	    obj.put("text", a.getCode() + " | " + a.getName());
+	    obj.put("id", a.getId());
+	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
+	    if (a.getChildren().size() > 0)
+		obj = JsonFORTree.addChildren(obj, a.getChildren());
+	    arr.put(obj);
+	    obj = new JSONObject();
+	}
+	model.addAttribute("message", arr.toString());
+	
+	JSONArray pre = new JSONArray();
+
+	if(classificationService.findById(id).getParent() != null)
+		pre.put(classificationService.findById(id).getParent().getId().toString());
+
+	classificationForm.setPre(pre.toString());
+	model.addAttribute("classificationForm", classificationForm);
+
+	return "classification/create";
+    }
+    
+    
+    
+    
+    
+    
+    
+    @RequestMapping("/classification/list")
+    public String forList(Model model) throws JSONException
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	JSONObject obj = new JSONObject();
+	JSONArray arr = new JSONArray();
+
+	for (Classification a : classificationService.list())
+	{
+	    obj.put("text", a.getCode() + " | " + a.getName());
+	    obj.put("id", a.getId());
+	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
+	    if (a.getChildren().size() > 0)
+		obj = JsonFORTree.addChildren(obj, a.getChildren());
+	    arr.put(obj);
+	    obj = new JSONObject();
+	}
+
+	model.addAttribute("classificationForm", new ClassificationForm());
+	model.addAttribute("message", arr.toString());
+	//model.addAttribute("pre", new String());
+
+	return "classification/list";
+
+    }
+    
+    
+    
+    @RequestMapping("/classification/deleteconfirmed/{id}")
+    public RedirectView forDeleteConfirmed(@PathVariable Long id, Model model)
+    {
+	classificationService.delete(id);
+	 return new RedirectView("/classification/list");
+    }
+    
+    
+
+}

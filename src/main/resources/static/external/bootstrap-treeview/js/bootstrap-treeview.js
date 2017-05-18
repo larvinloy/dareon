@@ -519,7 +519,7 @@
 				.addClass(node.searchResult ? 'search-result' : '') 
 				.attr('data-nodeid', node.nodeId)
 				.attr('id', node.nodeId)
-				.attr('data-for', node.id)
+				.attr('data-classification', node.id)
 				.attr('style', _this.buildStyleOverride(node));
 
 			// Add indent/spacer to mimic tree structure

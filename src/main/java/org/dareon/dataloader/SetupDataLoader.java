@@ -7,11 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.dareon.domain.FOR;
+import org.dareon.domain.Classification;
 import org.dareon.domain.Privilege;
 import org.dareon.domain.Role;
 import org.dareon.domain.User;
-import org.dareon.repository.FORRepository;
+import org.dareon.repository.ClassificationRepository;
 import org.dareon.repository.CFPRepository;
 import org.dareon.repository.PrivilegeRepository;
 import org.dareon.repository.ProposalRepository;
@@ -49,7 +49,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private PrivilegeRepository privilegeRepository;
     
     @Autowired
-    private FORRepository fORRepository;
+    private ClassificationRepository classificationRepository;
     
    
     // API
@@ -121,13 +121,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	// WARNING!
 	
 	
-	FOR for1 = new FOR("01","MATHEMATICAL SCIENCES");
-	FOR for2 = new FOR("0101", "PURE MATHEMATICS");
-	FOR for3 = new FOR("0102","APPLIED MATHEMATICS");
-	FOR for4 = new FOR("0103","NUMERICAL AND COMPUTATIONAL MATHEMATICS");
-	FOR for5 = new FOR("0104","STATISTICS");
-	FOR for6 = new FOR("0105","MATHEMATICAL PHYSICS");
-	FOR for7 = new FOR("0199","OTHER MATHEMATICAL SCIENCES");
+	Classification for1 = new Classification("01","MATHEMATICAL SCIENCES");
+	Classification for2 = new Classification("0101", "PURE MATHEMATICS");
+	Classification for3 = new Classification("0102","APPLIED MATHEMATICS");
+	Classification for4 = new Classification("0103","NUMERICAL AND COMPUTATIONAL MATHEMATICS");
+	Classification for5 = new Classification("0104","STATISTICS");
+	Classification for6 = new Classification("0105","MATHEMATICAL PHYSICS");
+	Classification for7 = new Classification("0199","OTHER MATHEMATICAL SCIENCES");
 	for1.setChildren( Arrays.asList(for1,for2,for3,for4,for5,for6,for7));
 	for2.setParent(for1);
 	for3.setParent(for1);
@@ -139,12 +139,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	
 	
 	
-	FOR for8 = new FOR("010501","Algebraic Structures in Mathematical Physics");
-	FOR for9 = new FOR("010502","Integrable Systems (Classical and Quantum)");
-	FOR for10 = new FOR("010503","Mathematical Aspects of Classical Mechanics, Quantum Mechanics and Quantum Information Theory");
-	FOR for11 = new FOR("010504","Mathematical Aspects of General Relativity");
-	FOR for12 = new FOR("010506","Statistical Mechanics, Physical Combinatorics and Mathematical Aspects of Condensed Matter ");
-	FOR for13 = new FOR("010599","Mathematical Physics not elsewhere classified ");
+	Classification for8 = new Classification("010501","Algebraic Structures in Mathematical Physics");
+	Classification for9 = new Classification("010502","Integrable Systems (Classical and Quantum)");
+	Classification for10 = new Classification("010503","Mathematical Aspects of Classical Mechanics, Quantum Mechanics and Quantum Information Theory");
+	Classification for11 = new Classification("010504","Mathematical Aspects of General Relativity");
+	Classification for12 = new Classification("010506","Statistical Mechanics, Physical Combinatorics and Mathematical Aspects of Condensed Matter ");
+	Classification for13 = new Classification("010599","Mathematical Physics not elsewhere classified ");
 	
 	for6.setChildren(Arrays.asList(for8,for9,for10,for11,for12,for13));
 	for8.setParent(for6);
@@ -155,38 +155,38 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	for13.setParent(for6);
 	
 	
-	FOR for14 = new FOR("02","PHYSICAL SCIENCES");
-	FOR for15 = new FOR("03","CHEMICAL SCIENCES");
-	FOR for16 = new FOR("04","EARTH SCIENCES");
-	FOR for17 = new FOR("05","ENVIRONMENTAL SCIENCES");
-	FOR for18 = new FOR("06","BIOLOGICAL SCIENCES");
-	FOR for19 = new FOR("07","AGRICULTURAL AND VETERINARY SCIENCES");
-	FOR for20 = new FOR("08","INFORMATION AND COMPUTING SCIENCES");
-	FOR for21 = new FOR("09","ENGINEERING");
-	FOR for22 = new FOR("10","TECHNOLOGY");
+	Classification for14 = new Classification("02","PHYSICAL SCIENCES");
+	Classification for15 = new Classification("03","CHEMICAL SCIENCES");
+	Classification for16 = new Classification("04","EARTH SCIENCES");
+	Classification for17 = new Classification("05","ENVIRONMENTAL SCIENCES");
+	Classification for18 = new Classification("06","BIOLOGICAL SCIENCES");
+	Classification for19 = new Classification("07","AGRICULTURAL AND VETERINARY SCIENCES");
+	Classification for20 = new Classification("08","INFORMATION AND COMPUTING SCIENCES");
+	Classification for21 = new Classification("09","ENGINEERING");
+	Classification for22 = new Classification("10","TECHNOLOGY");
 	
-	fORRepository.save(for1);
-	fORRepository.save(for2);
-	fORRepository.save(for3);
-	fORRepository.save(for4);
-	fORRepository.save(for5);
-	fORRepository.save(for6);
-	fORRepository.save(for7);
-	fORRepository.save(for8);
-	fORRepository.save(for9);
-	fORRepository.save(for10);
-	fORRepository.save(for11);
-	fORRepository.save(for12);
-	fORRepository.save(for13);
-	fORRepository.save(for14);
-	fORRepository.save(for15);
-	fORRepository.save(for16);
-	fORRepository.save(for17);
-	fORRepository.save(for18);
-	fORRepository.save(for19);
-	fORRepository.save(for20);
-	fORRepository.save(for21);
-	fORRepository.save(for22);
+	classificationRepository.save(for1);
+	classificationRepository.save(for2);
+	classificationRepository.save(for3);
+	classificationRepository.save(for4);
+	classificationRepository.save(for5);
+	classificationRepository.save(for6);
+	classificationRepository.save(for7);
+	classificationRepository.save(for8);
+	classificationRepository.save(for9);
+	classificationRepository.save(for10);
+	classificationRepository.save(for11);
+	classificationRepository.save(for12);
+	classificationRepository.save(for13);
+	classificationRepository.save(for14);
+	classificationRepository.save(for15);
+	classificationRepository.save(for16);
+	classificationRepository.save(for17);
+	classificationRepository.save(for18);
+	classificationRepository.save(for19);
+	classificationRepository.save(for20);
+	classificationRepository.save(for21);
+	classificationRepository.save(for22);
 //
 //	fORRepository.save(for8);
 //	fORRepository.save(for9);

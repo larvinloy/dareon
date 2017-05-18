@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import org.dareon.domain.FOR;
+import org.dareon.domain.Classification;
 import org.dareon.domain.Repo;
-import org.dareon.service.FORService;
+import org.dareon.service.ClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ public class RepoForm
     private String domains;
     private String pre;
   
-    public RepoForm(FORService fORService)
+    public RepoForm(ClassificationService classificationService)
     {
 	super();
 	repo = new Repo();

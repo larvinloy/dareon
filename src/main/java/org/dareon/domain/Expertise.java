@@ -37,14 +37,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //        generator = ObjectIdGenerators.PropertyGenerator.class,
 //        property = "id")
 
-/**
- * 
- * @author Ayush Garg
- * This class expertise level of different fields of research(FOR)
- */
-
 @Entity()
-@Table(name = "expertise", uniqueConstraints = { @UniqueConstraint(columnNames = { "for_id", "user_id" }) })
+@Table(name = "expertise", uniqueConstraints = { @UniqueConstraint(columnNames = { "classification_id", "user_id" }) })
 public class Expertise
 {
     @Id
@@ -53,7 +47,7 @@ public class Expertise
 
   
     @ManyToOne(fetch = FetchType.EAGER)
-    private FOR fOR;
+    private Classification classification;
 
   
     @ManyToOne()
@@ -68,24 +62,24 @@ public class Expertise
     }
 
    
-    public Expertise(User user, FOR fOR, int value)
+    public Expertise(User user, Classification classification, int value)
     {
 	super();
-	this.fOR = fOR;
+	this.classification = classification;
 	this.user = user;
 	this.value = value;
     }
 
 
-    public FOR getfOR()
+    public Classification getClassification()
     {
-        return fOR;
+        return classification;
     }
 
 
-    public void setfOR(FOR fOR)
+    public void setClassification(Classification classification)
     {
-        this.fOR = fOR;
+        this.classification = classification;
     }
 
 

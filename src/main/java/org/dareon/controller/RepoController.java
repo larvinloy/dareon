@@ -9,12 +9,12 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.dareon.domain.CFP;
-import org.dareon.domain.FOR;
+import org.dareon.domain.Classification;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
 import org.dareon.json.JsonFORTree;
 import org.dareon.service.CFPService;
-import org.dareon.service.FORService;
+import org.dareon.service.ClassificationService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
@@ -51,7 +51,7 @@ public class RepoController
     private RepoService repoService;
     private UserService userService;
     private CFPService cFPService;
-    private FORService fORService;
+    private ClassificationService classificationService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -64,13 +64,13 @@ public class RepoController
 
     @Autowired
     public RepoController(RepoService repoService, UserService userService,
-	    CFPService cFPService, FORService fORService)
+	    CFPService cFPService, ClassificationService classificationService)
     {
 	super();
 	this.repoService = repoService;
 	this.userService = userService;
 	this.cFPService = cFPService;
-	this.fORService = fORService;
+	this.classificationService = classificationService;
     }
 
     @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
@@ -88,7 +88,7 @@ public class RepoController
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
 //	System.out.println(fORService.listByLevel(levelService.findById((long)1)));
-	for(FOR a : fORService.list())
+	for(Classification a : classificationService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
@@ -114,12 +114,12 @@ public class RepoController
 	    repo.setCreator(userService.findByEmail(auth.getName()));
 	
 //	repo.setDomains(repoForm.getFORCollection());
-	Collection<FOR> fORs = new ArrayList<FOR>();
+	Collection<Classification> classifications = new ArrayList<Classification>();
 	for(Long id : repoForm.getFORCollection())
 	{
-	    fORs.add(fORService.findById(id));
+	    classifications.add(classificationService.findById(id));
 	}
-	repo.setDomains(fORs);
+	repo.setDomains(classifications);
 	
 	
 	Repo savedRepo = repoService.save(repo);
@@ -148,7 +148,7 @@ public class RepoController
 	JSONObject obj = new JSONObject();
 	JSONArray arr = new JSONArray();
 //	return aNZSRCService.list();
-	for(FOR a : fORService.list())
+	for(Classification a : classificationService.list())
 	{
 	    obj.put("text", a.getCode() + " | " + a.getName());
 	    obj.put("id", a.getId());
@@ -162,7 +162,7 @@ public class RepoController
 	
 	
 	JSONArray pre = new JSONArray();
-	for(FOR a : repoService.findById(id).getDomains())
+	for(Classification a : repoService.findById(id).getDomains())
 	{
 	    pre.put(a.getId().toString());
 	}

@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import org.dareon.domain.Expertise;
-import org.dareon.domain.FOR;
+import org.dareon.domain.Classification;
 import org.dareon.domain.CFP;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
@@ -16,7 +16,7 @@ public interface ExpertiseRepository extends CrudRepository<Expertise, Long>
 
     Expertise findById(Long id);
     List<Expertise> findByUser(User user);
-    Expertise findByFOR(FOR fOR);
+    Expertise findByClassification(Classification classification);
     List<Expertise> findAllByOrderById();
     List<Expertise> findAllByUser(User user);
     

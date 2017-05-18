@@ -11,38 +11,52 @@
 	<div class="container">
 		<div class="col-lg-12">
 
-			<h2 class="page-header">Add Field of Research to My Profile</h2>
- 
-			<form class="form-horizontal" th:object="${addExpertiseForm}"
-				th:action="@{/expertise/add}" method="post">
+			<h2>Classifications</h2>
+
+			<form class="form-horizontal" th:object="${classificationForm.classification}"
+				th:action="@{/classification/create}" method="post">
 
 				<div class="well well-lg">
-
-										
+ 
+					<input type="hidden" th:field="*{id}" /> 
+					
 					<div class="form-group">
-						
-						<div class="col-md-12 ">
+						<label class="col-sm-2 control-label" id="label-create">Code:</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" th:field="*{code}"
+								required="true" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label" id="label-create">Name:</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" th:field="*{name}"
+								required="true" />
+						</div>
+					</div>
+
+ 
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label" id="label-create">Parent:</label>
+						<div class="col-md-10 ">
 
 							<!-- CLASSIFICATIONS ADDED -->
-							<div class="child col-md-6 pre-scrollable panel panel-default"
-								style="min-height: 200px; max-height: 500px; padding: 2%">
+							<div class="child col-md-5 panel panel-default"
+								style="min-height: 65px; padding: 1%">
 
 								<table id="selectable-tags" class="table">
-									<tr>
-										<th colspan="2"
-											style="background: whitesmoke; border: solid thick; border-color: whitesmoke">
-											Fields of Research Added:</th>
-									</tr>
 								</table>
 							</div>
 							
 							<!-- TREE VIEW PANEL -->
-							<div class="child col-md-6 panel panel-default" 
+							<div class="child col-md-7 panel panel-default" 
 								style="min-height: 500px; max-height: 500px; background-color: lightslategray">
 
 								<!-- HIDDEN FIELD -->
 								<input id="selectable-output-id" type="hidden"
-										class="form-control" th:field="${addExpertiseForm.domains}" />
+										class="form-control" th:field="${classificationForm.parent}" />
 								
 								<div style="padding: 2%; height: 100%">
 									<div class="form-group" style="text-align: center">
@@ -104,12 +118,16 @@
 
 						</div>
 					</div>
+	
 				</div>
 
 				<div class="form-group">
 					<div class="col-sm-4">
-						<button id="btn-next" type="submit" class="btn btn-default">
-							Next <span class="glyphicon glyphicon-forward" /> 
+						<button type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-save" /> Save
+						</button>
+						<button type="reset" class="btn btn-default">
+							<span class="glyphicon glyphicon-refresh" /> Reset
 						</button>
 						<button type="button" class="btn btn-default"
 							onClick="history.go(-1);return true;">
@@ -137,9 +155,8 @@
             return $('#treeview-selectable').treeview({
               levels: 1,
   			  data: defaultData,
-              multiSelect: true,
+              multiSelect: false,
               onNodeSelected: function(event, node) {
-              	  
             	  $('#selectable-output-id').val(function(i, v) {
             		    var arr = v.split(',');
             		    arr.push(node.id);
@@ -188,8 +205,10 @@
                 });
                 
                 $selectableTree.treeview('unselectNode', [node.nodeId]);
-          	  	var row = document.getElementById("tag-"+node.id);
+          	  var row = document.getElementById("tag-"+node.id);
           	    row.parentNode.removeChild(row);
+          	    
+          	    
               }
             });
           };
@@ -203,7 +222,7 @@
           var selectableNodes = findSelectableNodes();
                   
 
-          var pre = $.parseJSON([[${addExpertiseForm.pre}]]);
+          var pre = $.parseJSON([[${classificationForm.pre}]]);
 
           //<![CDATA[
           if(pre != null)
@@ -211,7 +230,7 @@
         	  $selectableTree.treeview('expandAll');
               for(i=0;i<pre.length;i++) 
               {
-            	  var myElement = $('li[data-classification="'+pre[i]+'"]');  
+            	  var myElement = $('li[data-for="'+pre[i]+'"]');  
             	  $selectableTree.treeview('selectNode', [myElement.data('nodeid')]);
               }
               $selectableTree.treeview('collapseAll');
@@ -263,7 +282,6 @@
 
   		});
   	</script>
-
 
 
 </body>
