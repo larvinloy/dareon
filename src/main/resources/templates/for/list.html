@@ -13,7 +13,7 @@
 
 			<h2>Classifications</h2>
 
-			<div class="well well-lg">
+			<div class="well well-lg" style="min-height: 550px;">
 				<!-- CLASSIFICATIONS ADDED -->
 				<div class="col-md-5 panel panel-default" style="padding: 1%">
 					<h4>Select a Classification:</h4>
@@ -24,15 +24,15 @@
 					</div>
 
 					<div>
-						<a th:href="@{/for/create}" class="btn btn-default"> <span
-							class="glyphicon glyphicon-save" /> Create
-						</a> <a href=""
+						<a id="btn-create" th:href="@{/for/create}" class="btn btn-default"> <span
+							class="glyphicon glyphicon-file" /> Create
+						</a> <a id="btn-edit" href=""
 							onclick="this.href='/for/edit/'+document.getElementById('selectable-output-id').value"
-							class="btn btn-default"> <span
-							class="glyphicon glyphicon-refresh" /> Edit
-						</a> <a data-toggle="modal" data-target="#confirmDelete"
-							class="btn btn-default"> <span
-							class="glyphicon glyphicon-remove" /> Delete
+							class="btn btn-default disabled"> <span
+							class="glyphicon glyphicon-edit" /> Edit
+						</a> <a id="btn-delete" data-toggle="modal" data-target="#confirmDelete"
+							class="btn btn-default disabled"> <span
+							class="glyphicon glyphicon-trash"  /> Delete
 						</a>
 					</div>
 
@@ -139,7 +139,6 @@
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
 
-
 	<script th:inline="javascript">
 
   		$(function() {
@@ -152,6 +151,12 @@
   			  data: defaultData,
               multiSelect: false,
               onNodeSelected: function(event, node) {
+            	  	
+            	  $('#btn-create').addClass('disabled');
+                	$('#btn-edit').removeClass('disabled');
+                	if(node.tags == 0)
+                		$('#btn-delete').removeClass('disabled');
+            	  
             	  $('#selectable-output-id').val(function(i, v) {
             		    var arr = v.split(',');
             		    arr.push(node.id);
@@ -186,10 +191,15 @@
                     	    row.parentNode.removeChild(row);
                       }
                       cell2.appendChild(t2);
-              
+                       
               },
               onNodeUnselected: function (event, node) {
-                $('#selectable-output-id').val(function(i, v) {
+
+              	$('#btn-edit').addClass('disabled');
+            	$('#btn-delete').addClass('disabled');
+            	$('#btn-create').removeClass('disabled');
+
+            	  $('#selectable-output-id').val(function(i, v) {
                     return $.grep(v.split(','), function(v) { 
                         return v != node.id; 
                     }).join(',');        
