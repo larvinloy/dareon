@@ -82,13 +82,21 @@
 						<div class="form-group" style="text-align: center">
 
 							<div class="input-group">
-								<input type="text" id="input-select-node" class="form-control"
-									placeholder="Search for classification..." /> <span
-									class="input-group-addon"><span id="badge-search-size"
-									class="badge" style="background: black;"><div>
-											<span class="glyphicon glyphicon-search"></span>
-										</div> </span></span>
-							</div>
+											<input type="text" id="input-select-node"
+												class="form-control"
+												placeholder="Search for classification..." /> <span
+												class="input-group-addon"><span
+												id="badge-search-size" class="badge"
+												style="background: black;">
+
+													
+														<span class="">0 found </span>
+													
+											</span> <span role="button" class="glyphicon glyphicon-chevron-up"
+												id="btn-search-swap-up"></span> <span
+												role="button" class="glyphicon glyphicon-chevron-down"
+												id="btn-search-swap-down"></span></span>
+										</div>
 							<p>
 							<div class="btn-group btn-group-justified">
 								<div class="btn-group">
@@ -144,6 +152,8 @@
   		$(function() {
   			
         var defaultData = [[${message}]];
+        
+        var searchswap = 0;
 
         var initSelectableTree = function() {
             return $('#treeview-selectable').treeview({
@@ -260,7 +270,27 @@
 	            parent.scrollTop = x[0].offsetTop - parent.offsetTop;
 	
 			});
-
+         // switches highlighted on search
+            $('#btn-search-swap-down').on('click', function (e) {
+            	selectableNodes = findSelectableNodes();
+            	if((selectableNodes.length-1) > searchswap)
+            		{
+            		 var x = document.getElementsByClassName('search-result');
+      	            var parent = document.getElementById('treeview-selectable');
+      	            parent.scrollTop = x[++searchswap].offsetTop - parent.offsetTop;
+            		}
+            	
+              });
+            $('#btn-search-swap-up').on('click', function (e) {
+            	
+            	if(searchswap > 0)
+            	{
+            	var x = document.getElementsByClassName('search-result');
+ 	            var parent = document.getElementById('treeview-selectable');
+ 	            parent.scrollTop = x[--searchswap].offsetTop - parent.offsetTop;
+            	}
+            	 
+              });
 			//Select | Unselect All
           $('#btn-select-node.select-node').on('click', function (e) {
             $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') } ]);

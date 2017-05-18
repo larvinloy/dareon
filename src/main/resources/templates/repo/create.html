@@ -91,15 +91,15 @@
 									</tr>
 								</table>
 							</div>
-							
+
 							<!-- TREE VIEW PANEL -->
-							<div class="child col-md-7 panel panel-default" 
+							<div class="child col-md-7 panel panel-default"
 								style="min-height: 500px; max-height: 500px; background-color: lightslategray">
 
 								<!-- HIDDEN FIELD -->
 								<input id="selectable-output-id" type="hidden"
-										class="form-control" th:field="${repoForm.domains}" />
-								
+									class="form-control" th:field="${repoForm.domains}" />
+
 								<div style="padding: 2%; height: 100%">
 									<div class="form-group" style="text-align: center">
 
@@ -107,49 +107,55 @@
 											<input type="text" id="input-select-node"
 												class="form-control"
 												placeholder="Search for classification..." /> <span
-												class="input-group-addon" ><span
+												class="input-group-addon"><span
 												id="badge-search-size" class="badge"
-												style="background: black;"><div>
-														<span class="glyphicon glyphicon-search"></span>
-													</div> </span></span>
+												style="background: black;">
+
+													
+														<span class="">0 found </span>
+													
+											</span> <span role="button" class="glyphicon glyphicon-chevron-up"
+												id="btn-search-swap-up"></span> <span
+												role="button" class="glyphicon glyphicon-chevron-down"
+												id="btn-search-swap-down"></span></span>
 										</div>
 										<p>
 										<div class="btn-group btn-group-justified">
-										<div class="btn-group">
-											<button type="button" class="btn btn-default select-node"
-												id="btn-select-node" >
-												<span class="glyphicon glyphicon-ok" /> Add
-												
-											</button>
-										</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default select-node"
-												id="btn-unselect-node" >
-												<span class="glyphicon glyphicon-remove" /> Remove 
-											</button>
+											<div class="btn-group">
+												<button type="button" class="btn btn-default select-node"
+													id="btn-select-node">
+													<span class="glyphicon glyphicon-ok" /> Add
+
+												</button>
 											</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default"
-												id="btn-clear-search" data-toggle="tooltip" >
-												<span class="glyphicon glyphicon-refresh" /> Clear
-											</button>
+											<div class="btn-group">
+												<button type="button" class="btn btn-default select-node"
+													id="btn-unselect-node">
+													<span class="glyphicon glyphicon-remove" /> Remove
+												</button>
 											</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default"
-												id="btn-expand-all" >
-												<span class="glyphicon glyphicon-plus" /> Expand
-											</button>
+											<div class="btn-group">
+												<button type="button" class="btn btn-default"
+													id="btn-clear-search" data-toggle="tooltip">
+													<span class="glyphicon glyphicon-refresh" /> Clear
+												</button>
 											</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default"
-												id="btn-collapse-all" >
-												<span class="glyphicon glyphicon-minus" /> Collapse
-											</button>
+											<div class="btn-group">
+												<button type="button" class="btn btn-default"
+													id="btn-expand-all">
+													<span class="glyphicon glyphicon-plus" /> Expand
+												</button>
+											</div>
+											<div class="btn-group">
+												<button type="button" class="btn btn-default"
+													id="btn-collapse-all">
+													<span class="glyphicon glyphicon-minus" /> Collapse
+												</button>
 											</div>
 										</div>
 										</p>
-										
-										
+
+
 										<div id="treeview-selectable"
 											style="text-align: left; overflow-x: scroll; height: 390px">
 										</div>
@@ -297,20 +303,25 @@
 	
 			});
 			// switches highlighted on search
-            $('#badge-search-size').on('click', function (e) {
+            $('#btn-search-swap-down').on('click', function (e) {
             	selectableNodes = findSelectableNodes();
-            	if(selectableNodes.length == (searchswap + 1))
+            	if((selectableNodes.length-1) > searchswap)
             		{
-            		searchswap = 0;
+            		 var x = document.getElementsByClassName('search-result');
+      	            var parent = document.getElementById('treeview-selectable');
+      	            parent.scrollTop = x[++searchswap].offsetTop - parent.offsetTop;
             		}
-            	else
-            		{
-            		searchswap++;
-            		}
-            		
-            	 var x = document.getElementsByClassName('search-result');
+            	
+              });
+            $('#btn-search-swap-up').on('click', function (e) {
+            	
+            	if(searchswap > 0)
+            	{
+            	var x = document.getElementsByClassName('search-result');
  	            var parent = document.getElementById('treeview-selectable');
- 	            parent.scrollTop = x[searchswap].offsetTop - parent.offsetTop;
+ 	            parent.scrollTop = x[--searchswap].offsetTop - parent.offsetTop;
+            	}
+            	 
               });
 			//Select | Unselect All
           $('#btn-select-node.select-node').on('click', function (e) {
