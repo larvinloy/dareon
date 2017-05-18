@@ -191,6 +191,8 @@
   		$(function() {
   			
         var defaultData = [[${message}]];
+        
+        var searchswap = 0;
 
         var initSelectableTree = function() {
             return $('#treeview-selectable').treeview({
@@ -294,7 +296,22 @@
 	            parent.scrollTop = x[0].offsetTop - parent.offsetTop;
 	
 			});
-
+			// switches highlighted on search
+            $('#badge-search-size').on('click', function (e) {
+            	selectableNodes = findSelectableNodes();
+            	if(selectableNodes.length == (searchswap + 1))
+            		{
+            		searchswap = 0;
+            		}
+            	else
+            		{
+            		searchswap++;
+            		}
+            		
+            	 var x = document.getElementsByClassName('search-result');
+ 	            var parent = document.getElementById('treeview-selectable');
+ 	            parent.scrollTop = x[searchswap].offsetTop - parent.offsetTop;
+              });
 			//Select | Unselect All
           $('#btn-select-node.select-node').on('click', function (e) {
             $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') } ]);
