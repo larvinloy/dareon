@@ -37,7 +37,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //@JsonIdentityInfo(
 //        generator = ObjectIdGenerators.PropertyGenerator.class,
 //        property = "id")
+/**
+ * 
+ * @author Ayush Garg
+ * class defining Field of research for classification
+ */
 
+// data table named fors
 @Entity()
 @Table(name = "fors")
 public class FOR
@@ -73,6 +79,11 @@ public class FOR
     {
 	
     }
+    /**
+     * 
+     * @param code of FOR to super class
+     * @param name returns value of name variable(String) to super class
+     */
     public FOR(String code, String name)
     {
 	super();
@@ -80,19 +91,29 @@ public class FOR
 	this.name = name;
 	
     }
-
+/**
+ * 
+ * @return children value to the leaf node of tree
+ */
     @Transient()
     public boolean isLeaf()
     {
 	return (children == null || children.size() == 0);
     }
 
+    /**
+     * 
+     * @return Root value to the parent node
+     */
     @Transient()
     public boolean isRoot()
     {
 	return (parent == null);
     }
-
+/**
+ * 
+ * @return children value to leaf node as a list for field of research 
+ */
     public List<FOR> getChildren()
     {
 	return children;
@@ -102,7 +123,10 @@ public class FOR
     {
 	this.children = children;
     }
-
+/**
+ * 
+ * @return NAme value with respect to FOR
+ */
     public String getName()
     {
 	return name;
@@ -112,7 +136,10 @@ public class FOR
     {
 	this.name = name;
     }
-
+/**
+ * 
+ * @return parent name of FOR
+ */
     public FOR getParent()
     {
 	return parent;
@@ -123,6 +150,11 @@ public class FOR
 	this.parent = parent;
     }
 
+    /**
+     * 
+     * 
+     *@return randomly generated FOR Id (long type)
+     */
     public Long getId()
     {
 	return id;
@@ -132,7 +164,10 @@ public class FOR
     {
 	this.id = id;
     }
-
+/**
+ * 
+ * @return code of FOR
+ */
     public String getCode()
     {
 	return code;
@@ -143,21 +178,34 @@ public class FOR
 	this.code = code;
     }
 
+    /**
+     * 
+     * @return repos as a set of repos
+     */
     public Set<Repo> getRepos()
     {
         return repos;
     }
-
+/**
+ * 
+ * @param repos saving the value of repos as a set of Repo in Repos object
+ */
     public void setRepos(Set<Repo> repos)
     {
         this.repos = repos;
     }
-    
+    /**
+     * 
+     * @return expertises as a set of expertise
+     */
     public Set<Expertise> getExpertises()
     {
         return expertises;
     }
-    
+    /**
+     * 
+     * @param expertises saving the value of expertise as a set of Expertise in expertises object
+     */
     public void setExpertises(Set<Expertise> expertises)
     {
         this.expertises = expertises;

@@ -16,7 +16,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+/**
+ * 
+ * @author Ayush Garg
+ * class defining proposal domain and its attributes(fields and relations)
+ */
 @Entity
 @Table(name = "proposals")
 public class Proposal
@@ -47,7 +51,13 @@ public class Proposal
     {
 	
     }
-        
+       /**
+        *  
+        * @param title title of proposal
+        * @param description stores description 
+        * @param details stores details of proposals
+        * @param cfp describes call for proposals
+        */
     public Proposal(String title, String description, String details, CFP cfp)
     {
 	super();
@@ -57,7 +67,10 @@ public class Proposal
 	this.cfp = cfp;
     }
 
-
+/**
+ * 
+ * @return Id valu (long)
+ */
     public long getId()
     {
 	return id;
@@ -67,7 +80,10 @@ public class Proposal
     {
 	this.id = id;
     }
-
+/**
+ * 
+ * @return creation date(Date type)
+ */
     public Date getCreatedOn()
     {
 	return createdOn;
@@ -77,7 +93,10 @@ public class Proposal
     {
 	this.createdOn = createdOn;
     }
-
+/**
+ * 
+ * @return Title balue to the title object
+ */
     public String getTitle()
     {
 	return title;
@@ -87,7 +106,10 @@ public class Proposal
     {
 	this.title = title;
     }
-
+/**
+ * 
+ * @return Description(String type) to description field
+ */
     public String getDescription()
     {
 	return description;
@@ -97,7 +119,10 @@ public class Proposal
     {
 	this.description = description;
     }
-
+/**
+ * 
+ * @return details of the CFP to the object
+ */
     public String getDetails()
     {
 	return details;
@@ -108,6 +133,10 @@ public class Proposal
 	this.details = details;
     }
 
+    /**
+     * 
+     * @return CFP to the cfp object
+     */
     public CFP getCfp()
     {
         return cfp;

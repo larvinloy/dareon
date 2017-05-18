@@ -37,6 +37,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //        generator = ObjectIdGenerators.PropertyGenerator.class,
 //        property = "id")
 
+/**
+ * 
+ * @author Ayush Garg
+ * This class expertise level of different fields of research(FOR)
+ */
+
 @Entity()
 @Table(name = "expertise", uniqueConstraints = { @UniqueConstraint(columnNames = { "for_id", "user_id" }) })
 public class Expertise
