@@ -36,16 +36,72 @@
 									<td th:text="${proposal.cfp.repo.title}" />
 									<td style="text-align: center">
 										<div class="btn-group btn-group-sm">
-											<a
-												th:href="|@{/proposal/read/}${proposal.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> <a
-												th:href="|@{/proposal/edit/}${proposal.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> <a
-												th:href="|@{/proposal/delete/}${proposal.id}|"
-												class="btn btn-danger"><span class="glyphicon glyphicon-trash" /> Delete</a>
+											<a th:href="|@{/proposal/read/}${proposal.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
+											<a th:href="|@{/proposal/edit/}${proposal.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> 
+											<a class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+												<span class="glyphicon glyphicon-trash" /> Delete</a>
 										</div>
+
+										<!-- DELETE MODAL -->
+										<div id="confirmDelete" class="modal fade" tabindex="-1"
+											role="dialog">
+
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header"
+														style="padding: 20px 15px; background-color: red; color: white !important;">
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														<h2 class="modal-title">
+															<span class="glyphicon glyphicon-exclamation-sign" /> 
+															Warning  
+														</h2>
+													</div>
+
+													<div class="modal-body">
+														<p class="text-left">You are about to delete the following:</p>
+														
+														<table class="table table-bordered table-round text-left">
+															<tr>
+												                <td class="active text-center" colspan="2"><h4><strong>PROPOSAL</strong></h4></td>
+												            </tr>
+															<tr>
+																<td class=" col-md-3 active">Title</td>
+																<td><span th:text="${proposal.title}" /></td>
+															</tr>
+															<tr>
+																<td class="active">Description</td>
+																<td><span th:text="${proposal.description}" /></td>
+															</tr>
+															<tr>
+																<td class="active">Repository</td>
+																<td><span th:text="${proposal.cfp.repo.title}" /></td>
+															</tr>
+															<tr>
+																<td class="active">Call for Proposal</td>
+																<td><span th:text="${proposal.cfp.title}" /></td>
+															</tr>
+														</table>
+													</div>
+
+													<div class="modal-footer" style="background-color: #f9f9f9;">
+														<a type="button" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+														<a type="button" class="btn btn-default" th:href="|@{/proposal/deleteconfirmed/}${proposal.id}|">
+														<span class="glyphicon glyphicon-trash" /> Continue with Delete</a>
+													</div>
+
+												</div>
+												<!-- /.modal-content -->
+											</div>
+											<!-- /.modal-dialog -->
+										</div>
+										<!-- /.modal -->	
+																			
 									</td>
-		
 								</tr>
 							</th:block>
 						</tbody>
@@ -63,11 +119,12 @@
 		
 			</div>
 			
-		</div>		
+		</div>
+				
 	</div>
 	
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
-
+	
 </body>
 </html>

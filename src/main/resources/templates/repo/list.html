@@ -46,14 +46,68 @@
 									<td style="text-align: center">
 										<div class="btn-group btn-group-sm">
 											<a th:href="|@{/repo/read/}${repo.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> <a
-												th:href="|@{/repo/edit/}${repo.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> <a
-												th:href="|@{/repo/delete/}${repo.id}|"
-												class="btn btn-danger"><span class="glyphicon glyphicon-trash" /> Delete</a> <a
-												th:href="|@{/callforproposals/create/}${repo.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
+											<a th:href="|@{/repo/edit/}${repo.id}|"
+												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> 
+											<a class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+												<span class="glyphicon glyphicon-trash" /> Delete</a>	
+											<a th:href="|@{/callforproposals/create/}${repo.id}|"
 												class="btn btn-primary"><span class="glyphicon glyphicon-file"/> Create CFP</a>
 										</div>
+										
+										<!-- DELETE MODAL -->
+										<div id="confirmDelete" class="modal fade" tabindex="-1"
+											role="dialog">
+
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header"
+														style="padding: 20px 15px; background-color: red; color: white !important;">
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														<h2 class="modal-title">
+															<span class="glyphicon glyphicon-exclamation-sign" /> 
+															Warning  
+														</h2>
+													</div>
+
+													<div class="modal-body">
+														<p class="text-left">You are about to delete the following:</p>
+														
+														<table class="table table-bordered table-round text-left">
+															<tr>
+												                <td class="active text-center" colspan="2"><h4><strong>REPOSITORY</strong></h4></td>
+												            </tr>
+															<tr>
+																<td class=" col-md-4 active">Title</td>
+																<td><span th:text="${repo.title}" /></td>
+															</tr>
+															<tr>
+																<td class="active">Description</td>
+																<td><span th:text="${repo.description}" /></td>
+															</tr>
+															<tr>
+																<td class="active">Owner</td>
+																<td><span th:text="|${repo.owner.firstName} ${repo.owner.lastName}|" /></td>
+															</tr>
+														</table>
+													</div>
+
+													<div class="modal-footer" style="background-color: #f9f9f9;">
+														<a type="button" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+														<a type="button" class="btn btn-default" th:href="|@{/repo/deleteconfirmed/}${repo.id}|">
+														<span class="glyphicon glyphicon-trash" /> Continue with Delete</a>
+													</div>
+
+												</div>
+												<!-- /.modal-content -->
+											</div>
+											<!-- /.modal-dialog -->
+										</div>
+										<!-- /.modal -->										
+															
 									</td>
 								</tr>
 							</th:block>
