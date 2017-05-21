@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+
+<head>
+</head>
+ 
+ <body>
+
+	<div th:fragment="treeview-body"> 
+		<!-- CLASSIFICATIONS ADDED -->
+		
+		
+		  <div class="col-md-6" style="padding-left:0px">
+                <div class="child panel panel-default " >
+                    <div class="panel-heading" style="background-color: lightslategray">
+                        Classifications Added
+                    </div>
+                    <div class="panel-body" >
+                    	<div class="pre-scrollable" style="min-height:200px; max-height:425px;">
+ 						<table id="selectable-tags" class="table" />
+ 						</div>
+                    </div>
+                </div>
+            </div>
+
+		<!-- TREE VIEW PANEL -->
+		<div class="child col-md-6 panel panel-default" 
+			style="min-height: 500px; max-height: 500px; background-color: lightslategray">
+			
+			<div style="padding: 2%; height: 100%">
+				<div class="form-group" style="text-align: center">
+
+					<div class="input-group">
+						<input type="text" id="input-select-node"
+							class="form-control" placeholder="Search for classification..." style="height:35px"/> 
+							<span class="input-group-addon" style="height:35px">
+								<span id="badge-search-size" class="badge" style="background: black;">
+								0 found	</span> 
+								<a class="btn btn-xs"><span class="glyphicon glyphicon-chevron-up"
+									id="btn-search-swap-up" /></a> 
+								<a class="btn btn-xs"><span class="glyphicon glyphicon-chevron-down"
+									id="btn-search-swap-down" /></a>
+							</span>
+					</div>
+					<p>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default btn-sm select-node"
+							id="btn-select-node" >
+							<span class="glyphicon glyphicon-ok" /> Add Highlighted
+						</button>
+						<button type="button" class="btn btn-default btn-sm select-node"
+							id="btn-unselect-node" >
+							<span class="glyphicon glyphicon-remove" /> Remove Highlighted 
+						</button>
+						<button type="button" class="btn btn-default btn-sm" 
+							id="btn-expand-all" >
+							<span class="glyphicon glyphicon-plus" /> Expand
+						</button>
+						<button type="button" class="btn btn-default btn-sm"
+							id="btn-collapse-all" >
+							<span class="glyphicon glyphicon-minus" /> Collapse
+						</button>
+					</div>
+					</p>
+					
+					<div id="treeview-selectable"
+						style="text-align: left; overflow-x: scroll; height: 390px">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END OF TREEVIEW PANEL -->		
+	</div>
+ 
+
+	<div th:fragment="treeview-scripts">  
+		<script th:inline="javascript">
+
+  		$(function() {
+  			
+        var defaultData = [[${message}]];
+        
+        var searchswap = 0;
+
+        var initSelectableTree = function() {
+            return $('#treeview-selectable').treeview({
+              levels: 1,
+  			  data: defaultData,
+              multiSelect: true,
+              onNodeSelected: function(event, node) {
+            	  $('#selectable-output-id').val(function(i, v) {
+            		    var arr = v.split(',');
+            		    arr.push(node.id);
+            		    return arr.join(',').replace(/(^,)|(,$)/g, "");
+            		});
+              
+            	  $('#selectable-output-text').val(function(i, v) {
+          		    var arr = v.split(',');
+          		    arr.push(node.text);
+          		    return arr.join(',').replace(/(^,)|(,$)/g, "");
+          		});
+              
+            	  var table = document.getElementById("selectable-tags");
+            	  var row=table.insertRow(table.rows.length);
+            	  row.setAttribute("id","tag-"+node.id);
+            	  row.setAttribute("style","background:#c1dff1")
+                  var cell1=row.insertCell(0);
+            	  cell1.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thick;border-color:white");
+                  var t1=document.createElement("span");
+                      t1.innerHTML = node.text;
+                      cell1.appendChild(t1);
+                      
+                  var cell2=row.insertCell(1);
+                  cell2.setAttribute("style","max-width:95%; min-width:95%; border-bottom:solid thick; border-right:solid thick; border-color:white; text-align:right");
+                  var t2=document.createElement("button");
+                      t2.setAttribute("class","btn btn-default btn-xs glyphicon glyphicon-remove");
+                      t2.onclick = function(){
+                    	  $selectableTree.treeview('unselectNode', [node.nodeId]);
+                    	  var row = document.getElementById("tag-"+node.id);
+                    	    row.parentNode.removeChild(row);
+                      }
+                      cell2.appendChild(t2);
+              
+              },
+              onNodeUnselected: function (event, node) {
+                $('#selectable-output-id').val(function(i, v) {
+                    return $.grep(v.split(','), function(v) { 
+                        return v != node.id; 
+                    }).join(',');        
+                });
+                
+                $('#selectable-output-text').val(function(i, v) {
+                    return $.grep(v.split(','), function(v) { 
+                        return v != node.text; 
+                    }).join(',');        
+                });
+                
+                $selectableTree.treeview('unselectNode', [node.nodeId]);
+          	  var row = document.getElementById("tag-"+node.id);
+          	    row.parentNode.removeChild(row);
+          	    
+          	    
+              }
+            });
+          };
+          var $selectableTree = initSelectableTree();
+        
+          var findSelectableNodes = function() {
+            return $selectableTree.treeview('search', [ $('#input-select-node').val(), 
+            	{ ignoreCase: true, revealResults: true, exactMatch: false } ]);
+          };
+          
+          var selectableNodes = findSelectableNodes();
+          
+          if($('#selectable-pre').val() != "") {
+          	var pre = $.parseJSON($('#selectable-pre').val());
+	          //<![CDATA[
+	          if(pre != null)
+	        	  {
+	        	  $selectableTree.treeview('expandAll');
+	              for(i=0;i<pre.length;i++) 
+	              {
+	            	  var myElement = $('li[data-classification="'+pre[i]+'"]');  
+	            	  $selectableTree.treeview('selectNode', [myElement.data('nodeid')]);
+	              }
+	              $selectableTree.treeview('collapseAll');
+	        	  }
+	           //]]>
+          }
+          
+			//Process search input key events          
+            $('#input-select-node').on('keyup', function (e) {
+
+            	selectableNodes = findSelectableNodes();
+	            $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
+	            if(!(selectableNodes.length >= 1))
+	            	$('#badge-search-size').text("0 found");
+	            else   
+	            	$('#badge-search-size').text(selectableNodes.length + " found");
+	            var x = document.getElementsByClassName('search-result');
+	            var parent = document.getElementById('treeview-selectable');
+	            parent.scrollTop = x[0].offsetTop - parent.offsetTop;
+	
+			});
+			// switches highlighted on search
+            $('#btn-search-swap-down').on('click', function (e) {
+            	selectableNodes = findSelectableNodes();
+            	if((selectableNodes.length-1) > searchswap)
+            		{
+            		 var x = document.getElementsByClassName('search-result');
+      	            var parent = document.getElementById('treeview-selectable');
+      	            parent.scrollTop = x[++searchswap].offsetTop - parent.offsetTop;
+            		}
+            	
+              });
+            $('#btn-search-swap-up').on('click', function (e) {
+            	
+            	if(searchswap > 0)
+            	{
+            	var x = document.getElementsByClassName('search-result');
+ 	            var parent = document.getElementById('treeview-selectable');
+ 	            parent.scrollTop = x[--searchswap].offsetTop - parent.offsetTop;
+            	}
+            	 
+              });
+			//Select | Unselect All
+          $('#btn-select-node.select-node').on('click', function (e) {
+            $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') } ]);
+          });
+
+          $('#btn-unselect-node.select-node').on('click', function (e) {
+            $selectableTree.treeview('unselectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
+          });
+ 
+          $('#btn-clear-search').on('click', function (e) {
+        	  $selectableTree.treeview('clearSearch');
+              $('#input-select-node').val('');
+              $('#badge-search-size').text("0 found");
+          });
+          
+          // Expand | Collapse all
+          $('#btn-expand-all').on('click', function (e) {
+            var levels = $('#select-expand-all-levels').val();
+            $selectableTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
+          });
+
+          $('#btn-collapse-all').on('click', function (e) {
+        	  $selectableTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
+          });
+ 
+
+  		});
+  	</script>
+	</div>
+	
+  </body>
+</html>

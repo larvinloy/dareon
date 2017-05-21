@@ -23,10 +23,10 @@
 						<div th:each="index : ${#numbers.sequence(0,(#object.expertises.size() - 1))}">					
 							<div class="panel col-md-12">
 								<div class="col-md-1" >
-									<label class="control-label" style=" text-align: left; " th:text = "*{expertises[__${index}__].classification.code}"/>
+									<label class="control-label text-left" th:text = "*{expertises[__${index}__].classification.code}"/>
 								</div>
 								<div class="col-md-5" >
-									<label class="control-label" style=" text-align: left;" th:text = "*{expertises[__${index}__].classification.name}"/>
+									<label class="control-label text-left" th:text = "*{expertises[__${index}__].classification.name}"/>
 									<input type="hidden" th:field="*{expertises[__${index}__].classification}" />
 									<input type="hidden" th:field="*{expertises[__${index}__].user}" />
 								</div>
@@ -64,8 +64,8 @@
 		</div>
 	</div>
 
-
-
+	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
+	<footer th:replace="layouts/fragments :: footer"></footer>
 
 </body>
 </html>
