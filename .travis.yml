@@ -17,3 +17,6 @@ deploy:
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/public ubuntu@130.56.249.92:home/ubuntu/Desktop
   on:
     branch: master
+
+ notifications:
+    slack: dareon:rJva0mlPYFlPVIVQBwH68jSD
