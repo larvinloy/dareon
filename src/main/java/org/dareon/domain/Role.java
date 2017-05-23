@@ -13,7 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+/**
+ * 
+ * @author Ayush Garg
+ * Class defines roles and authentication of various users associated with the system
+ *
+ */
 @Entity
 @Table(name = "roles")
 public class Role
@@ -35,13 +40,19 @@ public class Role
     {
 
     } //
-    
+    /**
+     * 
+     * @param name returns the name of the user to the immediate super class
+     */
     public Role(final String name)
     {
 	super();
 	this.name = name;
     }
-
+/**
+ * 
+ * @return the user id to the id variable (Long Type)
+ */
     public Long getId()
     {
 	return id;
@@ -51,7 +62,10 @@ public class Role
     {
 	this.id = id;
     }
-
+/**
+ * 
+ * @return User name to the name variable (String Type)
+ */
     public String getName()
     {
         return name;
@@ -61,7 +75,10 @@ public class Role
     {
         this.name = name;
     }
-
+/**
+ * 
+ * @return th eset of user values to the users object
+ */
     public Set<User> getUsers()
     {
 	return users;
@@ -72,11 +89,18 @@ public class Role
 	this.users = users;
     }
     
+    /**
+     * 
+     * @return the Collection of privileges to privilege object.
+     */
     public Collection<Privilege> getPrivileges()
     {
         return privileges;
     }
-
+/**
+ * 
+ * @param privileges define the value of collection of privilages to privileges object
+ */
     public void setPrivileges(Collection<Privilege> privileges)
     {
         this.privileges = privileges;

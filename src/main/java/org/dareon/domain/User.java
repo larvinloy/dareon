@@ -24,7 +24,11 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-
+/**
+ * 
+ * @author Ayush Garg
+ *this class defines the user domain of the system and its relation with other objects and classes
+ */
 @Entity
 @Table(name = "users")
 public class User
@@ -54,7 +58,7 @@ public class User
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
 
-    // Setting relation
+    // Setting relations of th edifferent users
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "users_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
@@ -73,14 +77,24 @@ public class User
     @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     private Set<Expertise> expertises = new HashSet<Expertise>();
-
+/**
+ * returning user object to the immidiate super class
+ */
     public User()
     {
 	super();
 	
     }
 
-    
+    /**storing user details in the database
+     * 
+     * @param email returns user email to the immediate super class
+     * @param password returns user password to the immediate super class
+     * @param firstName Returns user first name to the immediate super class
+     * @param lastName returns user last name to the immediate super class
+     * @param institution returns the user institution to immediate super class
+     * @param roles returns user role to immediate super class
+     */
     public User(String email, String password, String firstName, String lastName, String institution,
 	    Collection<Role> roles)
     {
@@ -93,7 +107,10 @@ public class User
 	this.roles = roles;
     }
 
-
+/**
+ * 
+ * @return the user id to the id variable(Long Type)
+ */
     public Long getId()
     {
 	return id;
@@ -103,7 +120,10 @@ public class User
     {
 	this.id = id;
     }
-
+/**
+ * 
+ * @return the user email to the email variable(string Type)
+ */
     public String getEmail()
     {
 	return email;
@@ -114,6 +134,10 @@ public class User
 	this.email = email;
     }
 
+    /**
+     * 
+     * @return the set of Repos to the OwnedRepo Object
+     */
     public Set<Repo> getOwnedRepos()
     {
 	return ownedRepos;
@@ -124,6 +148,10 @@ public class User
 	this.ownedRepos = ownedRepos;
     }
 
+    /**
+     * 
+     * @return the user password to the password variable(String Type)
+     */
     public String getPassword()
     {
 	return password;
@@ -133,7 +161,10 @@ public class User
     {
 	this.password = password;
     }
-
+/**
+ * 
+ * @return the user first name to the firstname variable(String Type)
+ */
     public String getFirstName()
     {
 	return firstName;
@@ -143,7 +174,10 @@ public class User
     {
 	this.firstName = firstName;
     }
-
+    /**
+     * 
+     * @return the user last name to the lastname variable(String Type)
+     */
     public String getLastName()
     {
 	return lastName;
@@ -154,6 +188,10 @@ public class User
 	this.lastName = lastName;
     }
 
+    /**
+     * 
+     * @return the Collection of ROle to roles object
+     */
     public Collection<Role> getRoles()
     {
 	return roles;
@@ -163,7 +201,10 @@ public class User
     {
 	this.roles = roles;
     }
-
+    /**
+     * 
+     * @return the set of Repo to the createdRepos object
+     */
     public Set<Repo> getCreatedRepos()
     {
 	return createdRepos;
@@ -174,6 +215,10 @@ public class User
 	this.createdRepos = createdRepos;
     }
     
+    /**
+     * 
+     * @return the user institution to the institution variable(String Type)
+     */
     public String getInstitution()
     {
         return institution;
@@ -183,7 +228,10 @@ public class User
     {
         this.institution = institution;
     }
-
+    /**
+     * 
+     * @return the date of creation to the cretedOn variable(Date Type)
+     */
     public Date getCreatedOn()
     {
         return createdOn;
@@ -194,6 +242,10 @@ public class User
         this.createdOn = createdOn;
     }
     
+    /**
+     * 
+     * @return the set of repos to the reviewedRepos object
+     */
     public Set<Repo> getReviewedRepos()
     {
         return reviewedRepos;
@@ -206,7 +258,10 @@ public class User
     }
     
     
-
+/**
+ * 
+ * @return th eset of user expertise to the expertise object
+ */
     public Set<Expertise> getExpertises()
     {
         return expertises;
