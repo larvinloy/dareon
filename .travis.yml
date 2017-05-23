@@ -12,5 +12,4 @@ addons:
   ssh_known_hosts: 130.56.249.92
 
 deploy:
-  - tree
-
+- ls
