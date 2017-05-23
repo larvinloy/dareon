@@ -16,6 +16,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+/**
+ * 
+ * @author Ayush Garg
+ *Proposals class defines the proposal table and its relation with database
+ */
 
 @Entity
 @Table(name = "proposals")
@@ -47,7 +52,14 @@ public class Proposal
     {
 	
     }
-        
+     /**
+      *    
+      * @param title defines the values entered in the title column of proposal table
+      * @param description defines the values entered in the description column of proposal table
+      * @param details defines the values entered in the details column of proposal table
+      * @param cfp defines the values(calls for proposals) entered in the CFP column of proposal table
+      */
+    
     public Proposal(String title, String description, String details, CFP cfp)
     {
 	super();
@@ -57,7 +69,10 @@ public class Proposal
 	this.cfp = cfp;
     }
 
-
+/**
+ * 
+ * @return the value of ID to id variable(long type)
+ */
     public long getId()
     {
 	return id;
@@ -67,7 +82,10 @@ public class Proposal
     {
 	this.id = id;
     }
-
+/**
+ * 
+ * @return date of creation to the createdOn variable(Date type)
+ */
     public Date getCreatedOn()
     {
 	return createdOn;
@@ -77,7 +95,10 @@ public class Proposal
     {
 	this.createdOn = createdOn;
     }
-
+/**
+ * 
+ * @return value of title to the title variable(String type)
+ */
     public String getTitle()
     {
 	return title;
@@ -88,6 +109,10 @@ public class Proposal
 	this.title = title;
     }
 
+    /**
+     * 
+     * @return returns value entered in the descrition section of the table to description variable(String type)
+     */
     public String getDescription()
     {
 	return description;
@@ -98,6 +123,10 @@ public class Proposal
 	this.description = description;
     }
 
+    /**
+     * 
+     * @return Details of the proposals entered into details variable(String Type)
+     */
     public String getDetails()
     {
 	return details;
@@ -108,6 +137,10 @@ public class Proposal
 	this.details = details;
     }
 
+    /**
+     * 
+     * @return the value of cfp to the cfp object( CFP type)
+     */
     public CFP getCfp()
     {
         return cfp;
