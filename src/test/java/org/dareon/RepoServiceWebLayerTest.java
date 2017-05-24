@@ -37,7 +37,7 @@ import org.springframework.http.MediaType;
 @RunWith(SpringRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class repoServiceWebLayerTests
+public class RepoServiceWebLayerTest
 {
 
 	@Autowired

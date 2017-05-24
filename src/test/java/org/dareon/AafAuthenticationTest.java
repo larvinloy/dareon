@@ -26,7 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 @RunWith(SpringRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class aafAuthenticationTest
+public class AafAuthenticationTest
 {
 
 
