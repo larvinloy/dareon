@@ -7,8 +7,8 @@ git config --global user.name "Loy Larvin"
 git clone --quiet --branch=master  https://larvinloy:$GITHUB_API_KEY@github.com/larvinloy/docker-dareon
 #go into directory and copy data we're interested
 
-rm -f docker-dareon/DareonWebApp-0.0.1-SNAPSHOT.jar
-cp target/DareonWebApp-0.0.1-SNAPSHOT.jar docker-dareon/
+rm -f docker-dareon/docker/DareonWebApp-0.0.1-SNAPSHOT.jar
+cp target/DareonWebApp-0.0.1-SNAPSHOT.jar docker-dareon/docker/
 #add, commit and push files
 
 cd docker-dareon
