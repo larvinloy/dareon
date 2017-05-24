@@ -11,6 +11,7 @@ rm -f docker-dareon/DareonWebApp-0.0.1-SNAPSHOT.jar
 cp target/DareonWebApp-0.0.1-SNAPSHOT.jar docker-dareon/
 #add, commit and push files
 
+cd docker-dareon
 git add .
 git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed [skip ci] "
 git push -fq origin master
