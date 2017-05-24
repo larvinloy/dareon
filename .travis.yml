@@ -9,4 +9,5 @@ before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS dareondb;'
 
 after_success:
+- chmod +x ./upload-jar.sh
 - ./upload-jar.sh
