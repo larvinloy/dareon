@@ -13,3 +13,6 @@ addons:
 
 script:
 - ls target
+
+after_success:
+- ./upload-jar.sh
