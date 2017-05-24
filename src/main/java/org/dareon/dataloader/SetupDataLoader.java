@@ -96,7 +96,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		cfpDeletePrivilege, proposalDeletePrivilege, proposalReadPrivilege, repoReadPrivilege);
 	
 	final List<Privilege> doPrivileges = Arrays.asList(proposalReadPrivilege, proposalCreatePrivilege, proposalEditPrivilege,
-			proposalDeletePrivilege, cfpReadPrivilege);
+			proposalDeletePrivilege, cfpReadPrivilege, repoReadPrivilege);
 
 	createRoleIfNotFound("ROLE_SD", sdPrivileges);
 	createRoleIfNotFound("ROLE_SA", saPrivileges);
