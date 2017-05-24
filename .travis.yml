@@ -8,11 +8,5 @@ before_install:
   -in deploy_rsa.enc -out deploy_rsa -d
 - mysql -e 'CREATE DATABASE IF NOT EXISTS dareondb;'
 
-addons:
-  ssh_known_hosts: 130.56.249.92
-
-script:
-- ls target
-
 after_success:
 - ./upload-jar.sh
