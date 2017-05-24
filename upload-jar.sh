@@ -13,6 +13,6 @@ cp target/DareonWebApp-0.0.1-SNAPSHOT.jar docker-dareon/
 
 cd docker-dareon
 git add .
-git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed [skip ci] "
+git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed "
 git push -fq origin master
 echo -e "Done\n"
