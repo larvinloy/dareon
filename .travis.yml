@@ -8,12 +8,6 @@ before_install:
   -in deploy_rsa.enc -out deploy_rsa -d
 - mysql -e 'CREATE DATABASE IF NOT EXISTS dareondb;'
 
-addons:
-  ssh_known_hosts: 130.56.249.92
-
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/public ubuntu@130.56.249.92:home/ubuntu/Desktop
-  on:
-    branch: master
+after_success:
+- chmod +x ./upload-jar.sh
+- ./upload-jar.sh
