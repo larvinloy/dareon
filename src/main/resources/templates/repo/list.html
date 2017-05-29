@@ -31,7 +31,7 @@
 						<tbody>
 							<th:block th:each="repo : ${repos}">
 								<tr>
-									<td th:text="${repo.title}" />
+									<td> <p th:text="${repo.title}" /> <p th:text="${repo.description}" /> </td>
 									<td th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy')}" />
 									<td th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
 									<th:block th:if="${repo.owner} != null">
@@ -49,80 +49,103 @@
 												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
 											<a th:href="|@{/repo/edit/}${repo.id}|"
 												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> 
-											<a class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+											<a class="btn btn-danger" 
+											th:onclick="'javascript:deleteModal(\'' 
+												+ ${repo.id} + ','
+												+ ${repo.title} + ',' 
+												+ ${repo.description} + ','
+												+ |${repo.owner.firstName} ${repo.owner.lastName}| + ','
+												+ ${repo.getcFPs().size()}
+												+ '\');'" >
 												<span class="glyphicon glyphicon-trash" /> Delete</a>	
 											<a th:href="|@{/callforproposals/create/}${repo.id}|"
 												class="btn btn-primary"><span class="glyphicon glyphicon-file"/> Create CFP</a>
 										</div>
-										
-										<!-- DELETE MODAL -->
-										<div id="confirmDelete" class="modal fade" tabindex="-1"
-											role="dialog">
-
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="modal-header"
-														style="padding: 20px 15px; background-color: red; color: white !important;">
-														<button type="button" class="close" data-dismiss="modal"
-															aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-														<h2 class="modal-title">
-															<span class="glyphicon glyphicon-exclamation-sign" /> 
-															Warning  
-														</h2>
-													</div>
-
-													<div class="modal-body">
-														<p class="text-left">You are about to delete the following:</p>
-														
-														<table class="table table-bordered table-round text-left">
-															<tr>
-												                <td class="active text-center" colspan="2"><h4><strong>REPOSITORY</strong></h4></td>
-												            </tr>
-															<tr>
-																<td class=" col-md-4 active">Title</td>
-																<td><span th:text="${repo.title}" /></td>
-															</tr>
-															<tr>
-																<td class="active">Description</td>
-																<td><span th:text="${repo.description}" /></td>
-															</tr>
-															<tr>
-																<td class="active">Owner</td>
-																<td><span th:text="|${repo.owner.firstName} ${repo.owner.lastName}|" /></td>
-															</tr>
-														</table>
-													</div>
-
-													<div class="modal-footer" style="background-color: #f9f9f9;">
-														<a type="button" class="btn btn-primary" data-dismiss="modal">Cancel</a>
-														<a type="button" class="btn btn-default" th:href="|@{/repo/deleteconfirmed/}${repo.id}|">
-														<span class="glyphicon glyphicon-trash" /> Continue with Delete</a>
-													</div>
-
-												</div>
-												<!-- /.modal-content -->
-											</div>
-											<!-- /.modal-dialog -->
-										</div>
-										<!-- /.modal -->										
-															
 									</td>
 								</tr>
 							</th:block>
 						</tbody>
 		
 					</table>
-
 					<script>
-						$(document).ready(function() {
-							$('#repoTable').DataTable()
-						});
+
+					$(document).ready(function() {
+					    $('#repoTable').DataTable( {
+					        columnDefs: [ {
+					            orderable: false,
+					            className: 'select-checkbox',
+					            targets:   0
+					        } ],
+					        select: {
+					            style:    'os',
+					            selector: 'td:first-child'
+					        },
+					        order: [[ 1, 'asc' ]]
+					    } );
+					} );
+					
 					</script>
+					
 					<p th:if="${repos.size() == 0}">
 						<div class="alert alert-warning" role="alert">No Repositories found.</div>
 					</p>
+
+					<!-- DELETE MODAL -->
+					<div id="confirmDelete" class="modal fade" tabindex="-1"
+						role="dialog">
+	
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header"
+									style="padding: 20px 15px; background-color: #d9534f; color: white !important; ">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h3 class="modal-title">
+										Warning...  
+									</h3>
+								</div>
+	
+								<div class="modal-body">
+									<p class="text-left">You are about to delete the following:</p>
+									<table class="table table-bordered table-round text-left">
+										<tr>
+							                <td class="active text-center" colspan="2"><h4><strong>REPOSITORY</strong></h4></td>
+							            </tr>
+										<tr>
+											<td class=" col-md-3 active">Title</td>
+											<td><span id="repo_title" /></td>
+										</tr>
+										<tr>
+											<td class="active">Description</td>
+											<td><span id="repo_description" /></td>
+										</tr>
+										<tr>
+											<td class="active">Owner</td>
+											<td><span id="repo_owner" /></td>
+										</tr>
+										<tr>
+											<td class="active"># of CFPs</td>
+											<td><span id="repo_CFPs" /></td>
+										</tr>
+									</table>
+	
+								</div>
+	
+								<div class="modal-footer" style="background-color: #f9f9f9;">
+									<a type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
+									<a id="delete_btn" type="button" class="btn btn-danger"  >
+									
+									<span class="glyphicon glyphicon-trash" /> Continue with Delete</a>
+								</div>
+	
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.modal -->
 
 			</div>
 
@@ -131,6 +154,33 @@
 
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
+	
+	
+	
+	<script>
+	
+	function deleteModal(repo) {
+		
+		var arrRepo = repo.split(',');
+		var id=arrRepo[0];
+		var title=arrRepo[1];
+		var description=arrRepo[2];
+		var owner=arrRepo[3];
+		var CFPs=arrRepo[4];
+		
+		document.getElementById("repo_title").innerHTML = title;
+		document.getElementById("repo_description").innerHTML = description;
+		document.getElementById("repo_owner").innerHTML = owner;
+		document.getElementById("repo_CFPs").innerHTML = CFPs;
+
+		document.getElementById("delete_btn").href = '/repo/deleteconfirmed/' + id;
+		$('#confirmDelete').modal('show');
+		
+	}
+	
+	</script>
+	
+	
 
 </body>
 </html>
