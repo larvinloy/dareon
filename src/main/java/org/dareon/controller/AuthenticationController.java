@@ -26,7 +26,11 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import net.minidev.json.JSONObject;
-
+/**
+ * 
+ * @author Ayush Garg
+ *This is controller class for defining various user authentication with AAF
+ */
 @Controller
 public class AuthenticationController {
 
@@ -46,7 +50,7 @@ public class AuthenticationController {
 	private JTIService jtiService;
 	
 	
-    @RequestMapping("/auth/jwt")
+	    @RequestMapping("/auth/jwt")
     public String authenticateFromAAF(@RequestParam(value="assertion", required=true) String assertion, RedirectAttributes redirectAttributes) {
     	
 		try {
@@ -114,7 +118,12 @@ public class AuthenticationController {
     }
     
 
-    
+    /**
+     * 
+     * @param defines controls the authentication token issued to the user by right issuer
+     * @return
+     * @throws ValidationException  for invalid user(audience)
+     */
     private boolean validateJWTClaims(JWTClaimsSet claimsSet) throws ValidationException {
         
     	if (!claimsSet.getIssuer().equals(this.aafIssuer))
