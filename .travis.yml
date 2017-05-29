@@ -1,7 +1,13 @@
 language: java
 jdk:
- - oraclejdk8
+- oraclejdk8
 services:
- - mysql
+- mysql
 before_install:
- - mysql -e 'CREATE DATABASE IF NOT EXISTS dareondb;'
+- openssl aes-256-cbc -K $encrypted_dc2bc48c1933_key -iv $encrypted_dc2bc48c1933_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
+- mysql -e 'CREATE DATABASE IF NOT EXISTS dareondb;'
+
+after_success:
+- chmod +x ./upload-jar.sh
+- ./upload-jar.sh

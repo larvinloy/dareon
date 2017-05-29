@@ -36,6 +36,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+/**
+ * 
+ * 
+ * @author Ayush Garg
+ *This class implements the main functionality of the different services provided by our system
+ *and defines its relation with service layer
+ */
 
 @Controller
 public class CFPController
@@ -53,7 +60,12 @@ public class CFPController
     {
 	auth.userDetailsService(userDetailsService);
     }
-
+/**
+ * 
+ * @param repoService defines repository services and returns the value to immediate super class
+ * @param userService define different user services and returns the value to immediate super class
+ * @param cFPService defines various call for proposal services and returns the value to immediate super class
+ */
     @Autowired
     public CFPController(RepoService repoService, UserService userService,
 	    CFPService cFPService)
@@ -63,7 +75,11 @@ public class CFPController
 	this.userService = userService;
 	this.cFPService = cFPService;
     }
-
+/**
+ * 
+ * @param model defines the main structure of CFP create function
+ * @return the value of callforproposals/create to the object CFP
+ */
     @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
     @RequestMapping("/callforproposals/create")
     public String cFPCreate(Model model)
@@ -73,7 +89,12 @@ public class CFPController
 	model.addAttribute("callForProposals", new CFP());
 	return "callforproposals/create";
     }
-    
+    /**
+     * 
+     * @param model defines the main structure of the CFP create function with pre selected repository and the path variable.
+     * @param id defines the Repo owner id of the selected repo for which it is authenticated to create
+     * @return the callforproposals/create model to the CFP object
+     */
     @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#id)")
     @RequestMapping("/callforproposals/create/{id}")
     public String cFPCreateWithPreselectedRepo(Model model,@PathVariable Long id)
@@ -83,7 +104,11 @@ public class CFPController
 	model.addAttribute("callForProposals", new CFP());
 	return "callforproposals/create";
     }
-
+/**
+ * 
+ * @param cFP defines the th esave functionfor saving newly created cfp in cFP object
+ * @return the savedCallForProposal to CFP object
+ */
     @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#cFP)")
     @RequestMapping(value = "/callforproposals/create", method = RequestMethod.POST)
     public String cFPSave(@ModelAttribute CFP cFP)
@@ -98,6 +123,12 @@ public class CFPController
 	return "redirect:read/" + savedCallForProposals.getId();
     }
 
+    /**
+     * 
+     * @param id defines the CFP owner id
+     * @param model defines the edit function link with controller
+     * @return value "callforproposals/create"
+     */
     @PreAuthorize("hasAuthority('CFP_EDIT_PRIVILEGE') AND isCFPOwner(#id)")
     @RequestMapping("/callforproposals/edit/{id}")
     public String cFPEdit(@PathVariable Long id, Model model)
@@ -107,7 +138,12 @@ public class CFPController
 	model.addAttribute("callForProposals", cFPService.findById(id));
 	return "callforproposals/create";
     }
-    
+    /**
+     * 
+     * @param id defines the CFP owner id
+     * @param model the read function and its link with controller
+     * @return  value "callforproposals/read"
+     */
     @PreAuthorize("hasAuthority('CFP_READ_PRIVILEGE')")
     @RequestMapping("/callforproposals/read/{id}")
     public String cFPRead(@PathVariable Long id, Model model)
@@ -116,7 +152,11 @@ public class CFPController
 	model.addAttribute("callForProposals", cFPService.findById(id));
 	return "callforproposals/read";
     }
-
+/**
+ * 
+ * @param model defines the read function and its link with controller
+ * @return value "callforproposals/list" to redirect view to the list page
+ */
     @PreAuthorize("hasAuthority('CFP_READ_PRIVILEGE')")
     @RequestMapping("/callforproposals/list")
     public String cFPList(Model model)
@@ -125,7 +165,12 @@ public class CFPController
 	return "callforproposals/list";
     }
     
-    
+    /**
+     * 
+     * @param id defines the CFP owner id
+     * @param model defines the delete function and its link with controller
+     * @return redirects the page to "callforproposals/delete"
+     */
     @PreAuthorize("hasAuthority('CFP_DELETE_PRIVILEGE') AND isCFPOwner(#id)")
     @RequestMapping("/callforproposals/delete/{id}")
     public String cFPDelete(@PathVariable Long id, Model model)

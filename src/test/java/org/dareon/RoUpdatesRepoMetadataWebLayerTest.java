@@ -37,7 +37,7 @@ import org.springframework.http.MediaType;
 @RunWith(SpringRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class RoUpdatesRepoMetadataWebLayerTests
+public class RoUpdatesRepoMetadataWebLayerTest
 {
 
 	@Autowired
@@ -73,7 +73,7 @@ public class RoUpdatesRepoMetadataWebLayerTests
                 .param("repo.id", "2") //search for repository to edit
 		.param("repo.title", "Test Repository 2")
 		.param("repo.institution", "Test Institution 2")
-		.param("repo.definition", "Modified definition") //modified contents
+		.param("repo.shortDescription", "Modified shortDescription") //modified contents
 		.param("repo.description", "Test Description 2")
 		.param("repo.status", "true")
 		.param("repo.creator", "2")
@@ -96,8 +96,8 @@ public class RoUpdatesRepoMetadataWebLayerTests
 		assertEquals("failure - repository increased", numberOfRepositories, repoService.list().size());
 		assertEquals("failure - ID attribute not match", rv.getId(), 2);
 		assertEquals("failure - Repository attribute not match", rv.getTitle(), "Test Repository 2");
-		//the definition should have changed
-		assertEquals("failure - Definition attribute not match", rv.getDefinition(), "Modified definition");
+		//the shortDescription should have changed
+		assertEquals("failure - shortDescription attribute not match", rv.getShortDescription(), "Modified shortDescription");
 		assertEquals("failure - Description attribute not match", rv.getDescription(), "Test Description 2");
 		assertEquals("failure - Institution attribute not match", rv.getInstitution(), "Test Institution 2");
 		assertEquals("failure - Status attribute not match", rv.getStatus(), true);
@@ -117,7 +117,7 @@ public class RoUpdatesRepoMetadataWebLayerTests
                 .param("repo.id", "1") //search for repository to edit
 		.param("repo.title", "Test Repository 1")
 		.param("repo.institution", "Test Institution 1")
-		.param("repo.definition", "Modified definition") //modified contents
+		.param("repo.shortDescription", "Modified shortDescription") //modified contents
 		.param("repo.description", "Test Description 1")
 		.param("repo.status", "true")
 		.param("repo.creator", "2")

@@ -1,77 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-	<head th:replace="layouts/fragments :: head-min"></head>
+<head th:replace="layouts/fragments :: head-min"></head>
 
 <body>
 
 	<div th:replace="layouts/navigation :: nav-private"></div>
 
 	<!-- Page Content -->
-    <div class="container">
-		
+	<div class="container">
+
 		<div class="col-lg-12">
 			<h2 class="page-header">Delete Repository</h2>
-			
-			
+
+
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4><p th:text="${repo.title}" /></h4>
+					<h4>
+						<p th:text="${repo.title}" />
+					</h4>
 				</div>
-				
+
 				<div class="panel-body">
-	
+
+					<div>
+						<label class="col-sm-2 control-label">Definition:</label>
+						<div class="col-md-10">
+							<p th:text="${repo.shortDescription}" />
+						</div>
+					</div>
+
 					<div>
 						<label class="col-sm-2 control-label">Description:</label>
 						<div class="col-md-10">
 							<p th:text="${repo.description}" />
 						</div>
 					</div>
-			
-					<div>
-						<label class="col-sm-2 control-label">Definition:</label>
-						<div class="col-md-10">
-							<p th:text="${repo.definition}" />
-						</div>
-					</div>
-					
+
+
+
 					<div>
 						<label class="col-sm-2 control-label">Institution:</label>
 						<div class="col-md-10">
 							<p th:text="${repo.institution}" />
 						</div>
 					</div>
-		
+
 					<div>
 						<label class="col-sm-2 control-label">Date Created:</label>
 						<div class="col-md-10">
-							<p th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
+							<p
+								th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
 						</div>
 					</div>
-			
+
 					<div>
 						<label class="col-sm-2 control-label">Status:</label>
 						<div class="col-md-10">
-							<p th:if="${repo.status} == true" >Online</p>
-							<p th:if="${repo.status} == false" >Offline</p>
+							<p th:if="${repo.status} == true">Online</p>
+							<p th:if="${repo.status} == false">Offline</p>
 						</div>
 					</div>
-					
-	
+
+
 				</div>
 
 			</div>
 
 			<div class="col-sm-6">
 				<div class="alert alert-danger">
-					<strong>Warning!</strong> You are about to delete this repository. Continue with the deletion?
+					<strong>Warning!</strong> You are about to delete this repository.
+					Continue with the deletion?
 				</div>
-				<a th:href="|@{/repo/deleteconfirmed/}${repo.id}|" class="btn btn-default"><span class="glyphicon glyphicon-ok"/> Confirm</a>
-				<a onClick="history.go(-1);return true;" class="btn btn-default"><span class="glyphicon glyphicon-remove"/> Cancel</a>
+				<a th:href="|@{/repo/deleteconfirmed/}${repo.id}|"
+					class="btn btn-default"><span class="glyphicon glyphicon-ok" />
+					Confirm</a> <a onClick="history.go(-1);return true;"
+					class="btn btn-default"><span
+					class="glyphicon glyphicon-remove" /> Cancel</a>
 			</div>
 
 		</div>
-		
+
 	</div>
 
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>

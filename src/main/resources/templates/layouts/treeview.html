@@ -1,80 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 </head>
- 
- <body>
 
-	<div th:fragment="treeview-body"> 
+<body>
+
+	<div th:fragment="treeview-body">
 		<!-- CLASSIFICATIONS ADDED -->
-		
-		
-		  <div class="col-md-6" style="padding-left:0px">
-                <div class="child panel panel-default " >
-                    <div class="panel-heading" style="background-color: lightslategray">
-                        Classifications Added
-                    </div>
-                    <div class="panel-body" >
-                    	<div class="pre-scrollable" style="min-height:200px; max-height:425px;">
- 						<table id="selectable-tags" class="table" />
- 						</div>
-                    </div>
-                </div>
-            </div>
+
+
+		<div class="col-md-6" style="padding-left: 0px">
+			<div class="child panel panel-default ">
+				<div class="panel-heading" style="background-color: white">
+					Classification List:</div>
+				<div class="panel-body">
+					<div class="pre-scrollable"
+						style="min-height: 200px; max-height: 425px;">
+						<table id="selectable-tags" class="table" />
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!-- TREE VIEW PANEL -->
-		<div class="child col-md-6 panel panel-default" 
+		<div class="child col-md-6 panel panel-default"
 			style="min-height: 500px; max-height: 500px; background-color: lightslategray">
-			
+
 			<div style="padding: 2%; height: 100%">
-				<div class="form-group" style="text-align: center">
+				<div class="form-group" style="text-align: left">
 
 					<div class="input-group">
-						<input type="text" id="input-select-node"
-							class="form-control" placeholder="Search for classification..." style="height:35px"/> 
-							<span class="input-group-addon" style="height:35px">
-								<span id="badge-search-size" class="badge" style="background: black;">
-								0 found	</span> 
-								<a class="btn btn-xs"><span class="glyphicon glyphicon-chevron-up"
-									id="btn-search-swap-up" /></a> 
-								<a class="btn btn-xs"><span class="glyphicon glyphicon-chevron-down"
-									id="btn-search-swap-down" /></a>
-							</span>
+						<input type="text" id="input-select-node" class="form-control"
+							placeholder="Search for classification..." style="height: 35px" />
+						<span class="input-group-addon" style="height: 35px"> <span
+							id="badge-search-size" class="badge" style="background: black;">
+								0 found </span> <a class="btn btn-xs"><span
+								class="glyphicon glyphicon-chevron-up" id="btn-search-swap-up" /></a>
+							<a class="btn btn-xs"><span
+								class="glyphicon glyphicon-chevron-down"
+								id="btn-search-swap-down" /></a>
+						</span>
 					</div>
 					<p>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default btn-sm select-node"
-							id="btn-select-node" >
-							<span class="glyphicon glyphicon-ok" /> Add Highlighted
-						</button>
-						<button type="button" class="btn btn-default btn-sm select-node"
-							id="btn-unselect-node" >
-							<span class="glyphicon glyphicon-remove" /> Remove Highlighted 
-						</button>
-						<button type="button" class="btn btn-default btn-sm" 
-							id="btn-expand-all" >
-							<span class="glyphicon glyphicon-plus" /> Expand
-						</button>
-						<button type="button" class="btn btn-default btn-sm"
-							id="btn-collapse-all" >
-							<span class="glyphicon glyphicon-minus" /> Collapse
-						</button>
+					<div>
+						<input id="btn-expand" type="checkbox" data-toggle="toggle"
+							data-size="small" data-on="Collapse Nodes"
+							data-off="Expand Nodes" data-onstyle="primary"
+							data-offstyle="default" data-width="125"/>
+						<div class="btn-group pull-right">
+							<button type="button" class="btn btn-default btn-sm select-node"
+								id="btn-select-node">
+								<span class="glyphicon glyphicon-ok" /> Add Highlighted
+							</button>
+							<button type="button" class="btn btn-default btn-sm select-node"
+								id="btn-unselect-node">
+								<span class="glyphicon glyphicon-remove" /> Remove Highlighted
+							</button>
+
+						</div>
+
 					</div>
+
+
+
 					</p>
-					
+
 					<div id="treeview-selectable"
 						style="text-align: left; overflow-x: scroll; height: 390px">
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- END OF TREEVIEW PANEL -->		
+		<!-- END OF TREEVIEW PANEL -->
 	</div>
- 
 
-	<div th:fragment="treeview-scripts">  
+
+	<div th:fragment="treeview-scripts">
 		<script th:inline="javascript">
 
   		$(function() {
@@ -220,19 +223,22 @@
           });
           
           // Expand | Collapse all
-          $('#btn-expand-all').on('click', function (e) {
-            var levels = $('#select-expand-all-levels').val();
-            $selectableTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
+          $('#btn-expand').change(function (e) {
+        	  if($(this).prop('checked'))
+        	  {
+        		  var levels = $('#select-expand-all-levels').val();
+                  $selectableTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
+        	  }
+        	  else
+        	  {
+        		  $selectableTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
+        	  }
+            
           });
-
-          $('#btn-collapse-all').on('click', function (e) {
-        	  $selectableTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
-          });
- 
 
   		});
   	</script>
 	</div>
-	
-  </body>
+
+</body>
 </html>

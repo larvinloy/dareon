@@ -28,7 +28,12 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+/**
+ * 
+ * @author Ayush Garg
+ * this class defines the Repo table and relation of its various fields with other table and objects
+ *
+ */
 @Entity
 @Table(name = "repos")
 public class Repo
@@ -50,7 +55,7 @@ public class Repo
     private Date createdOn;
 
     @Column(nullable = false,columnDefinition = "TEXT")
-    private String definition;
+    private String shortDescription;
 
     @Column(nullable = false,columnDefinition = "TEXT")
     private String description;
@@ -65,6 +70,7 @@ public class Repo
     
     @Type(type="true_false")
     private Boolean status = true;
+    // set of CFPs as new object(As a hashset)
     
     @OneToMany(mappedBy="repo", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Set<CFP> cFPs = new HashSet<CFP>();
@@ -85,14 +91,23 @@ public class Repo
     public Repo()
     {
     }
-
-    public Repo(String title, String institution, String definition, String description, User creator, User owner,
+/**
+ * 
+ * @param title returns Repo title to immediate super class
+ * @param institution returns institute name (String type) to the immediate super class
+ * @param shortDescription returns definition of the Repository (String type) to the immediate super class
+ * @param description returns description of the Repository (String type) to the immediate super class
+ * @param creator returns creator of the Repository (String type) to the immediate super class
+ * @param owner returns owner of the Repository (String type) to the immediate super class
+ * @param status returns status of the Repository (String type) to the immediate super class
+ */
+    public Repo(String title, String institution, String shortDescription, String description, User creator, User owner,
 	    Boolean status)
     {
 	super();
 	this.title = title;
 	this.institution = institution;
-	this.definition = definition;
+	this.shortDescription = shortDescription;
 	this.description = description;
 	this.creator = creator;
 	this.owner = owner;
@@ -101,6 +116,11 @@ public class Repo
 	this.domains = domains;
     }
 
+    /**
+     * 
+     * @return the name of Repo Owner to the owner object(User type)
+     */
+    
     public User getOwner()
     {
         return owner;
@@ -112,12 +132,18 @@ public class Repo
         this.owner = owner;
     }
 
-
+/**
+ * 
+ * @return the name of creator of the repository to the creator object(User type)
+ */
     public User getCreator()
     {
 	return creator;
     }
-
+/**
+ * 
+ * @return the date of creation of repo to the createdOn variable(Date type)
+ */
     @JsonSerialize(using = JsonDateSerializer.class)
     public Date getCreatedOn()
     {
@@ -129,6 +155,10 @@ public class Repo
 	this.createdOn = createdOn;
     }
 
+    /**
+     * 
+     * @return associated institution name with repo to the institution variable(String type)
+     */
     public String getInstitution()
     {
 	return institution;
@@ -148,7 +178,10 @@ public class Repo
     {
 	this.setTitle(name);
     }
-
+/**
+ * 
+ * @return repo id to the id variable(long type)
+ */
     public long getId()
     {
 	return id;
@@ -158,7 +191,10 @@ public class Repo
     {
 	this.id = id;
     }
-
+/**
+ * 
+ * @return repo title to the variable title (String type)
+ */
     public String getTitle()
     {
 	return title;
@@ -168,17 +204,23 @@ public class Repo
     {
 	this.title = title;
     }
-
-    public String getDefinition()
+/**
+ * 
+ * @return the definiton of repo to the definition variable(String type)
+ */
+    public String getShortDescription()
     {
-	return definition;
+	return shortDescription;
     }
 
-    public void setDefinition(String definition)
+    public void setShortDescription(String shortDesctiption)
     {
-	this.definition = definition;
+	this.shortDescription = shortDesctiption;
     }
-
+/**
+ * 
+ * @return the description of Repo to the description variable(String type)
+ */
     public String getDescription()
     {
 	return description;
@@ -188,7 +230,10 @@ public class Repo
     {
 	this.description = description;
     }
-    
+    /**
+     * 
+     * @return the value of cfp to the set of CFPs
+     */
     public Set<CFP> getcFPs()
     {
         return cFPs;
@@ -198,7 +243,10 @@ public class Repo
     {
         this.cFPs = cFP;
     }
-
+/**
+ * 
+ * @return the status of Repo to the status variable(Bolean type)
+ */
     public Boolean getStatus()
     {
         return status;
@@ -209,7 +257,10 @@ public class Repo
         this.status = status;
     }
     
-    
+    /**
+     * 
+     * @return the collection for classification to the domain object 
+     */  
     public Collection<Classification> getDomains()
     {
         return domains;
@@ -219,7 +270,10 @@ public class Repo
     {
         this.domains = domains;
     }
-
+/**
+ * 
+ * @return the collection for classification to the proposalReviewers object 
+ */
     public Collection<Classification> getProposalReviewers()
     {
         return proposalReviewers;
@@ -234,7 +288,7 @@ public class Repo
     @Override
     public String toString()
     {
-	return "Repo [id=" + id + ", name=" + title + ", definition=" + definition + ", description=" + description
+	return "Repo [id=" + id + ", name=" + title + ", definition=" + shortDescription + ", description=" + description
 		+ ", user=" + creator + "]";
     }
 }
