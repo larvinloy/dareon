@@ -74,7 +74,7 @@ public class RepoServiceWebLayerTest
 		.param("repo.title", "sample repository 3")
 		.param("repo.institution", "Sample institution for repository 3")
 		.param("repo.description", "Sample description for repository 3")
-		.param("repo.definition", "Sample definition for repository 3")
+		.param("repo.shortDescription", "Sample shortDescription for repository 3")
 		.param("repo.owner", "3")
 		.param("repoForm.domains", "{3,4}"))
      	//check if redirected to repository details page
@@ -100,7 +100,7 @@ public class RepoServiceWebLayerTest
 		//The ID should be automatically created with an incremental value
 		assertEquals("failure - ID attribute not match", rv.getId(), 3);
 		assertEquals("failure - Title attribute not match", "sample repository 3", rv.getTitle());
-		assertEquals("failure - Definition attribute not match", "Sample definition for repository 3", rv.getDefinition());
+		assertEquals("failure - shortDescription attribute not match", "Sample shortDescription for repository 3", rv.getShortDescription());
 		assertEquals("failure - Description attribute not match", "Sample description for repository 3", rv.getDescription());
 		assertEquals("failure - Institution attribute not match", "Sample institution for repository 3", rv.getInstitution());
 		//The Status should be automatically created with the default: true
@@ -125,7 +125,7 @@ public class RepoServiceWebLayerTest
                 .param("repo.id", "1") //search for repository to edit
 		.param("repo.title", "Test Repo 1")
 		.param("repo.institution", "Test Institution 1")
-		.param("repo.definition", "Modified definition") //modified contents
+		.param("repo.shortDescription", "Modified shortDescription") //modified contents
 		.param("repo.description", "Test Description 1")
 		.param("repo.status", "true")
 		.param("repo.creator", "2")
@@ -147,8 +147,8 @@ public class RepoServiceWebLayerTest
 		assertEquals("failure - repository increased", numberOfRepositoriesPriorToUpdate, numberOfRepositoriesAfterUpdate);
 		assertEquals("failure - ID attribute not match", 1, rv.getId());
 		assertEquals("failure - Repository attribute not match", "Test Repo 1", rv.getTitle());
-		//the definition should have changed
-		assertEquals("failure - Definition attribute not match", "Modified definition", rv.getDefinition());
+		//the shortDescription should have changed
+		assertEquals("failure - shortDescription attribute not match", "Modified shortDescription", rv.getShortDescription());
 		assertEquals("failure - Description attribute not match", "Test Description 1", rv.getDescription());
 		assertEquals("failure - Institution attribute not match", "Test Institution 1", rv.getInstitution());
 		assertEquals("failure - Status attribute not match", true, rv.getStatus());

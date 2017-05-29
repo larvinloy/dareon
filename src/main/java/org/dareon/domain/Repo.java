@@ -55,7 +55,7 @@ public class Repo
     private Date createdOn;
 
     @Column(nullable = false,columnDefinition = "TEXT")
-    private String definition;
+    private String shortDescription;
 
     @Column(nullable = false,columnDefinition = "TEXT")
     private String description;
@@ -95,19 +95,19 @@ public class Repo
  * 
  * @param title returns Repo title to immediate super class
  * @param institution returns institute name (String type) to the immediate super class
- * @param definition returns definition of the Repository (String type) to the immediate super class
+ * @param shortDescription returns definition of the Repository (String type) to the immediate super class
  * @param description returns description of the Repository (String type) to the immediate super class
  * @param creator returns creator of the Repository (String type) to the immediate super class
  * @param owner returns owner of the Repository (String type) to the immediate super class
  * @param status returns status of the Repository (String type) to the immediate super class
  */
-    public Repo(String title, String institution, String definition, String description, User creator, User owner,
+    public Repo(String title, String institution, String shortDescription, String description, User creator, User owner,
 	    Boolean status)
     {
 	super();
 	this.title = title;
 	this.institution = institution;
-	this.definition = definition;
+	this.shortDescription = shortDescription;
 	this.description = description;
 	this.creator = creator;
 	this.owner = owner;
@@ -208,14 +208,14 @@ public class Repo
  * 
  * @return the definiton of repo to the definition variable(String type)
  */
-    public String getDefinition()
+    public String getShortDescription()
     {
-	return definition;
+	return shortDescription;
     }
 
-    public void setDefinition(String definition)
+    public void setShortDescription(String shortDesctiption)
     {
-	this.definition = definition;
+	this.shortDescription = shortDesctiption;
     }
 /**
  * 
@@ -288,7 +288,7 @@ public class Repo
     @Override
     public String toString()
     {
-	return "Repo [id=" + id + ", name=" + title + ", definition=" + definition + ", description=" + description
+	return "Repo [id=" + id + ", name=" + title + ", definition=" + shortDescription + ", description=" + description
 		+ ", user=" + creator + "]";
     }
 }
