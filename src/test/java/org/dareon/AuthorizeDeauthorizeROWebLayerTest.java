@@ -74,7 +74,7 @@ public class AuthorizeDeauthorizeROWebLayerTest
                 .param("repo.id", "1") //search for repository to edit
 		.param("repo.title", "Test Repository 1")
 		.param("repo.institution", "Test Institution 1")
-		.param("repo.definition", "Test definition 1")
+		.param("repo.shortDescription", "Test shortDescription 1")
 		.param("repo.description", "Test Description 1")
 		.param("repo.status", "true")
 		.param("repo.creator", "2")
@@ -112,7 +112,7 @@ public class AuthorizeDeauthorizeROWebLayerTest
                 .param("repo.id", "1") //search for repository to edit
 		.param("repo.title", "Test Repository 1")
 		.param("repo.institution", "Test Institution 1")
-		.param("repo.definition", "Test definition 1")
+		.param("repo.shortDescription", "Test shortDescription 1")
 		.param("repo.description", "Test Description 1")
 		.param("repo.status", "true")
 		.param("repo.creator", "2") //Systems Administrator ID
