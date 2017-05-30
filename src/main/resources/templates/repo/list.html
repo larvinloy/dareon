@@ -3,6 +3,43 @@
 
 	<head th:replace="layouts/fragments :: head-all"></head>
 
+<style>	
+hr.faded { 
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	}
+
+table.dataTable {
+  width: 100%;
+  clear: both;
+  border-spacing: 10px;
+  }
+  
+  table.dataTable thead td {
+    border-top: 0px ;
+    border-bottom: 0px ; 
+    }
+    
+  table.dataTable tbody td {
+    border-top: 0px;
+    border-bottom: 0px;
+    }
+
+
+.badge {
+  font-weight: bold;
+}
+.badge-red {
+  background-color: #b94a48;
+}
+.badge-green {
+  background-color: #468847;
+}
+
+</style>
+
+
 <body>
 
 	<div th:replace="layouts/navigation :: nav-private"></div>
@@ -11,40 +48,34 @@
     <div class="container">
 		<div class="col-lg-12">
 			<h2 class="page-header">
-				Repositories <a href="/repo/create" class="btn btn-primary btn-lg"
-					role="button">Create</a>
+				Repositories <a href="/repo/create" class="btn btn-primary pull-right"
+					role="button"><span class="glyphicon glyphicon-pencil" /> Create</a>
 			</h2>
 
 			<div class="well well-lg">
 
-					<table class="table table-hover table-responsive cell-border" id="repoTable">
+					<table class="table table-responsive" id="repoTable">
 						<thead>
 							<tr>
-								<th style="text-align: center">Title</th>
-								<th style="text-align: center">Created On</th>
-								<th style="text-align: center">Creator</th>
-								<th style="text-align: center">Owner</th>
-								<th style="text-align: center">Status</th>
-								<th style="text-align: center">Action</th>
+								<th style="text-align: right">Ascending|Descending Order</th>
 							</tr>
 						</thead>
 						<tbody>
 							<th:block th:each="repo : ${repos}">
 								<tr>
-									<td> <p th:text="${repo.title}" /> <p th:text="${repo.description}" /> </td>
-									<td th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy')}" />
-									<td th:text="|${repo.creator.firstName} ${repo.creator.lastName}|"/>
-									<th:block th:if="${repo.owner} != null">
-										<td th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
-									</th:block>
-									<td th:if="${repo.status} == true" >Online</td>
-									<td th:if="${repo.status} == false" >Offline</td>
-																	
-									<th:block th:if="${repo.owner} == null">
-										<td >Not assigned</td>
-									</th:block>
-									<td style="text-align: center">
-										<div class="btn-group btn-group-sm">
+									<td> 
+									<span class="pull-right" th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy')}" />
+									<a th:href="|@{/repo/read/}${repo.id}|"><h4 th:text="${repo.title}" /></a>
+									<span class="label label-info">
+										<th:block th:if="${repo.owner} != null">
+											<span th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
+										</th:block>
+									</span>
+									<hr class="faded"/>
+									<p th:text="${repo.shortDescription}" /> 
+									<p>
+									
+									<div class="btn-group btn-group-sm">
 											<a th:href="|@{/repo/read/}${repo.id}|"
 												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
 											<a th:href="|@{/repo/edit/}${repo.id}|"
@@ -53,15 +84,20 @@
 											th:onclick="'javascript:deleteModal(\'' 
 												+ ${repo.id} + ','
 												+ ${repo.title} + ',' 
-												+ ${repo.description} + ','
+												+ ${repo.shortDescription} + ','
 												+ |${repo.owner.firstName} ${repo.owner.lastName}| + ','
 												+ ${repo.getcFPs().size()}
 												+ '\');'" >
 												<span class="glyphicon glyphicon-trash" /> Delete</a>	
 											<a th:href="|@{/callforproposals/create/}${repo.id}|"
-												class="btn btn-primary"><span class="glyphicon glyphicon-file"/> Create CFP</a>
-										</div>
+												class="btn btn-primary"><span class="glyphicon glyphicon-pencil"/> Create CFP</a>
+										</div>	
+										<span class="badge badge-green pull-right" th:if="${repo.status} == true" >Online</span>
+										<span class="badge badge-red pull-right" th:if="${repo.status} == false" >Offline</span>							
+									</p>
+									
 									</td>
+
 								</tr>
 							</th:block>
 						</tbody>
@@ -70,19 +106,8 @@
 					<script>
 
 					$(document).ready(function() {
-					    $('#repoTable').DataTable( {
-					        columnDefs: [ {
-					            orderable: false,
-					            className: 'select-checkbox',
-					            targets:   0
-					        } ],
-					        select: {
-					            style:    'os',
-					            selector: 'td:first-child'
-					        },
-					        order: [[ 1, 'asc' ]]
-					    } );
-					} );
+						$('#repoTable').DataTable()
+					});
 					
 					</script>
 					
@@ -155,32 +180,25 @@
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
 	
-	
-	
 	<script>
+		function deleteModal(repo) {
+			
+			var arrRepo = repo.split(',');
+			var id=arrRepo[0];
+			var title=arrRepo[1];
+			var description=arrRepo[2];
+			var owner=arrRepo[3];
+			var CFPs=arrRepo[4];
+			
+			document.getElementById("repo_title").innerHTML = title;
+			document.getElementById("repo_description").innerHTML = description;
+			document.getElementById("repo_owner").innerHTML = owner;
+			document.getElementById("repo_CFPs").innerHTML = CFPs;
 	
-	function deleteModal(repo) {
-		
-		var arrRepo = repo.split(',');
-		var id=arrRepo[0];
-		var title=arrRepo[1];
-		var description=arrRepo[2];
-		var owner=arrRepo[3];
-		var CFPs=arrRepo[4];
-		
-		document.getElementById("repo_title").innerHTML = title;
-		document.getElementById("repo_description").innerHTML = description;
-		document.getElementById("repo_owner").innerHTML = owner;
-		document.getElementById("repo_CFPs").innerHTML = CFPs;
-
-		document.getElementById("delete_btn").href = '/repo/deleteconfirmed/' + id;
-		$('#confirmDelete').modal('show');
-		
-	}
-	
+			document.getElementById("delete_btn").href = '/repo/deleteconfirmed/' + id;
+			$('#confirmDelete').modal('show');
+		}
 	</script>
-	
-	
 
 </body>
 </html>
