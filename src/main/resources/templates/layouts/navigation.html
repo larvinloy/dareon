@@ -24,7 +24,7 @@
 		        <li class="dropdown pull-right">
 		          <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 5px;" href="#" >
 		          	<span class="glyphicon glyphicon-user" /> <span th:text ="|${#authentication.getPrincipal().getUser().getFirstName()} ${#authentication.getPrincipal().getUser().getLastName()}|" /> <b class="caret"></b></a>
-		          <ul class="dropdown-menu">
+		          <ul class="dropdown-menu" style="min-width:20px; width:100%">
 		            <li> <a href="#">My Profile</a> </li>
 					<li> <a href="/expertise/add">My Expertise</a> </li>
 					<li class="divider"></li>
@@ -55,10 +55,10 @@
 		      <!--                      pull-right keeps the drop-down in line -->
 		      <ul class="nav navbar-nav pull-right">
 				<li><a href="/"><span class="glyphicon glyphicon-home"/> Home</a></li>
-				<li><a href="/repo/list"><span class="glyphicon glyphicon-folder-open"/>  Repositories</a></li>
-				<li><a href="/callforproposals/list"><span class="glyphicon glyphicon-list"/> Call for Proposals</a></li>
-				<li><a href="/proposal/list"><span class="glyphicon glyphicon-file"/> Proposals</a></li>
-				<li><a href="/classification/list"><span class="glyphicon glyphicon-file"/> Classifications</a></li>
+				<li><a href="/repo/list"><span class="glyphicon glyphicon-folder-open"/> Repositories</a></li>
+				<li><a href="/callforproposals/list"><span class="glyphicon glyphicon-bullhorn"/> Call for Proposals</a></li>
+				<li><a href="/proposal/list"><span class="glyphicon glyphicon-inbox"/> Proposals</a></li>
+				<li><a href="/classification/list"><span class="glyphicon glyphicon-tags"/> Classifications</a></li>
 		      </ul>
 		    </div>
 		    
@@ -88,7 +88,7 @@
 						<li>
 						    <h4 class="form-signin-heading">Login via</h4>
 							<div class="row">
-								<a href="https://rapid.test.aaf.edu.au/jwt/authnrequest/research/SAaWlfVa_TEfjcz4TisRFw"> 
+								<a href="https://rapid.test.aaf.edu.au/jwt/authnrequest/research/zwlqa1P7GnhzuYdrByb-vg"> 
 								<img src="https://rapid.test.aaf.edu.au/aaf_service_439x105.png" class="img-responsive" alt="Australia Access Federation" width="100%" /> 
 								</a>
 							</div>

@@ -34,7 +34,7 @@ import net.minidev.json.JSONObject;
 @Controller
 public class AuthenticationController {
 
-	private String aafUrl = "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/SAaWlfVa_TEfjcz4TisRFw";
+	private String aafUrl = "https://rapid.test.aaf.edu.au/jwt/authnrequest/research/zwlqa1P7GnhzuYdrByb-vg";
 	private String aafIssuer = "https://rapid.test.aaf.edu.au";
 	private String aafAudience = "https://www.dareon.org";
 	private String aafSecretKey = "Hy2unvH&!kc1OQ&|>%+k*5wGELN&lUd^";
