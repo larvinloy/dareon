@@ -91,8 +91,7 @@ public class ProposalController
     public String proposalSave(@ModelAttribute Proposal proposal)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	if(proposalService.findById(proposal.getId()) == null)
-	    proposal.setCreator(userService.findByEmail(auth.getName()));
+	   
 	Proposal savedproposal = proposalService.save(proposal);
 
 	return "redirect:read/" + savedproposal.getId();

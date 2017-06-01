@@ -8,7 +8,10 @@ import org.dareon.domain.Repo;
 import org.dareon.repository.CFPRepository;
 import org.dareon.repository.ProposalRepository;
 import org.dareon.repository.RepoRepository;
+import org.dareon.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,11 +19,13 @@ public class ProposalService
 {
 
     private ProposalRepository proposalRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public ProposalService(ProposalRepository proposalRepository)
+    public ProposalService(ProposalRepository proposalRepository,UserRepository userRepository)
     {
 	this.proposalRepository = proposalRepository;
+	this.userRepository = userRepository;
     }
 
     public Proposal get(Long id)
@@ -30,9 +35,13 @@ public class ProposalService
 
     public Proposal save(Proposal proposal)
     {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	Proposal tempProposal = proposalRepository.findById(proposal.getId());
 	if(tempProposal == null)
+	{
+		proposal.setCreator(userRepository.findByEmail(auth.getName()));
 	    return proposalRepository.save(proposal);
+	}
 	else
 	{
 	    Proposal editProposal = new Proposal();
@@ -42,6 +51,7 @@ public class ProposalService
 	    editProposal.setCfp(tempProposal.getCfp());
 	    editProposal.setCreatedOn(tempProposal.getCreatedOn());
 	    editProposal.setTitle(proposal.getTitle());
+	    editProposal.setCreator(proposal.getCreator());
 	    return proposalRepository.save(editProposal);
 	}
     }

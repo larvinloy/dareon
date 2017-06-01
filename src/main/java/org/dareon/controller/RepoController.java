@@ -104,7 +104,7 @@ public class RepoController
 	return "repo/create";
     }
 
-    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('REPO_CREATE_PRIVILEGE') AND isRepoOwner(#repoForm))")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('REPO_EDIT_PRIVILEGE') AND isRepoOwner(#repoForm))")
     @RequestMapping(value = "/repo/create", method = RequestMethod.POST)
     public String repoSave(@ModelAttribute RepoForm repoForm, @ModelAttribute String domains)
     {

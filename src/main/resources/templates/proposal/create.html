@@ -22,7 +22,8 @@
 
 				<div class="well well-lg">
 
-					<input type="hidden" th:field="*{id}" />
+					<input type="hidden" th:field="*{creator}" /> <input type="hidden"
+						th:field="*{id}" />
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Select
 							Call:</label>
@@ -37,19 +38,22 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Title:</label>
 						<div class="col-md-10">
-							<input type="text" class="form-control" th:field="*{title}" required="true" />
+							<input type="text" class="form-control" th:field="*{title}"
+								required="true" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Description:</label>
 						<div class="col-md-10">
-							<textarea class="form-control" rows="5" th:field="*{description}" required="true" >body</textarea>
+							<textarea class="form-control" rows="5" th:field="*{description}"
+								required="true">body</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" id="label-create">Details:</label>
 						<div class="col-md-10">
-							<textarea class="form-control" rows="5" th:field="*{details}" required="true" >body</textarea>
+							<textarea class="form-control" rows="5" th:field="*{details}"
+								required="true">body</textarea>
 						</div>
 					</div>
 

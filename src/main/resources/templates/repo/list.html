@@ -70,7 +70,7 @@ table.dataTable {
 										<a th:href="|@{/repo/read/}${repo.id}|"><h4 th:text="${repo.title}" /></a>
 										<span class="label label-info">
 											<th:block th:if="${repo.owner} != null">
-												<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}"
+												<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
 													class="glyphicon glyphicon-star" />
 												<span th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
 											</th:block>
