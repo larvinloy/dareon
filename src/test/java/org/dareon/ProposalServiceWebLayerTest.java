@@ -105,7 +105,8 @@ public class ProposalServiceWebLayerTest
 		.param("title", "Test Proposal 1")
 		.param("details", "Modified details")
 		.param("description", "Test Proposal Description 1")
-		.param("cfp", "1")) 
+		.param("cfp", "1")
+    	.param("creator", "4"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("read/1"))
 		.andReturn();
