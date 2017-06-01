@@ -9,9 +9,11 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.dareon.domain.CFP;
+import org.dareon.domain.Proposal;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
 import org.dareon.service.CFPService;
+import org.dareon.service.ProposalService;
 import org.dareon.service.RepoService;
 import org.dareon.service.UserDetailsImpl;
 import org.dareon.service.UserService;
@@ -49,8 +51,10 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 
     private RepoService repoService;
     private CFPService cFPService;
+    private ProposalService proposalService;
 
-    public CustomSecurityExpressionRoot(Authentication authentication, RepoService repoService, CFPService cFPService)
+    public CustomSecurityExpressionRoot(Authentication authentication, RepoService repoService, CFPService cFPService,
+	    ProposalService proposalService)
     {
 	if (authentication == null)
 	{
@@ -59,6 +63,7 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 	this.authentication = authentication;
 	this.repoService = repoService;
 	this.cFPService = cFPService;
+	this.proposalService = proposalService;
     }
 
     @Override
@@ -89,7 +94,7 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 	    return true;
 	return false;
     }
-    
+
     @Transactional
     public boolean isRepoOwner(CFP cFP)
     {
@@ -98,7 +103,7 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 	    return true;
 	return false;
     }
-    
+
     @Transactional
     public boolean isRepoOwner(RepoForm repoForm)
     {
@@ -108,13 +113,23 @@ public class CustomSecurityExpressionRoot implements MethodSecurityExpressionOpe
 	    return true;
 	return false;
     }
-    
+
     @Transactional
-    public boolean isCFPOwner(Long id)
+    public boolean isRepoAndCFPOwner(Long id)
     {
 	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
 	CFP cFP = cFPService.findById(id);
 	if (cFP.getRepo().getOwner().getEmail().equals(user.getEmail()))
+	    return true;
+	return false;
+    }
+
+    @Transactional
+    public boolean isProposalCreator(Long id)
+    {
+	final User user = ((UserDetailsImpl) this.getPrincipal()).getUser();
+	Proposal proposal = proposalService.findById(id);
+	if (proposal.getCreator().getEmail().equals(user.getEmail()))
 	    return true;
 	return false;
     }

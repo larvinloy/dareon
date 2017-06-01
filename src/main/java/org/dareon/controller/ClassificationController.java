@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,7 +48,7 @@ public class ClassificationController
 	this.classificationService = classificationService;
     }
 
-    // @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA')")
     @RequestMapping("/classification/create")
     public String forCreate(Model model) throws JSONException
     {
@@ -75,7 +76,7 @@ public class ClassificationController
     }
 
 
-    
+    @PreAuthorize("hasRole('ROLE_SA')")
     @RequestMapping(value = "/classification/create", method = RequestMethod.POST)
     public String forSave(@ModelAttribute ClassificationForm classificationForm)
     {
@@ -106,7 +107,7 @@ public class ClassificationController
     }
 
     
-
+    @PreAuthorize("hasRole('ROLE_SA')")
     @RequestMapping("/classification/edit/{id}")
     public String forEdit(@PathVariable Long id, Model model)
     {
@@ -145,7 +146,7 @@ public class ClassificationController
     
     
     
-    
+    @PreAuthorize("hasRole('ROLE_SA')")
     @RequestMapping("/classification/list")
     public String forList(Model model) throws JSONException
     {
@@ -173,7 +174,7 @@ public class ClassificationController
     }
     
     
-    
+    @PreAuthorize("hasRole('ROLE_SA')")
     @RequestMapping("/classification/deleteconfirmed/{id}")
     public RedirectView forDeleteConfirmed(@PathVariable Long id, Model model)
     {

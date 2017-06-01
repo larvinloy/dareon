@@ -80,7 +80,7 @@ public class CFPController
  * @param model defines the main structure of CFP create function
  * @return the value of callforproposals/create to the object CFP
  */
-    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('CFP_CREATE_PRIVILEGE')")
     @RequestMapping("/callforproposals/create")
     public String cFPCreate(Model model)
     {
@@ -95,7 +95,7 @@ public class CFPController
      * @param id defines the Repo owner id of the selected repo for which it is authenticated to create
      * @return the callforproposals/create model to the CFP object
      */
-    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#id)")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#id))")
     @RequestMapping("/callforproposals/create/{id}")
     public String cFPCreateWithPreselectedRepo(Model model,@PathVariable Long id)
     {
@@ -109,7 +109,7 @@ public class CFPController
  * @param cFP defines the th esave functionfor saving newly created cfp in cFP object
  * @return the savedCallForProposal to CFP object
  */
-    @PreAuthorize("hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#cFP)")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('CFP_CREATE_PRIVILEGE') AND isRepoOwner(#cFP))")
     @RequestMapping(value = "/callforproposals/create", method = RequestMethod.POST)
     public String cFPSave(@ModelAttribute CFP cFP)
     {
@@ -129,7 +129,7 @@ public class CFPController
      * @param model defines the edit function link with controller
      * @return value "callforproposals/create"
      */
-    @PreAuthorize("hasAuthority('CFP_EDIT_PRIVILEGE') AND isCFPOwner(#id)")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('CFP_EDIT_PRIVILEGE') AND isRepoAndCFPOwner(#id))")
     @RequestMapping("/callforproposals/edit/{id}")
     public String cFPEdit(@PathVariable Long id, Model model)
     {
@@ -171,7 +171,7 @@ public class CFPController
      * @param model defines the delete function and its link with controller
      * @return redirects the page to "callforproposals/delete"
      */
-    @PreAuthorize("hasAuthority('CFP_DELETE_PRIVILEGE') AND isCFPOwner(#id)")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('CFP_DELETE_PRIVILEGE') AND isRepoAndCFPOwner(#id))")
     @RequestMapping("/callforproposals/delete/{id}")
     public String cFPDelete(@PathVariable Long id, Model model)
     {
@@ -179,7 +179,7 @@ public class CFPController
 	return "callforproposals/delete";
     }
     
-    @PreAuthorize("hasAuthority('CFP_DELETE_PRIVILEGE') AND isCFPOwner(#id)")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('CFP_DELETE_PRIVILEGE') AND isRepoAndCFPOwner(#id))")
     @RequestMapping("/callforproposals/deleteconfirmed/{id}")
     public RedirectView cFPDeleteConfirmed(@PathVariable Long id, Model model)
     {

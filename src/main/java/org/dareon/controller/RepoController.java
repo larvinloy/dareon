@@ -73,7 +73,7 @@ public class RepoController
 	this.classificationService = classificationService;
     }
 
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('REPO_CREATE_PRIVILEGE')")
     @RequestMapping("/repo/create")
     public String repoCreate(Model model)
     {
@@ -104,7 +104,7 @@ public class RepoController
 	return "repo/create";
     }
 
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#repoForm)")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('REPO_CREATE_PRIVILEGE') AND isRepoOwner(#repoForm))")
     @RequestMapping(value = "/repo/create", method = RequestMethod.POST)
     public String repoSave(@ModelAttribute RepoForm repoForm, @ModelAttribute String domains)
     {
@@ -131,7 +131,7 @@ public class RepoController
 	return "redirect:read/" + savedRepo.getId();
     }
     
-    @PreAuthorize("hasAuthority('REPO_EDIT_PRIVILEGE') AND isRepoOwner(#id)")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('REPO_EDIT_PRIVILEGE') AND isRepoOwner(#id))")
     @RequestMapping("/repo/edit/{id}")
     public String repoEdit(@PathVariable Long id, Model model)
     {
@@ -172,7 +172,7 @@ public class RepoController
 	return "repo/create";
     }
 
-    @PreAuthorize("hasAuthority('REPO_READ_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('REPO_READ_PRIVILEGE')")
     @RequestMapping("/repo/read/{id}")
     public String repoRead(@PathVariable Long id, Model model)
     {
@@ -180,7 +180,7 @@ public class RepoController
 	return "repo/read";
     }
     
-    @PreAuthorize("hasAuthority('REPO_DELETE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('REPO_DELETE_PRIVILEGE') AND isRepoOwner(#id))")
     @RequestMapping("/repo/delete/{id}")
     public String repoDelete(@PathVariable Long id, Model model)
     {
@@ -188,7 +188,7 @@ public class RepoController
 	return "repo/delete";
     }
     
-    @PreAuthorize("hasAuthority('REPO_DELETE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('REPO_DELETE_PRIVILEGE') AND isRepoOwner(#id))")
     @RequestMapping("/repo/deleteconfirmed/{id}")
     public RedirectView repoDeleteConfirmed(@PathVariable Long id, Model model)
     {

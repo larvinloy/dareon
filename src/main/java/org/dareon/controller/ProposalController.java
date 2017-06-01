@@ -66,7 +66,7 @@ public class ProposalController
 	this.proposalService = proposalService;
     }
 
-    @PreAuthorize("hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
     @RequestMapping("/proposal/create")
     public String proposalCreate(Model model)
     {
@@ -76,7 +76,7 @@ public class ProposalController
 	return "proposal/create";
     }
     
-    @PreAuthorize("hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
     @RequestMapping("/proposal/create/{id}")
     public String proposalCreateWithPreselectedRepo(Model model,@PathVariable Long id)
     {
@@ -86,7 +86,7 @@ public class ProposalController
 	return "proposal/create";
     }
 
-    @PreAuthorize("hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
     @RequestMapping(value = "/proposal/create", method = RequestMethod.POST)
     public String proposalSave(@ModelAttribute Proposal proposal)
     {
@@ -98,7 +98,7 @@ public class ProposalController
 	return "redirect:read/" + savedproposal.getId();
     }
 
-    @PreAuthorize("hasAuthority('PROPOSAL_EDIT_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('PROPOSAL_EDIT_PRIVILEGE'))")
     @RequestMapping("/proposal/edit/{id}")
     public String proposalEdit(@PathVariable Long id, Model model)
     {
@@ -126,7 +126,7 @@ public class ProposalController
     }
     
     
-    @PreAuthorize("hasAuthority('PROPOSAL_DELETE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('PROPOSAL_DELETE_PRIVILEGE'))")
     @RequestMapping("/proposal/delete/{id}")
     public String proposalDelete(@PathVariable Long id, Model model)
     {
@@ -134,7 +134,7 @@ public class ProposalController
 	return "proposal/delete";
     }
     
-    @PreAuthorize("hasAuthority('PROPOSAL_DELETE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('PROPOSAL_DELETE_PRIVILEGE'))")
     @RequestMapping("/proposal/deleteconfirmed/{id}")
     public RedirectView proposalDeleteConfirmed(@PathVariable Long id, Model model)
     {
