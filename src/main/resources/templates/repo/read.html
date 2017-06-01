@@ -28,7 +28,7 @@
 							<p th:text="${repo.shortDescription}" />
 						</div>
 					</div>
-					
+
 					<div>
 						<label class="col-sm-2 control-label">Description:</label>
 						<div class="col-md-10">
@@ -74,13 +74,68 @@
 							<p th:if="${repo.status} == false">Offline</p>
 						</div>
 					</div>
+					<div>
+						<label class="col-sm-2 control-label">Classifications:</label>
+
+
+
+
+						<table
+							class="table table-bordered table-round text-left"
+							style="height: 80px; max-width: 80%;">
+
+							<th:block th:each="domain : ${repo.domains}">
+								<tr style="width:100%;">
+
+									<td class="active" th:text="|${domain.code + ' |'} ${domain.name}|"></td>
+
+								</tr>
+
+
+							</th:block>
+						</table>
+
+
+
+
+					</div>
+
+
+					<div style="float: left; padding-top: 10px">
+						<label class="col-sm-2 control-label">CFPs Associated:</label>
+
+						<table
+							class="table table-bordered table-round text-left"
+							style="min-height: 100px; max-height: 400px; max-width: 80%">
+							<thead>
+								<tr>
+									<th class="active" style="text-align: center">Title</th>
+									<th class="active" style="text-align: center">Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="cFP : ${repo.cFPs}">
+
+									<tr>
+
+										<td class="active" th:text="${cFP.title}"></td>
+										<td th:text="${cFP.description}" />
+									</tr>
+								</th:block>
+							</tbody>
+
+						</table>
+					</div>
+
 
 				</div>
 			</div>
 
+
+
 			<div class="col-sm-6">
 				<a type="button" class="btn btn-default" th:href="|@{/repo/list}"><span
-					class="glyphicon glyphicon-backward" /> Close</a>
+					class="glyphicon glyphicon-backward" /> Back</a>
 			</div>
 
 		</div>
