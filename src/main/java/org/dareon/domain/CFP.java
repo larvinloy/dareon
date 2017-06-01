@@ -57,7 +57,7 @@ public class CFP
     @JoinColumn(name="repo_id", nullable = false)
     private Repo repo;
     
-    @OneToMany(mappedBy="cfp", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(mappedBy="cfp", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Set<Proposal> proposals = new HashSet<Proposal>();
 
    

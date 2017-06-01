@@ -50,7 +50,7 @@ public class Classification
 
     
 //    @JsonBackReference
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Classification> children;
     
    
@@ -65,7 +65,7 @@ public class Classification
     @ManyToMany(mappedBy = "domains")
     private Set<Repo> repos = new HashSet<Repo>();
     
-    @OneToMany(mappedBy="classification", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(mappedBy="classification", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     private Set<Expertise> expertises = new HashSet<Expertise>();
     

@@ -72,16 +72,16 @@ public class Repo
     private Boolean status = true;
     // set of CFPs as new object(As a hashset)
     
-    @OneToMany(mappedBy="repo", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(mappedBy="repo", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Set<CFP> cFPs = new HashSet<CFP>();
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "repos_proposalreviewers", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
 	    @JoinColumn(name = "user_id") })
     private Collection<Classification> proposalReviewers;
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "repos_fors", joinColumns = { @JoinColumn(name = "repo_id") }, inverseJoinColumns = {
 	    @JoinColumn(name = "for_id") })

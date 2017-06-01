@@ -2,6 +2,7 @@ package org.dareon.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 
 import org.dareon.domain.Repo;
 import org.dareon.repository.RepoRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
 @Service
 public class RepoService
@@ -69,6 +71,7 @@ public class RepoService
 	repoRepository.delete(id);
     }
 
+    @Transactional()
     public List<Repo> list()
     {
 	return repoRepository.findAllByOrderByCreatedOnDesc();

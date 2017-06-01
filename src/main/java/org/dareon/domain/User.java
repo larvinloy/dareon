@@ -65,20 +65,20 @@ public class User
 	    @JoinColumn(name = "role_id") })
     private Collection<Role> roles;
 
-    @OneToMany(mappedBy = "creator", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "creator", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Set<Repo> createdRepos = new HashSet<Repo>();
 
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Set<Repo> ownedRepos = new HashSet<Repo>();
     
     @ManyToMany(mappedBy = "proposalReviewers")
     private Set<Repo> reviewedRepos = new HashSet<Repo>();
     
-    @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     private Set<Expertise> expertises = new HashSet<Expertise>();
     
-    @OneToMany(mappedBy="creator", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(mappedBy="creator", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     private Set<Proposal> createdProposals = new HashSet<Proposal>();
 /**
