@@ -48,7 +48,7 @@ table.dataTable {
     <div class="container">
 		<div class="col-lg-12">
 			<h2 class="page-header">
-				Repositories <a href="/repo/create" class="btn btn-primary pull-right"
+				Repositories <a th:if="${#authorization.expression('hasAuthority(''REPO_CREATE_PRIVILEGE'')')}" href="/repo/create" class="btn btn-primary pull-right"
 					role="button"><span class="glyphicon glyphicon-pencil" /> Create</a>
 			</h2>
 
@@ -75,13 +75,17 @@ table.dataTable {
 									<p th:text="${repo.shortDescription}" /> 
 									<p>
 									
-									<div class="btn-group btn-group-sm">
+										<div>
 											<a th:href="|@{/repo/read/}${repo.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
-											<a th:href="|@{/repo/edit/}${repo.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> 
-											<a class="btn btn-danger" 
-											th:onclick="'javascript:deleteModal(\'' 
+												class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"/> View</a> 
+											<a th:if="${#authorization.expression('hasAuthority(''REPO_EDIT_PRIVILEGE'')')} 
+												AND ${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
+												th:href="|@{/repo/edit/}${repo.id}|"
+												class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit" /> Edit</a> 
+											<a th:if="${#authorization.expression('hasAuthority(''REPO_DELETE_PRIVILEGE'')')} 
+												AND ${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
+												th:href="|@{/repo/edit/}${repo.id}|"
+												class="btn btn-danger btn-xs" th:onclick="'javascript:deleteModal(\'' 
 												+ ${repo.id} + ','
 												+ ${repo.title} + ',' 
 												+ ${repo.shortDescription} + ','
@@ -89,8 +93,10 @@ table.dataTable {
 												+ ${repo.getcFPs().size()}
 												+ '\');'" >
 												<span class="glyphicon glyphicon-trash" /> Delete</a>	
-											<a th:href="|@{/callforproposals/create/}${repo.id}|"
-												class="btn btn-primary"><span class="glyphicon glyphicon-pencil"/> Create CFP</a>
+											<a th:if="${#authorization.expression('hasAuthority(''CFP_CREATE_PRIVILEGE'')')} 
+												AND ${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
+												th:href="|@{/repo/edit/}${repo.id}|"
+												class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"/> Create CFP</a>
 										</div>	
 										<span class="badge badge-green pull-right" th:if="${repo.status} == true" >Online</span>
 										<span class="badge badge-red pull-right" th:if="${repo.status} == false" >Offline</span>							

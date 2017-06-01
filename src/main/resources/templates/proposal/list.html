@@ -37,7 +37,7 @@ table.dataTable {
     <div class="container">
 		<div class="col-lg-12">
 				<h2 class="page-header">
-					Proposals <a href="/proposal/create" class="btn btn-primary pull-right"
+					Proposals <a th:if="${#authorization.expression('hasAuthority(''PROPOSAL_CREATE_PRIVILEGE'')')}" href="/proposal/create" class="btn btn-primary pull-right"
 					role="button"><span class="glyphicon glyphicon-pencil" /> Create</a>
 				</h2>
 
@@ -64,9 +64,11 @@ table.dataTable {
 										<div class="btn-group btn-group-xs">
 											<a th:href="|@{/proposal/read/}${proposal.id}|"
 												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
-											<a th:href="|@{/proposal/edit/}${proposal.id}|"
+											<a th:if="${#authorization.expression('hasAuthority(''PROPOSAL_EDIT_PRIVILEGE'')')}" 
+												th:href="|@{/proposal/edit/}${proposal.id}|"
 												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> 
-											<a class="btn btn-danger" 
+											<a th:if="${#authorization.expression('hasAuthority(''PROPOSAL_EDIT_PRIVILEGE'')')}" 
+												class="btn btn-danger" 
 												th:onclick="'javascript:deleteModal(\'' 
 													+ ${proposal.id} + ','
 													+ ${proposal.title} + ',' 

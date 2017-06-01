@@ -27,8 +27,8 @@
 		          <ul class="dropdown-menu" style="min-width:40px; width:100%">
 		            <li> <a href="#">My Profile</a> </li>
 					<li> <a href="/expertise/add">My Expertise</a> </li>
-					<li class="divider"></li>
-		               <li> <a href="#">Change Password</a> </li>
+					<li sec:authorize="hasAuthority('ROLE_SA')" class="divider"></li>
+		               <li sec:authorize="hasAuthority('ROLE_SA')"> <a href="#">Change Password</a> </li>
 		               <li class="divider"></li>
 					<li>
 						<div class="col-md-12">
@@ -58,7 +58,7 @@
 				<li><a href="/repo/list"><span class="glyphicon glyphicon-folder-open"/> Repositories</a></li>
 				<li><a href="/callforproposals/list"><span class="glyphicon glyphicon-bullhorn"/> Call for Proposals</a></li>
 				<li><a href="/proposal/list"><span class="glyphicon glyphicon-inbox"/> Proposals</a></li>
-				<li><a href="/classification/list"><span class="glyphicon glyphicon-tags"/> Classifications</a></li>
+				<li sec:authorize="hasAuthority('ROLE_SA')"><a href="/classification/list"><span class="glyphicon glyphicon-tags"/> Classifications</a></li>
 		      </ul>
 		    </div>
 		    

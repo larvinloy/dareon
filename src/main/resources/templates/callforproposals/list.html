@@ -35,7 +35,7 @@ table.dataTable {
     <div class="container">
 		<div class="col-lg-12">
 				<h2 class="page-header">
-					Call for Proposals <a href="/callforproposals/create" class="btn btn-primary pull-right"
+					Call for Proposals <a th:if="${#authorization.expression('hasAuthority(''CFP_CREATE_PRIVILEGE'')')}" href="/callforproposals/create" class="btn btn-primary pull-right"
 					role="button"><span class="glyphicon glyphicon-pencil" /> Create</a>
 				</h2>
 
@@ -59,13 +59,15 @@ table.dataTable {
 										<hr class="faded"/>
 										<p th:text="${callForProposals.description}" />
 										<p>
-											<div class="btn-group btn-group-xs">
+										
 												<a th:href="|@{/callforproposals/read/}${callForProposals.id}|"
-													class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
-												<a th:href="|@{/callforproposals/edit/}${callForProposals.id}|"
-													class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> 
-												<a class="btn btn-danger" 
-												th:onclick="'javascript:deleteModal(\'' 
+													class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"/> View</a> 
+												<a th:if="${#authorization.expression('hasAuthority(''CFP_EDIT_PRIVILEGE'')')}" 
+													th:href="|@{/callforproposals/edit/}${callForProposals.id}|"
+													class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit" /> Edit</a> 
+												<a th:if="${#authorization.expression('hasAuthority(''CFP_DELETE_PRIVILEGE'')')}" 
+													class="btn btn-danger btn-xs" 
+													th:onclick="'javascript:deleteModal(\'' 
 													+ ${callForProposals.id} + ','
 													+ ${callForProposals.title} + ',' 
 													+ ${callForProposals.description} + ','
@@ -73,7 +75,7 @@ table.dataTable {
 													+ ${callForProposals.getProposals().size()}
 													+ '\');'" >
 													<span class="glyphicon glyphicon-trash" /> Delete</a>	
-											</div>
+											
 										</p>
 									</td>
 
