@@ -110,8 +110,7 @@ public class RepoController
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	Repo repo = repoForm.getRepo();
-	if(repoService.findById(repo.getId()) == null)
-	    repo.setCreator(userService.findByEmail(auth.getName()));
+	
 	
 //	repo.setDomains(repoForm.getFORCollection());
 	Collection<Classification> classifications = new ArrayList<Classification>();

@@ -22,7 +22,7 @@ public class ProposalService
     private UserRepository userRepository;
 
     @Autowired
-    public ProposalService(ProposalRepository proposalRepository,UserRepository userRepository)
+    public ProposalService(ProposalRepository proposalRepository, UserRepository userRepository)
     {
 	this.proposalRepository = proposalRepository;
 	this.userRepository = userRepository;
@@ -35,14 +35,13 @@ public class ProposalService
 
     public Proposal save(Proposal proposal)
     {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	Proposal tempProposal = proposalRepository.findById(proposal.getId());
-	if(tempProposal == null)
+	if (tempProposal == null)
 	{
-		proposal.setCreator(userRepository.findByEmail(auth.getName()));
+	    proposal.setCreator(userRepository.findByEmail(auth.getName()));
 	    return proposalRepository.save(proposal);
-	}
-	else
+	} else
 	{
 	    Proposal editProposal = new Proposal();
 	    editProposal.setId(proposal.getId());
@@ -51,7 +50,7 @@ public class ProposalService
 	    editProposal.setCfp(tempProposal.getCfp());
 	    editProposal.setCreatedOn(tempProposal.getCreatedOn());
 	    editProposal.setTitle(proposal.getTitle());
-	    editProposal.setCreator(proposal.getCreator());
+	    editProposal.setCreator(tempProposal.getCreator());
 	    return proposalRepository.save(editProposal);
 	}
     }
@@ -76,6 +75,6 @@ public class ProposalService
     {
 	// TODO Auto-generated method stub
 	proposalRepository.delete(id);
-	
+
     }
 }
