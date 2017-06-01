@@ -84,7 +84,6 @@ table.dataTable {
 												class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit" /> Edit</a> 
 											<a th:if="${#authorization.expression('hasAuthority(''REPO_DELETE_PRIVILEGE'')')} 
 												AND ${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
-												th:href="|@{/repo/edit/}${repo.id}|"
 												class="btn btn-danger btn-xs" th:onclick="'javascript:deleteModal(\'' 
 												+ ${repo.id} + ','
 												+ ${repo.title} + ',' 
@@ -95,7 +94,7 @@ table.dataTable {
 												<span class="glyphicon glyphicon-trash" /> Delete</a>	
 											<a th:if="${#authorization.expression('hasAuthority(''CFP_CREATE_PRIVILEGE'')')} 
 												AND ${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
-												th:href="|@{/repo/edit/}${repo.id}|"
+												th:href="|@{/callforproposals/create/}${repo.id}|"
 												class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"/> Create CFP</a>
 										</div>	
 										<span class="badge badge-green pull-right" th:if="${repo.status} == true" >Online</span>

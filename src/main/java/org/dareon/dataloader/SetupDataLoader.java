@@ -98,7 +98,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		proposalCreatePrivilege, proposalDeletePrivilege, proposalEditPrivilege, proposalReadPrivilege);
 
 	final List<Privilege> roPrivileges = Arrays.asList(classificationReadPrivilege,cfpReadPrivilege, cfpCreatePrivilege, cfpEditPrivilege,
-		cfpDeletePrivilege, proposalDeletePrivilege, proposalReadPrivilege, repoReadPrivilege);
+		cfpDeletePrivilege, proposalDeletePrivilege, proposalReadPrivilege, repoReadPrivilege, repoEditPrivilege);
 
 	final List<Privilege> doPrivileges = Arrays.asList(classificationReadPrivilege,proposalReadPrivilege, proposalCreatePrivilege,
 		proposalEditPrivilege, proposalDeletePrivilege, cfpReadPrivilege, repoReadPrivilege);

@@ -61,14 +61,13 @@ table.dataTable {
 										<hr class="faded"/>
 										<span th:text="${proposal.description}" />
 										<p>
-										<div class="btn-group btn-group-xs">
 											<a th:href="|@{/proposal/read/}${proposal.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-eye-open"/> View</a> 
+												class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"/> View</a> 
 											<a th:if="${#authorization.expression('hasAuthority(''PROPOSAL_EDIT_PRIVILEGE'')')}" 
 												th:href="|@{/proposal/edit/}${proposal.id}|"
-												class="btn btn-default"><span class="glyphicon glyphicon-edit" /> Edit</a> 
+												class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit" /> Edit</a> 
 											<a th:if="${#authorization.expression('hasAuthority(''PROPOSAL_EDIT_PRIVILEGE'')')}" 
-												class="btn btn-danger" 
+												class="btn btn-danger btn-xs" 
 												th:onclick="'javascript:deleteModal(\'' 
 													+ ${proposal.id} + ','
 													+ ${proposal.title} + ',' 
@@ -77,7 +76,6 @@ table.dataTable {
 													+ ${proposal.cfp.repo.title}
 													+ '\');'" >
 												<span class="glyphicon glyphicon-trash" /> Delete</a>
-										</div>									
 										</p>
 									</td>
 								</tr>

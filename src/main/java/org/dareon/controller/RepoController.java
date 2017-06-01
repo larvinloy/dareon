@@ -131,7 +131,7 @@ public class RepoController
 	return "redirect:read/" + savedRepo.getId();
     }
     
-    @PreAuthorize("hasAuthority('REPO_CREATE_PRIVILEGE') OR isRepoOwner(#id)")
+    @PreAuthorize("hasAuthority('REPO_EDIT_PRIVILEGE') AND isRepoOwner(#id)")
     @RequestMapping("/repo/edit/{id}")
     public String repoEdit(@PathVariable Long id, Model model)
     {
