@@ -35,6 +35,7 @@ table.dataTable {
     <div class="container">
 		<div class="col-lg-12">
 				<h2 class="page-header">
+				<span class="glyphicon glyphicon-bullhorn"/>
 					Call for Proposals <a th:if="${#authorization.expression('hasAuthority(''CFP_CREATE_PRIVILEGE'')')} 
 						OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}"
 						href="/callforproposals/create" class="btn btn-primary pull-right"
@@ -57,7 +58,15 @@ table.dataTable {
 										
 										<a th:href="|@{/callforproposals/read/}${callForProposals.id}|">
 										<h4 th:text="${callForProposals.title}" /></a>
-										<span class="label label-info" th:text="${callForProposals.repo.title}" />
+										<span class="label label-default" style="margin-right: 10px">
+											<th:block th:if="${callForProposals.repo.owner} != null">
+												<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${callForProposals.repo.owner.Email}" 
+													class="glyphicon glyphicon-star" />
+												<span class="glyphicon glyphicon-user" />
+												<span th:text="|${callForProposals.repo.owner.firstName} ${callForProposals.repo.owner.lastName}|"/>
+											</th:block>
+										</span>
+										<span class="label label-info"><span class="glyphicon glyphicon-folder-open"/> <span th:text="${callForProposals.repo.title}" /></span>
 										<hr class="faded"/>
 										<p th:text="${callForProposals.description}" />
 										<p>

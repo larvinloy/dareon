@@ -48,6 +48,7 @@ table.dataTable {
     <div class="container">
 		<div class="col-lg-12">
 			<h2 class="page-header">
+			<span class="glyphicon glyphicon-folder-open"/>
 				Repositories <a th:if="${#authorization.expression('hasAuthority(''REPO_CREATE_PRIVILEGE'')')} 
 					OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}" 
 					href="/repo/create" class="btn btn-primary pull-right"
@@ -68,10 +69,11 @@ table.dataTable {
 									<td> 
 										<span class="pull-right" th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy')}" />
 										<a th:href="|@{/repo/read/}${repo.id}|"><h4 th:text="${repo.title}" /></a>
-										<span class="label label-info">
+										<span class="label label-default">
 											<th:block th:if="${repo.owner} != null">
 												<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
 													class="glyphicon glyphicon-star" />
+												<span class="glyphicon glyphicon-user" />
 												<span th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
 											</th:block>
 										</span>
