@@ -70,9 +70,9 @@ public class InitUsersRepos
     public void initProposals()
     {
     //Proposal(String title, String description, String details, CFP cfp)	
-	final Proposal prop1 = new Proposal("Test Proposal 1","Test Proposal Description 1","Test Proposal Details 1",cfpRepository.findById((long) 1));
+	final Proposal prop1 = new Proposal("Test Proposal 1","Test Proposal Description 1","Test Proposal Details 1",cfpRepository.findById((long) 1),userRepository.findByEmail("dataowner@rmit.edu.au"));
 	proposalRepository.save(prop1);
-	final Proposal prop2 = new Proposal("Test Proposal 2","Test Proposal Description 2","Test Proposal Details 2",cfpRepository.findById((long) 2));;
+	final Proposal prop2 = new Proposal("Test Proposal 2","Test Proposal Description 2","Test Proposal Details 2",cfpRepository.findById((long) 2),userRepository.findByEmail("dataowner@rmit.edu.au"));;
 	proposalRepository.save(prop2);
     }
     

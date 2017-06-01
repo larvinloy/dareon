@@ -91,10 +91,8 @@ public class ProposalController
     public String proposalSave(@ModelAttribute Proposal proposal)
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	// UserDetailsImpl u = (UserDetailsImpl)auth.getPrincipal();
-	// if (proposal.getUser() == null)
-	// proposal.setUser(cFPService.findByTitle(title)));
-	// return proposal.getRepo().toString();
+	if(proposalService.findById(proposal.getId()) == null)
+	    proposal.setCreator(userService.findByEmail(auth.getName()));
 	Proposal savedproposal = proposalService.save(proposal);
 
 	return "redirect:read/" + savedproposal.getId();

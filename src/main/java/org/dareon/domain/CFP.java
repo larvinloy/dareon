@@ -54,7 +54,7 @@ public class CFP
     
     // joining repo_id for table repo with many to one relationship
     @ManyToOne()
-    @JoinColumn(name="repo_id")
+    @JoinColumn(name="repo_id", nullable = false)
     private Repo repo;
     
     @OneToMany(mappedBy="cfp", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})

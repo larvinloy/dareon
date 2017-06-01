@@ -77,6 +77,10 @@ public class User
     @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     private Set<Expertise> expertises = new HashSet<Expertise>();
+    
+    @OneToMany(mappedBy="creator", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Set<Proposal> createdProposals = new HashSet<Proposal>();
 /**
  * returning user object to the immidiate super class
  */
@@ -273,6 +277,16 @@ public class User
         this.expertises = expertises;
     }
 
+
+    public Set<Proposal> getCreatedProposals()
+    {
+        return createdProposals;
+    }
+
+    public void setCreatedProposals(Set<Proposal> createdProposals)
+    {
+        this.createdProposals = createdProposals;
+    }
 
     @Override
     public String toString()

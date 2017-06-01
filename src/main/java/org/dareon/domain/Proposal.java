@@ -45,8 +45,12 @@ public class Proposal
     private String details;
 
     @ManyToOne()
-    @JoinColumn(name = "cfp_id")
+    @JoinColumn(name = "cfp_id",nullable = false)
     private CFP cfp;
+    
+    @ManyToOne()
+    @JoinColumn(name = "creator_id",nullable = false)
+    private User creator;
 
     public Proposal()
     {
@@ -60,13 +64,14 @@ public class Proposal
       * @param cfp defines the values(calls for proposals) entered in the CFP column of proposal table
       */
     
-    public Proposal(String title, String description, String details, CFP cfp)
+    public Proposal(String title, String description, String details, CFP cfp, User creator)
     {
 	super();
 	this.title = title;
 	this.description = description;
 	this.details = details;
 	this.cfp = cfp;
+	this.creator = creator;
     }
 
 /**
@@ -150,7 +155,18 @@ public class Proposal
     {
         this.cfp = cfp;
     }
+    public User getCreator()
+    {
+        return creator;
+    }
+    public void setCreator(User creator)
+    {
+        this.creator = creator;
+    }
+  
+    
 
+    
   
 
 }

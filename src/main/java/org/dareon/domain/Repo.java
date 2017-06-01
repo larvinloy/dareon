@@ -61,11 +61,11 @@ public class Repo
     private String description;
 
     @ManyToOne()
-    @JoinColumn(name="creator_id")
+    @JoinColumn(name="creator_id",nullable = false)
     private User creator;
     
     @ManyToOne()
-    @JoinColumn(name="owner_id")
+    @JoinColumn(name="owner_id", nullable = false)
     private User owner;
     
     @Type(type="true_false")
