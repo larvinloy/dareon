@@ -13,7 +13,7 @@ import org.dareon.domain.CFP;
 import org.dareon.domain.Expertise;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
-import org.dareon.json.JsonFORTree;
+import org.dareon.json.JsonClassificationTree;
 import org.dareon.service.ExpertiseService;
 import org.dareon.service.ClassificationService;
 import org.dareon.service.CFPService;
@@ -81,20 +81,7 @@ public class ExpertiseController
     public String addExpertise(Model model) throws JSONException
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	JSONObject obj = new JSONObject();
-	JSONArray arr = new JSONArray();
-	// return aNZSRCService.list();
-	// for(FOR a : expertiseService.listByLevel(levelService.findById((long)1)))
-	for (Classification a : classificationService.list())
-	{
-	    obj.put("text", a.getCode() + " | " + a.getName());
-	    obj.put("id", a.getId());
-	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if (a.getChildren().size() > 0)
-		obj = JsonFORTree.addChildren(obj, a.getChildren());
-	    arr.put(obj);
-	    obj = new JSONObject();
-	}
+	
 
 	
 	
@@ -107,7 +94,7 @@ public class ExpertiseController
 	AddExpertiseForm addExpertiseForm = new AddExpertiseForm();
 	addExpertiseForm.setPre(pre.toString());
 	model.addAttribute("addExpertiseForm", addExpertiseForm);
-	model.addAttribute("message", arr.toString());
+	model.addAttribute("classificationTree", JsonClassificationTree.getClassificationTreeAsString(classificationService.list()));
 
 	return "expertise/addexpertise";
 

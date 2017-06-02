@@ -13,7 +13,7 @@ import org.dareon.domain.CFP;
 import org.dareon.domain.Classification;
 import org.dareon.domain.Repo;
 import org.dareon.domain.User;
-import org.dareon.json.JsonFORTree;
+import org.dareon.json.JsonClassificationTree;
 import org.dareon.service.CFPService;
 import org.dareon.service.ClassificationService;
 import org.dareon.service.RepoService;
@@ -85,21 +85,7 @@ public class RepoController
 	users.add(0,userService.findByEmail(auth.getName()));
 	model.addAttribute("users",users);
 	
-	JSONObject obj = new JSONObject();
-	JSONArray arr = new JSONArray();
-//	return aNZSRCService.list();
-//	System.out.println(fORService.listByLevel(levelService.findById((long)1)));
-	for(Classification a : classificationService.list())
-	{
-	    obj.put("text", a.getCode() + " | " + a.getName());
-	    obj.put("id", a.getId());
-	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if(a.getChildren().size() > 0)
-		obj = JsonFORTree.addChildren(obj, a.getChildren());
-	    arr.put(obj);
-	    obj = new JSONObject();
-	}
-	model.addAttribute("message", arr.toString());
+	model.addAttribute("classificationTree", JsonClassificationTree.getClassificationTreeAsString(classificationService.list()));
 	model.addAttribute("domains", new String());
 	model.addAttribute("pre", new String());
 	return "repo/create";
@@ -145,20 +131,8 @@ public class RepoController
 	users.add(0,userService.findByEmail(auth.getName()));
 	model.addAttribute("users",users);
 	
-	JSONObject obj = new JSONObject();
-	JSONArray arr = new JSONArray();
-//	return aNZSRCService.list();
-	for(Classification a : classificationService.list())
-	{
-	    obj.put("text", a.getCode() + " | " + a.getName());
-	    obj.put("id", a.getId());
-	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if(a.getChildren().size() > 0)
-		obj = JsonFORTree.addChildren(obj, a.getChildren());
-	    arr.put(obj);
-	    obj = new JSONObject();
-	}
-	model.addAttribute("message", arr.toString());
+	
+	model.addAttribute("classificationTree", JsonClassificationTree.getClassificationTreeAsString(classificationService.list()));
 	
 	
 	JSONArray pre = new JSONArray();
