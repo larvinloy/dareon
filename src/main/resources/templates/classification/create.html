@@ -11,7 +11,9 @@
 	<div class="container">
 		<div class="col-lg-12">
 
-			<h2>Classifications</h2>
+			<h2  class="page-header">
+			<span class="glyphicon glyphicon-tags"/>
+			Create New Classification</h2>
 
 			<form class="form-horizontal" th:object="${classificationForm.classification}"
 				th:action="@{/classification/create}" method="post">

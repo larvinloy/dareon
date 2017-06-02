@@ -11,10 +11,12 @@
 	<div class="container">
 		<div class="col-lg-12">
 
-			<h2 th:if="${repoForm.repo.title} == null" class="page-header">Create
-				New Repository</h2>
-			<h2 th:if="${repoForm.repo.title} != null" class="page-header">Update
-				Repository</h2>
+			<h2 th:if="${repoForm.repo.title} == null" class="page-header">
+			<span class="glyphicon glyphicon-folder-open"/>
+			Create New Repository</h2>
+			<h2 th:if="${repoForm.repo.title} != null" class="page-header">
+			<span class="glyphicon glyphicon-folder-open"/>
+			Update Repository</h2>
 
 			<form class="form-horizontal" th:object="${repoForm.repo}"
 				th:action="@{/repo/create}" method="post">
