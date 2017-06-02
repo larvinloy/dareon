@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.dareon.domain.CFP;
@@ -198,9 +199,17 @@ public class RepoController
     
     @PreAuthorize("hasAuthority('REPO_READ_PRIVILEGE')")
     @RequestMapping("/repo/list")
-    public String repoList(Model model)
+    public String repoList(HttpServletRequest request, Model model)
     {
-	model.addAttribute("repos", repoService.list());
+	 if (request.isUserInRole("ROLE_SA"))	     
+	 {
+	     model.addAttribute("repos", repoService.listForSA());
+	 }
+	 else
+	 {
+	     model.addAttribute("repos", repoService.listForOtherRoles());
+	 }
+	
 	return "repo/list";
     }
 }

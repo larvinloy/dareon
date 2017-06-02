@@ -66,7 +66,7 @@ public class RepoServiceWebLayerTest
     @WithUserDetails("admin@dareon.org")
     public void RepoCreateAndReadTest() throws Exception
     {
-    	long numberOfRepositoriesPriorToCreate = repoService.list().size();
+    	long numberOfRepositoriesPriorToCreate = repoService.listForSA().size();
     	
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -83,7 +83,7 @@ public class RepoServiceWebLayerTest
 		.andDo(print());
 
     	
-    	long numberOfRepositoriesAfterCreate = repoService.list().size();
+    	long numberOfRepositoriesAfterCreate = repoService.listForSA().size();
     	
 		// check if the repository was created 
 		MvcResult response = mockMvc.perform(get("/repo/read/3"))
@@ -117,7 +117,7 @@ public class RepoServiceWebLayerTest
     @WithUserDetails("admin@dareon.org")
     public void RepoUpdateAndReadTest() throws Exception
     {
-    	long numberOfRepositoriesPriorToUpdate = repoService.list().size();
+    	long numberOfRepositoriesPriorToUpdate = repoService.listForSA().size();
     	
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -134,7 +134,7 @@ public class RepoServiceWebLayerTest
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("read/1"));
 
-    	long numberOfRepositoriesAfterUpdate = repoService.list().size();
+    	long numberOfRepositoriesAfterUpdate = repoService.listForSA().size();
     	
 		// check if the repository was updated 
 		MvcResult response = mockMvc.perform(get("/repo/read/1"))
@@ -161,7 +161,7 @@ public class RepoServiceWebLayerTest
     @WithUserDetails("admin@dareon.org")
     public void RepoDeleteTest() throws Exception
     {
-    	long numberOfRepositoriesPriorToDelete = repoService.list().size();
+    	long numberOfRepositoriesPriorToDelete = repoService.listForSA().size();
     	
 		// check if the repository is existing 
 		MvcResult responseRepo = mockMvc.perform(get("/repo/read/2"))
@@ -187,7 +187,7 @@ public class RepoServiceWebLayerTest
 				.andExpect(status().is3xxRedirection())
 				.andExpect(redirectedUrl("/repo/list"));
 
-		long numberOfRepositoriesAfterDelete = repoService.list().size();
+		long numberOfRepositoriesAfterDelete = repoService.listForSA().size();
 		
 		//check if the repository was deleted
 		Repo repository = repoService.findByTitle("Test Repo 2");
