@@ -3,6 +3,37 @@
 
 <head th:replace="layouts/fragments :: head-min"></head>
 
+
+
+<style>
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  overflow-y: auto;
+  width: 100%;
+  max-height: 200px;
+  
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+  width: 100%;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+  width:100%;
+}
+
+.alert {
+  margin-bottom: 1px;
+  height: 30px;
+  line-height:30px;
+  padding:0px 15px;
+}
+</style>
+
 <body>
 
 	<div th:replace="layouts/navigation :: nav-private"></div>
@@ -24,28 +55,28 @@
 				<div class="panel-body">
 
 					<div>
-						<label class="col-sm-2 control-label">Short Description:</label>
+						<label class="col-md-2 control-label">Short Description:</label>
 						<div class="col-md-10">
 							<p th:text="${repo.shortDescription}" />
 						</div>
 					</div>
 
 					<div>
-						<label class="col-sm-2 control-label">Description:</label>
+						<label class="col-md-2 control-label">Description:</label>
 						<div class="col-md-10">
 							<p th:text="${repo.description}" />
 						</div>
 					</div>
 
 					<div>
-						<label class="col-sm-2 control-label">Institution:</label>
+						<label class="col-md-2 control-label">Institution:</label>
 						<div class="col-md-10">
 							<p th:text="${repo.institution}" />
 						</div>
 					</div>
 
 					<div>
-						<label class="col-sm-2 control-label">Date Created:</label>
+						<label class="col-md-2 control-label">Date Created:</label>
 						<div class="col-md-10">
 							<p
 								th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy hh:mm:ss a')}" />
@@ -53,57 +84,79 @@
 					</div>
 
 					<div>
-						<label class="col-sm-2 control-label">Created by:</label>
+						<label class="col-md-2 control-label">Created by:</label>
 						<div class="col-md-10">
 							<p th:text="|${repo.creator.firstName} ${repo.creator.lastName}|" />
 						</div>
 					</div>
 
 					<div>
-						<label class="col-sm-2 control-label">Owner:</label>
+						<label class="col-md-2 control-label">Owner:</label>
 						<div class="col-md-10">
 							<p th:text="|${repo.owner.firstName} ${repo.owner.lastName}|" />
 						</div>
 					</div>
 
 					<div>
-						<label class="col-sm-2 control-label">Status:</label>
+						<label class="col-md-2 control-label">Status:</label>
 						<div class="col-md-10">
 							<p th:if="${repo.status} == true">Online</p>
 							<p th:if="${repo.status} == false">Offline</p>
 						</div>
 					</div>
-				</div>
-<hr style="height: 1px; margin-top: 0px; margin-bottom: 0px;" />
-			<div class="panel-body">
-						<label class="col-sm-2 control-label">CFPs Associated:</label>
-						<div class="col-md-10">
-							<table>
-								<tr>
+
+					<div class="col-md-6">
+						<div class="panel panel-default panel-body" style="padding: 5px;">
+							<table class="table table-fixed">
+								<thead>
+									<tr>
+										<th>Call for Proposals:</th>
+									</tr>
+								</thead>
+								<tbody>
 									<th:block th:each="cFP : ${repo.cFPs}">
 										<tr>
-											<td th:text="${cFP.title}"></td>
+											<td th:text="${cFP.title}" />
 										</tr>
 									</th:block>
-								</tr>
-							</table>
-						</div>
-			</div>
-<hr style="height: 1px; margin-top: 0px; margin-bottom: 0px;" />
-			<div class="panel-body">
-						<label class="col-sm-2 control-label">Classifications:</label>
-						<div class="col-md-10">
-							<table>
-								<th:block th:each="domain : ${repo.domains}">
 									<tr>
-										<td th:text="|${domain.code + ' |'} ${domain.name}|"></td>
+										<td th:if="${repo.cFPs.size()} == 0"><div
+												class="alert alert-warning" role="alert" style="">No Call for
+												Proposals found.</div></td>
 									</tr>
-								</th:block>
+								</tbody>
 							</table>
 						</div>
-			</div>
+					</div>
 
-</div>
+					<div class="col-md-6">
+						<div class="panel panel-default panel-body" style="padding: 5px;">
+							<table class="table table-fixed">
+								<thead>
+									<tr>
+										<th>Classifications:</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="domain : ${repo.domains}">
+										<tr>
+											<td th:text="|${domain.code + ' |'} ${domain.name}|" />
+										</tr>
+									</th:block>
+									<tr>
+										<td th:if="${repo.domains.size()} == 0"><div
+												class="alert alert-warning" role="alert">No
+												Classifications found.</div></td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
+					
+			</div>
 
 
 			<div class="col-sm-6">
