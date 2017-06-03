@@ -4,7 +4,7 @@ package org.dareon.controller;
 import java.util.List;
 
 import org.dareon.domain.Classification;
-import org.dareon.json.JsonFORTree;
+import org.dareon.json.JsonClassificationTree;
 import org.dareon.service.ClassificationService;
 import org.dareon.wrappers.ClassificationForm;
 import org.json.JSONArray;
@@ -53,22 +53,10 @@ public class ClassificationController
     public String forCreate(Model model) throws JSONException
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	JSONObject obj = new JSONObject();
-	JSONArray arr = new JSONArray();
-
-	for (Classification a : classificationService.list())
-	{
-	    obj.put("text", a.getCode() + " | " + a.getName());
-	    obj.put("id", a.getId());
-	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if (a.getChildren().size() > 0)
-		obj = JsonFORTree.addChildren(obj, a.getChildren());
-	    arr.put(obj);
-	    obj = new JSONObject();
-	}
+	
 
 	model.addAttribute("classificationForm", new ClassificationForm());
-	model.addAttribute("message", arr.toString());
+	model.addAttribute("classificationTree", JsonClassificationTree.getClassificationTreeAsString(classificationService.list()));
 	model.addAttribute("pre", new String());
 	model.addAttribute("parent", new String());
 
@@ -115,20 +103,7 @@ public class ClassificationController
 	ClassificationForm classificationForm = new ClassificationForm();
 	classificationForm.setClassification(classificationService.findById(id));
 	
-	JSONObject obj = new JSONObject();
-	JSONArray arr = new JSONArray();
-
-	for (Classification a : classificationService.list())
-	{
-	    obj.put("text", a.getCode() + " | " + a.getName());
-	    obj.put("id", a.getId());
-	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if (a.getChildren().size() > 0)
-		obj = JsonFORTree.addChildren(obj, a.getChildren());
-	    arr.put(obj);
-	    obj = new JSONObject();
-	}
-	model.addAttribute("message", arr.toString());
+	model.addAttribute("classificationTree", JsonClassificationTree.getClassificationTreeAsString(classificationService.list()));
 	
 	JSONArray pre = new JSONArray();
 
@@ -151,22 +126,9 @@ public class ClassificationController
     public String forList(Model model) throws JSONException
     {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	JSONObject obj = new JSONObject();
-	JSONArray arr = new JSONArray();
-
-	for (Classification a : classificationService.list())
-	{
-	    obj.put("text", a.getCode() + " | " + a.getName());
-	    obj.put("id", a.getId());
-	    obj.put("tags", new JSONArray().put(String.valueOf(a.getChildren().size())));
-	    if (a.getChildren().size() > 0)
-		obj = JsonFORTree.addChildren(obj, a.getChildren());
-	    arr.put(obj);
-	    obj = new JSONObject();
-	}
 
 	model.addAttribute("classificationForm", new ClassificationForm());
-	model.addAttribute("message", arr.toString());
+	model.addAttribute("classificationTree", JsonClassificationTree.getClassificationTreeAsString(classificationService.list()));
 	//model.addAttribute("pre", new String());
 
 	return "classification/list";

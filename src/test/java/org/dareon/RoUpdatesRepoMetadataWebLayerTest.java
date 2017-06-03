@@ -65,7 +65,7 @@ public class RoUpdatesRepoMetadataWebLayerTest
     @WithUserDetails("repoowner@rmit.edu.au")
     public void roCanUpdateOwnedRepoMetadataTest() throws Exception
     {
-    	long numberOfRepositories = repoService.list().size();
+    	long numberOfRepositories = repoService.listForSA().size();
     	
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -93,7 +93,7 @@ public class RoUpdatesRepoMetadataWebLayerTest
 		
 		assertNotNull("failure - not null", repoValue);
 		//number of repositories should have not increased
-		assertEquals("failure - repository increased", numberOfRepositories, repoService.list().size());
+		assertEquals("failure - repository increased", numberOfRepositories, repoService.listForSA().size());
 		assertEquals("failure - ID attribute not match", rv.getId(), 2);
 		assertEquals("failure - Repository attribute not match", rv.getTitle(), "Test Repository 2");
 		//the shortDescription should have changed

@@ -11,10 +11,12 @@
 	<div class="container">
 		<div class="col-lg-12">
 
-			<h2 th:if="${proposal.title} == null" class="page-header">Create
-				New Proposal</h2>
-			<h2 th:if="${proposal.title} != null" class="page-header">Update
-				Proposal</h2>
+			<h2 th:if="${proposal.title} == null" class="page-header">
+			<span class="glyphicon glyphicon-inbox"/>
+			Create New Proposal</h2>
+			<h2 th:if="${proposal.title} != null" class="page-header">
+			<span class="glyphicon glyphicon-inbox"/>
+			Update Proposal</h2>
 
 
 			<form class="form-horizontal" th:object="${proposal}"

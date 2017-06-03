@@ -65,7 +65,7 @@ public class AuthorizeDeauthorizeROWebLayerTest
     @WithUserDetails("admin@dareon.org")
     public void saAuthorizeROtoManageRepo() throws Exception
     {
-    	long numberOfRepositories = repoService.list().size();
+    	long numberOfRepositories = repoService.listForSA().size();
     	
     	//Admin edits a repository
     	this.mockMvc.perform(post("/repo/create")
@@ -92,7 +92,7 @@ public class AuthorizeDeauthorizeROWebLayerTest
 		Repo rv = (Repo)repoValue;
 		
 		//number of repositories should have not increased
-		assertEquals("failure - repository increased", numberOfRepositories, repoService.list().size());
+		assertEquals("failure - repository increased", numberOfRepositories, repoService.listForSA().size());
 		//check if the same repo
 		assertEquals("failure - ID attribute not match", rv.getId(), 1);
 		//Owner should have changed from admin@dareon.org to repoowner@rmit.edu.au
@@ -104,7 +104,7 @@ public class AuthorizeDeauthorizeROWebLayerTest
     @WithUserDetails("admin@dareon.org")
     public void saDeAuthorizeROtoManageRepo() throws Exception
     {
-    	long numberOfRepositories = repoService.list().size();
+    	long numberOfRepositories = repoService.listForSA().size();
     	
     	this.mockMvc.perform(post("/repo/create")
 		.contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -131,7 +131,7 @@ public class AuthorizeDeauthorizeROWebLayerTest
 		Repo rv = (Repo)repoValue;
 		
 		//number of repositories should have not increased
-		assertEquals("failure - repository increased", numberOfRepositories, repoService.list().size());
+		assertEquals("failure - repository increased", numberOfRepositories, repoService.listForSA().size());
 		//check if the same repo
 		assertEquals("failure - ID attribute not match", rv.getId(), 1);
 		//Owner should have changed from repoowner@rmit.edu.au to admin@dareon.org

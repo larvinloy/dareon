@@ -1,5 +1,6 @@
 package org.dareon.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -72,9 +73,19 @@ public class RepoService
     }
 
     @Transactional()
-    public List<Repo> list()
+    public List<Repo> listForSA()
     {
 	return repoRepository.findAllByOrderByCreatedOnDesc();
+    }
+    
+    @Transactional()
+    public List<Repo> listForOtherRoles()
+    {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	List<Repo> repos = new ArrayList<Repo>();
+	repos.addAll(repoRepository.findAllByStatusOrderByCreatedOnDesc(true));
+	repos.addAll(repoRepository.findAllByOwnerAndStatusOrderByCreatedOnDesc(userRepository.findByEmail(auth.getName()), false));
+	return repos;
     }
     
     public Repo findByTitle(String title)
