@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+</head>
+
+<body>
+
+	<div th:fragment="data-table">
+		<script th:inline="javascript">
+		//DataTable Settings
+		$('#customTable').dataTable( {
+			//<![CDATA[ 
+			 dom: "<'row'<'col-sm-6'<'toolbar-button'>><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-4'l><'col-sm-8'p>>"
+			//]]>
+		});
+		
+		$("div.toolbar-button").html(
+			 '<div class="btn-group" data-toggle="buttons" style="margin-bottom:15px;">' +
+			  '<label class="btn btn-default active">' +
+			  '<input type="radio" name="options" id="all" autocomplete="off" checked="checked" /><span class="glyphicon glyphicon-plus" />' +
+			  ' Show All</label>' +
+			  '<label class="btn btn-default">' +
+			  '<input type="radio" name="options" id="owned" autocomplete="off" /><span class="glyphicon glyphicon-minus" />' +
+			  ' Show Owned</label></div>');
+		
+		$(document).ready(function() {
+  	  		var table = $('#customTable').DataTable();
+  	  		var loggedInUser=[[|${#authentication.getPrincipal().getUser().getFirstName()} ${#authentication.getPrincipal().getUser().getLastName()}|]];
+
+  	  	$('#owned').change(function() {
+  			 table
+  			    .columns( 0 )
+  			    .search(loggedInUser)
+  			    .draw();
+  		});
+	  	$('#all').change(function() {
+  			 table
+  			    .columns( 0 )
+  			    .search("")
+  			    .draw();
+  		});
+		});
+		</script>
+	</div>
+
+</body>
+</html>

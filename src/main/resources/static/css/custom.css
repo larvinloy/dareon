@@ -74,3 +74,55 @@ footer {
     border-bottom-right-radius: 6px;
 }
 
+/* Badge colors */
+.badge {
+  font-weight: bold;
+}
+.badge-red {
+  background-color: #b94a48;
+}
+.badge-green {
+  background-color: #468847;
+}
+
+/* Horizontal rule */
+hr {
+    height: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+hr.faded { 
+    margin-top: 20px;
+    margin-top: 20px;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	}
+
+/* DataTable */
+table.dataTable {
+  width: 100%;
+  clear: both;
+  }
+  
+  table.dataTable thead td {
+    border-top: 0px ;
+    border-bottom: 0px ; 
+    margin: 0 !important;
+	padding: 0 !important;    
+    }
+    
+  table.dataTable tbody td {
+    border-top: 0px;
+    border-bottom: 0px;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    }
+
+.panel-body.no-margin {
+   padding: 10px !important;
+   margin: 0 !important;
+	}
+

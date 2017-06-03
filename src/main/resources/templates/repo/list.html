@@ -3,43 +3,6 @@
 
 	<head th:replace="layouts/fragments :: head-all"></head>
 
-<style>	
-hr.faded { 
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-	}
-
-table.dataTable {
-  width: 100%;
-  clear: both;
-  border-spacing: 10px;
-  }
-  
-  table.dataTable thead td {
-    border-top: 0px ;
-    border-bottom: 0px ; 
-    }
-    
-  table.dataTable tbody td {
-    border-top: 0px;
-    border-bottom: 0px;
-    }
-
-
-.badge {
-  font-weight: bold;
-}
-.badge-red {
-  background-color: #b94a48;
-}
-.badge-green {
-  background-color: #468847;
-}
-
-</style>
-
-
 <body>
 
 	<div th:replace="layouts/navigation :: nav-private"></div>
@@ -56,8 +19,8 @@ table.dataTable {
 			</h2>
 
 			<div class="well well-lg">
-
-					<table class="table table-responsive" id="repoTable">
+				
+					<table class="table table-responsive" id="customTable">
 						<thead>
 							<tr>
 								<th style="text-align: right">Ascending|Descending Order</th>
@@ -67,19 +30,23 @@ table.dataTable {
 							<th:block th:each="repo : ${repos}">
 								<tr>
 									<td> 
-										<span class="pull-right" th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy')}" />
+									<div class="panel panel-body panel-default no-margin">
+ 										<div class="pull-right">
+	 										<span class="glyphicon glyphicon-calendar"/>
+	 										<span th:text="${#calendars.format(repo.createdOn,'dd/MM/yyyy')}" /> 
+ 										</div>
 										<a th:href="|@{/repo/read/}${repo.id}|"><h4 th:text="${repo.title}" /></a>
 										<span class="label label-default">
 											<th:block th:if="${repo.owner} != null">
 												<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email}" 
-													class="glyphicon glyphicon-star" />
+													class="glyphicon glyphicon-star" style="color:#fff06d"/>
 												<span class="glyphicon glyphicon-user" />
 												<span th:text="|${repo.owner.firstName} ${repo.owner.lastName}|"/>
 											</th:block>
 										</span>
 										<hr class="faded"/>
 										<p th:text="${repo.shortDescription}" /> 
-										<p>
+										<hr />
 											<div>
 												<a th:href="|@{/repo/read/}${repo.id}|"
 													class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"/> View</a> 
@@ -104,10 +71,11 @@ table.dataTable {
 													OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}" 
 													th:href="|@{/callforproposals/create/}${repo.id}|"
 													class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"/> Create CFP</a>
-											</div>	
-											<span class="badge badge-green pull-right" th:if="${repo.status} == true" >Online</span>
-											<span class="badge badge-red pull-right" th:if="${repo.status} == false" >Offline</span>							
-										</p>
+												
+												<span class="badge badge-green pull-right" th:if="${repo.status} == true" >Online</span>
+												<span class="badge badge-red pull-right" th:if="${repo.status} == false" >Offline</span>							
+											</div>
+										</div>
 									</td>
 
 								</tr>
@@ -115,14 +83,7 @@ table.dataTable {
 						</tbody>
 		
 					</table>
-					<script>
 
-					$(document).ready(function() {
-						$('#repoTable').DataTable()
-					});
-					
-					</script>
-					
 					<p th:if="${repos.size() == 0}">
 						<div class="alert alert-warning" role="alert">No Repositories found.</div>
 					</p>
@@ -191,10 +152,11 @@ table.dataTable {
 
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
+	<div th:replace="layouts/datatable :: data-table"></div>
 	
-	<script>
+	<script th:inline="javascript">
+
 		function deleteModal(repo) {
-			
 			var arrRepo = repo.split(',');
 			var id=arrRepo[0];
 			var title=arrRepo[1];

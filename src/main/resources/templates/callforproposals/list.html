@@ -3,30 +3,6 @@
 
 	<head th:replace="layouts/fragments :: head-all"></head>
 
-<style>	
-hr.faded { 
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-	}
-
-table.dataTable {
-  width: 100%;
-  clear: both;
-  border-spacing: 10px;
-  }
-  
-  table.dataTable thead td {
-    border-top: 0px ;
-    border-bottom: 0px ; 
-    }
-    
-  table.dataTable tbody td {
-    border-top: 0px;
-    border-bottom: 0px;
-    }
-</style>	
-
 <body>
 
 	<div th:replace="layouts/navigation :: nav-private"></div>
@@ -44,7 +20,7 @@ table.dataTable {
 
 				<div class="well well-lg">
 
-					<table class="table table-responsive " id="cfpTable">
+					<table class="table table-responsive " id="customTable">
 						<thead>
 							<tr>
 								<th style="text-align: right">Ascending|Descending Order</th>
@@ -54,23 +30,26 @@ table.dataTable {
 							<th:block th:each="callForProposals : ${callsForProposals}">
 								<tr>
 									<td> 
-										<span class="pull-right" th:text="${#calendars.format(callForProposals.createdOn,'dd/MM/yyyy')}" />
-										
-										<a th:href="|@{/callforproposals/read/}${callForProposals.id}|">
-										<h4 th:text="${callForProposals.title}" /></a>
-										<span class="label label-default" style="margin-right: 10px">
-											<th:block th:if="${callForProposals.repo.owner} != null">
-												<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${callForProposals.repo.owner.Email}" 
-													class="glyphicon glyphicon-star" />
-												<span class="glyphicon glyphicon-user" />
-												<span th:text="|${callForProposals.repo.owner.firstName} ${callForProposals.repo.owner.lastName}|"/>
-											</th:block>
-										</span>
-										<span class="label label-info"><span class="glyphicon glyphicon-folder-open"/> <span th:text="${callForProposals.repo.title}" /></span>
-										<hr class="faded"/>
-										<p th:text="${callForProposals.description}" />
-										<p>
-										
+										<div class="panel panel-body panel-default no-margin">
+	 										<div class="pull-right">
+		 										<span class="glyphicon glyphicon-calendar"/>
+												<span th:text="${#calendars.format(callForProposals.createdOn,'dd/MM/yyyy')}" />
+											</div>
+											<a th:href="|@{/callforproposals/read/}${callForProposals.id}|">
+											<h4 th:text="${callForProposals.title}" /></a>
+											<span class="label label-default" style="margin-right: 10px">
+												<th:block th:if="${callForProposals.repo.owner} != null">
+													<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${callForProposals.repo.owner.Email}" 
+														class="glyphicon glyphicon-star" style="color:#fff06d" />
+													<span class="glyphicon glyphicon-user" />
+													<span th:text="|${callForProposals.repo.owner.firstName} ${callForProposals.repo.owner.lastName}|"/>
+												</th:block>
+											</span>
+											<span class="label label-info"><span class="glyphicon glyphicon-folder-open"/> <span th:text="${callForProposals.repo.title}" /></span>
+											<hr class="faded"/>
+											<p th:text="${callForProposals.description}" />
+											<hr />
+											<div>
 												<a th:href="|@{/callforproposals/read/}${callForProposals.id}|"
 													class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"/> View</a> 
 												<a th:if="(${#authorization.expression('hasAuthority(''CFP_EDIT_PRIVILEGE'')')}
@@ -90,21 +69,16 @@ table.dataTable {
 													+ ${callForProposals.getProposals().size()}
 													+ '\');'" >
 													<span class="glyphicon glyphicon-trash" /> Delete</a>	
-											
-										</p>
+											</div>
+										</div>
 									</td>
 
 								</tr>
 							</th:block>
 						</tbody>
-		
 					</table>
 					
-					<script>
-						$(document).ready(function() {
-							$('#cfpTable').DataTable()
-						});
-					</script>
+
 					<p th:if="${callsForProposals.size() == 0}">
 						<div class="alert alert-warning" role="alert">No Call for Proposals found.</div>
 					</p>
@@ -175,7 +149,8 @@ table.dataTable {
 	
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
-	
+	<div th:replace="layouts/datatable :: data-table"></div>
+		
 	<script>
 		function deleteModal(obj) {
 			

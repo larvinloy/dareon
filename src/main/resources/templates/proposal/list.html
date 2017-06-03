@@ -3,32 +3,6 @@
 
 	<head th:replace="layouts/fragments :: head-all"></head>
 
-
-<style>	
-hr.faded { 
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-	}
-
-table.dataTable {
-  width: 100%;
-  clear: both;
-  border-spacing: 10px;
-  }
-  
-  table.dataTable thead td {
-    border-top: 0px ;
-    border-bottom: 0px ; 
-    }
-    
-  table.dataTable tbody td {
-    border-top: 0px;
-    border-bottom: 0px;
-    }
-</style>	
-
-
 <body>
 
 	<div th:replace="layouts/navigation :: nav-private"></div>
@@ -46,7 +20,7 @@ table.dataTable {
 
 				<div class="well well-lg">
 
-					<table class="table table-responsive" id="proposalTable">
+					<table class="table table-responsive" id="customTable">
 						<thead>
 							<tr>
 								<th style="text-align: right">Ascending|Descending Order</th>
@@ -55,29 +29,33 @@ table.dataTable {
 						<tbody>
 							<th:block th:each="proposal : ${proposals}">
 								<tr>
-									<td> 
-										<span class="pull-right" th:text="${#calendars.format(proposal.createdOn,'dd/MM/yyyy')}" />
-										<a th:href="|@{/proposal/read/}${proposal.id}|">
-										<h4 th:text="${proposal.title}" /></a>
-										<span class="label label-default" style="margin-right: 10px">
-											<th:block th:if="${proposal.creator} != null">
-												<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${proposal.creator.Email}" 
-													class="glyphicon glyphicon-star" />
-												<span class="glyphicon glyphicon-user" />
-												<span th:text="|${proposal.creator.firstName} ${proposal.creator.lastName}|"/>
-											</th:block>
-										</span>
-										
-										<span class="label label-info" style="margin-right: 10px">
-											<span class="glyphicon glyphicon-folder-open"/>
-											<span th:text="${proposal.cfp.repo.title}" />
-										</span><span class="label label-info">
-											<span class="glyphicon glyphicon-bullhorn"/>
-											<span th:text="${proposal.cfp.title}" />
-										</span>
-										<hr class="faded"/>
-										<span th:text="${proposal.description}" />
-										<p>
+									<td>
+										<div class="panel panel-body panel-default no-margin"> 
+	 										<div class="pull-right">
+		 										<span class="glyphicon glyphicon-calendar"/>
+												<span th:text="${#calendars.format(proposal.createdOn,'dd/MM/yyyy')}" />
+											</div>
+											<a th:href="|@{/proposal/read/}${proposal.id}|">
+											<h4 th:text="${proposal.title}" /></a>
+											<span class="label label-default" style="margin-right: 10px">
+												<th:block th:if="${proposal.creator} != null">
+													<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${proposal.creator.Email}" 
+														class="glyphicon glyphicon-star" style="color:#fff06d" />
+													<span class="glyphicon glyphicon-user" />
+													<span th:text="|${proposal.creator.firstName} ${proposal.creator.lastName}|"/>
+												</th:block>
+											</span>
+											
+											<span class="label label-info" style="margin-right: 10px">
+												<span class="glyphicon glyphicon-folder-open"/>
+												<span th:text="${proposal.cfp.repo.title}" />
+											</span><span class="label label-info">
+												<span class="glyphicon glyphicon-bullhorn"/>
+												<span th:text="${proposal.cfp.title}" />
+											</span>
+											<hr class="faded"/>
+											<span th:text="${proposal.description}" />
+											<hr />
 											<div>
 												<a th:href="|@{/proposal/read/}${proposal.id}|"
 													class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"/> View</a> 
@@ -99,19 +77,14 @@ table.dataTable {
 														+ '\');'" >
 													<span class="glyphicon glyphicon-trash" /> Delete</a>
 											</div>
-										</p>
+										</div>
 									</td>
 								</tr>
 							</th:block>
 						</tbody>
 		
 					</table>
-					
-					<script>
-						$(document).ready(function() {
-							$('#proposalTable').DataTable()
-						});
-					</script>
+
 					<p th:if="${proposals.size() == 0}">
 						<div class="alert alert-warning" role="alert">No Proposals found.</div>
 					</p>
@@ -181,7 +154,8 @@ table.dataTable {
 	
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<footer th:replace="layouts/fragments :: footer"></footer>
-
+	<div th:replace="layouts/datatable :: data-table"></div>
+	
 	<script>
 		function deleteModal(obj) {
 			
