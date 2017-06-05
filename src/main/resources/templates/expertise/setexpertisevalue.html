@@ -2,6 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="layouts/fragments :: head-all"></head>
+
+<style>
+
+tbody {
+    display:block;
+    max-height:400px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+thead {
+    width: 100%;
+}
+
+
+</style>
  
 <body>
 
@@ -18,37 +37,39 @@
 			<form class="form-horizontal" th:action="@{/expertise/setvalue}"
 				th:object="${addExpertiseValueForm}" method="post">
 
-				<div class="well well-lg pre-scrollable" style="max-height:400px">
-
-					<div class="panel col-md-12" >
-					<hr />
-						<div th:each="index : ${#numbers.sequence(0,(#object.expertises.size() - 1))}">					
-							<div class="panel col-md-12">
-								<div class="col-md-1" >
-									<label class="control-label text-left" th:text = "*{expertises[__${index}__].classification.code}"/>
-								</div>
-								<div class="col-md-5" >
-									<label class="control-label text-left" th:text = "*{expertises[__${index}__].classification.name}"/>
-									<input type="hidden" th:field="*{expertises[__${index}__].classification}" />
-									<input type="hidden" th:field="*{expertises[__${index}__].user}" />
-								</div>
-							
-								<div class="col-md-6">
-									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="1" th:text="Novice" /></label>
-									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="2" th:text="Decent" /></label>
-									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="3" th:text="Good" /></label>
-									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="4" th:text="Great" /></label>
-									<label class="radio-inline"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="5" th:text="Superhero" /></label>
-								</div>
-								<hr />
-							</div>
-						</div>
-					
+				<div class="well well-lg">
+					<div class="panel panel-default" style="margin-bottom:0px;">
+						<table class="table table-responsive table-hover">
+							<thead>
+								<tr>
+									<th class="col-xs-1">Code</th>
+									<th class="col-xs-5">Classification</th>
+									<th class="col-xs-5">Expertise</th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="index : ${#numbers.sequence(0,(#object.expertises.size() - 1))}">						
+								<tr>
+									<td class="col-xs-1" th:text = "*{expertises[__${index}__].classification.code}" />
+									<td class="col-xs-5" th:text = "*{expertises[__${index}__].classification.name}">
+										<input type="hidden" th:field="*{expertises[__${index}__].classification}" />
+										<input type="hidden" th:field="*{expertises[__${index}__].user}" />										
+										</td>
+									<td class="col-xs-5">
+										<label class="radio-inline" style="padding-top:0px;"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="1" th:text="Novice" /></label>
+										<label class="radio-inline" style="padding-top:0px;"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="2" th:text="Advanced" /></label>
+										<label class="radio-inline" style="padding-top:0px;"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="3" th:text="Competent" /></label>
+										<label class="radio-inline" style="padding-top:0px;"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="4" th:text="Proficient" /></label>
+										<label class="radio-inline" style="padding-top:0px;"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="5" th:text="Expert" /></label>									
+									</td>
+								</tr>
+								</th:block>
+							</tbody>
+						</table>
 					</div>
-					
-					
 				</div>
-				<div class="form-group">
+
+			<div class="form-group">
 					<div class="col-sm-4">
 						<button type="button" class="btn btn-default"
 							onClick="history.go(-1);return true;">

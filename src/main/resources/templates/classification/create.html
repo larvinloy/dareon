@@ -20,6 +20,9 @@
 
 				<div class="well well-lg">
  
+ 					<!-- HIDDEN FIELD -->
+					<input id="selectable-output-id" type="hidden"
+							class="form-control" th:field="${classificationForm.parent}" />
 					<input type="hidden" th:field="*{id}" /> 
 					
 					<div class="form-group">
@@ -44,85 +47,52 @@
 						<label class="col-sm-2 control-label" id="label-create">Parent:</label>
 						<div class="col-md-10 ">
 
-							<!-- CLASSIFICATIONS ADDED -->
-							<div class="child col-md-5 panel panel-default"
-								style="min-height: 65px; padding: 1%">
 
-								<table id="selectable-tags" class="table">
-								</table>
-							</div>
-							
-							<!-- TREE VIEW PANEL -->
-							<div class="child col-md-7 panel panel-default" 
-								style="min-height: 500px; max-height: 500px; background-color: lightslategray">
 
-								<!-- HIDDEN FIELD -->
-								<input id="selectable-output-id" type="hidden"
-										class="form-control" th:field="${classificationForm.parent}" />
-								
-								<div style="padding: 2%; height: 100%">
-									<div class="form-group" style="text-align: center">
+		<!-- TREE VIEW PANEL -->
+		<div class="child col-md-6 panel panel-default" 
+			style="min-height: 500px; max-height: 500px; background-color: #000054; ">
 
-										<div class="input-group">
-											<input type="text" id="input-select-node"
-												class="form-control"
-												placeholder="Search for classification..." /> <span
-												class="input-group-addon"><span
-												id="badge-search-size" class="badge"
-												style="background: black;">
+			<div style="padding: 2%; height: 100%">
+				<div class="form-group" style="text-align: left">
 
-													
-														<span class="">0 found </span>
-													
-											</span> <span role="button" class="glyphicon glyphicon-chevron-up"
-												id="btn-search-swap-up"></span> <span
-												role="button" class="glyphicon glyphicon-chevron-down"
-												id="btn-search-swap-down"></span></span>
-										</div>
-										<p>
-										<div class="btn-group btn-group-justified">
-										<div class="btn-group">
-											<button type="button" class="btn btn-default select-node"
-												id="btn-select-node" >
-												<span class="glyphicon glyphicon-ok" /> Add
-												
-											</button>
-										</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default select-node"
-												id="btn-unselect-node" >
-												<span class="glyphicon glyphicon-remove" /> Remove 
-											</button>
-											</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default"
-												id="btn-clear-search" data-toggle="tooltip" >
-												<span class="glyphicon glyphicon-refresh" /> Clear
-											</button>
-											</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default"
-												id="btn-expand-all" >
-												<span class="glyphicon glyphicon-plus" /> Expand
-											</button>
-											</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default"
-												id="btn-collapse-all" >
-												<span class="glyphicon glyphicon-minus" /> Collapse
-											</button>
-											</div>
-										</div>
-										</p>
-										
-										
-										<div id="treeview-selectable"
-											style="text-align: left; overflow-x: scroll; height: 390px">
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- END OF TREEVIEW PANEL -->
+					<div class="input-group" >
+						<input type="text" id="input-select-node" class="form-control"
+							placeholder="Search for classification..." style="height: 35px" />
+						<span class="input-group-addon" style="height: 35px"><span id="badge-search-size" 
+						class="badge" style="background: black;">0 found</span><a class="btn btn-xs hidden" id="btn-search-swap-up" ><i 
+						class="glyphicon glyphicon-chevron-up" /></a><a class="btn btn-xs hidden" id="btn-search-swap-down"><i	
+						class="glyphicon glyphicon-chevron-down" /></a></span>
+					</div>
+				</div>
+					
+				<div class="form-group">
+				  <button type="button" id="btn-expand" class="btn btn-default btn-sm" data-toggle="collapse" >
+				  <span class="glyphicon glyphicon-plus" /> Expand All</button>
+				</div>
+				
+				<div id="treeview-selectable" class="form-group"
+					style="padding:0px; text-align: left; overflow-x: scroll; height: 390px">
+				</div>
+			
+			</div>
+		</div>
+		<!-- END OF TREEVIEW PANEL -->
+
+		<!-- CLASSIFICATION LIST -->
+		<div class="child col-md-6" style="padding-right:0px; ">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="background-color: white">
+					Classification:</div>
+				<div class="panel-body"
+						style="min-height: 70px;">
+						<table id="selectable-tags" class="table" />
+					
+				</div>
+			</div>
+		</div>
+		<!-- END OF CLASSIFICATION LIST -->
+
 
 						</div>
 					</div>
@@ -154,13 +124,11 @@
 
 
 	<script th:inline="javascript">
-
   		$(function() {
   			
         var defaultData = [[${classificationTree}]];
         
         var searchswap = 0;
-
         var initSelectableTree = function() {
             return $('#treeview-selectable').treeview({
               levels: 1,
@@ -184,13 +152,13 @@
             	  row.setAttribute("id","tag-"+node.id);
             	  row.setAttribute("style","background:#c1dff1")
                   var cell1=row.insertCell(0);
-            	  cell1.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thick;border-left:solid thick;border-color:whitesmoke");
+            	  cell1.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thick;border-color:white");
                   var t1=document.createElement("span");
                       t1.innerHTML = node.text;
                       cell1.appendChild(t1);
                       
                   var cell2=row.insertCell(1);
-                  cell2.setAttribute("style","max-width:95%;min-width:95%;border-bottom:solid thick;border-right:solid thick;border-color:whitesmoke");
+                  cell2.setAttribute("style","max-width:95%; min-width:95%; border-bottom:solid thick; border-right:solid thick; border-color:white; text-align:right");
                   var t2=document.createElement("button");
                       t2.setAttribute("class","btn btn-default btn-xs glyphicon glyphicon-remove");
                       t2.onclick = function(){
@@ -215,55 +183,43 @@
                 });
                 
                 $selectableTree.treeview('unselectNode', [node.nodeId]);
-          	  var row = document.getElementById("tag-"+node.id);
+          	  	var row = document.getElementById("tag-"+node.id);
           	    row.parentNode.removeChild(row);
-          	    
-          	    
               }
             });
           };
           var $selectableTree = initSelectableTree();
-        
+	        
           var findSelectableNodes = function() {
             return $selectableTree.treeview('search', [ $('#input-select-node').val(), 
             	{ ignoreCase: true, revealResults: true, exactMatch: false } ]);
           };
           
           var selectableNodes = findSelectableNodes();
-                  
-
-          var pre = $.parseJSON([[${classificationForm.pre}]]);
-
-          //<![CDATA[
-          if(pre != null)
-        	  {
-        	  $selectableTree.treeview('expandAll');
-              for(i=0;i<pre.length;i++) 
-              {
-            	  var myElement = $('li[data-for="'+pre[i]+'"]');  
-            	  $selectableTree.treeview('selectNode', [myElement.data('nodeid')]);
-              }
-              $selectableTree.treeview('collapseAll');
-        	  }
-           //]]>
-         
           
           
 			//Process search input key events          
             $('#input-select-node').on('keyup', function (e) {
 
             	selectableNodes = findSelectableNodes();
-	            $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
-	            if(!(selectableNodes.length >= 1))
+	            //$('.select-node').prop('disabled', !(selectableNodes.length >= 1));
+	            if(!(selectableNodes.length >= 1)) {
 	            	$('#badge-search-size').text("0 found");
-	            else   
+	            	$('#btn-search-swap-up').addClass('hidden');
+	            	$('#btn-search-swap-down').addClass('hidden');
+	            } else {  
 	            	$('#badge-search-size').text(selectableNodes.length + " found");
+	            	$('#btn-search-swap-up').removeClass('hidden');
+	            	$('#btn-search-swap-down').removeClass('hidden');
+	            }
+	            
 	            var x = document.getElementsByClassName('search-result');
 	            var parent = document.getElementById('treeview-selectable');
 	            parent.scrollTop = x[0].offsetTop - parent.offsetTop;
+				$('#btn-expand').html('<span class="glyphicon glyphicon-minus"></span> Collapse All'); 	            
 	
 			});
-         // switches highlighted on search
+			// switches highlighted on search
             $('#btn-search-swap-down').on('click', function (e) {
             	selectableNodes = findSelectableNodes();
             	if((selectableNodes.length-1) > searchswap)
@@ -272,44 +228,32 @@
       	            var parent = document.getElementById('treeview-selectable');
       	            parent.scrollTop = x[++searchswap].offsetTop - parent.offsetTop;
             		}
-            	
               });
-            $('#btn-search-swap-up').on('click', function (e) {
-            	
+
+			$('#btn-search-swap-up').on('click', function (e) {
             	if(searchswap > 0)
             	{
             	var x = document.getElementsByClassName('search-result');
  	            var parent = document.getElementById('treeview-selectable');
  	            parent.scrollTop = x[--searchswap].offsetTop - parent.offsetTop;
             	}
-            	 
               });
-			//Select | Unselect All
-          $('#btn-select-node.select-node').on('click', function (e) {
-            $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') } ]);
-          });
-
-          $('#btn-unselect-node.select-node').on('click', function (e) {
-            $selectableTree.treeview('unselectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
-          });
- 
-          $('#btn-clear-search').on('click', function (e) {
-        	  $selectableTree.treeview('clearSearch');
-              $('#input-select-node').val('');
-              $('#badge-search-size').text("0 found");
-          });
-          
+			
           // Expand | Collapse all
-          $('#btn-expand-all').on('click', function (e) {
-            var levels = $('#select-expand-all-levels').val();
-            $selectableTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
-          });
-
-          $('#btn-collapse-all').on('click', function (e) {
-        	  $selectableTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
-          });
- 
-
+          $('#btn-expand span').parent().click(function () {
+        	  if($('#btn-expand span').hasClass('glyphicon-plus'))
+        	  {
+        	     $('#btn-expand').html('<span class="glyphicon glyphicon-minus"></span> Collapse All'); 
+				  var levels = $('#select-expand-all-levels').val();
+		          $selectableTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
+        	  }
+        	  else
+        	  {      
+        	      $('#btn-expand').html('<span class="glyphicon glyphicon-plus"></span> Expand All'); 
+				  $selectableTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
+        	  }
+       	  }); 
+          
   		});
   	</script>
 

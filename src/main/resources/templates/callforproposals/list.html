@@ -14,7 +14,7 @@
 				<span class="glyphicon glyphicon-bullhorn"/>
 					Call for Proposals <a th:if="${#authorization.expression('hasAuthority(''CFP_CREATE_PRIVILEGE'')')} 
 						OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}"
-						href="/callforproposals/create" class="btn btn-primary pull-right"
+						href="/callforproposals/create" class="btn btn-create pull-right"
 					role="button"><span class="glyphicon glyphicon-pencil" /> Create</a>
 				</h2>
 
@@ -31,13 +31,9 @@
 								<tr>
 									<td> 
 										<div class="panel panel-body panel-default no-margin">
-	 										<div class="pull-right">
-		 										<span class="glyphicon glyphicon-calendar"/>
-												<span th:text="${#calendars.format(callForProposals.createdOn,'dd/MM/yyyy')}" />
-											</div>
-											<a th:href="|@{/callforproposals/read/}${callForProposals.id}|">
+											<a class="link-title" th:href="|@{/callforproposals/read/}${callForProposals.id}|">
 											<h4 th:text="${callForProposals.title}" /></a>
-											<span class="label label-default" style="margin-right: 10px">
+											<span class="label label-owner">
 												<th:block th:if="${callForProposals.repo.owner} != null">
 													<span th:if="${#authentication.getPrincipal().getUser().getEmail()} == ${callForProposals.repo.owner.Email}" 
 														class="glyphicon glyphicon-star" style="color:#fff06d" />
@@ -45,7 +41,11 @@
 													<span th:text="|${callForProposals.repo.owner.firstName} ${callForProposals.repo.owner.lastName}|"/>
 												</th:block>
 											</span>
-											<span class="label label-info"><span class="glyphicon glyphicon-folder-open"/> <span th:text="${callForProposals.repo.title}" /></span>
+											<span class="label label-owner"><span class="glyphicon glyphicon-folder-open"/> <span th:text="${callForProposals.repo.title}" /></span>
+	 										<span class="label label-date">
+		 										<span class="glyphicon glyphicon-calendar"/>
+												<span th:text="${#calendars.format(callForProposals.createdOn,'dd/MM/yyyy')}" />
+											</span>
 											<hr class="faded"/>
 											<p th:text="${callForProposals.description}" />
 											<hr />
@@ -60,7 +60,7 @@
 												<a th:if="(${#authorization.expression('hasAuthority(''CFP_DELETE_PRIVILEGE'')')}
 													AND ${#authentication.getPrincipal().getUser().getEmail()} == ${callForProposals.repo.owner.Email})
 													OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}" 
-													class="btn btn-danger btn-xs" 
+													class="btn btn-default btn-xs" 
 													th:onclick="'javascript:deleteModal(\'' 
 													+ ${callForProposals.id} + ','
 													+ ${callForProposals.title} + ',' 
@@ -90,8 +90,7 @@
 	
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<div class="modal-header"
-									style="padding: 20px 15px; background-color: #d9534f; color: white !important; ">
+								<div class="modal-header modal-delete">
 									<button type="button" class="close" data-dismiss="modal"
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
@@ -129,7 +128,7 @@
 	
 								<div class="modal-footer" style="background-color: #f9f9f9;">
 									<a type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
-									<a id="delete_btn" type="button" class="btn btn-danger"  >
+									<a id="delete_btn" type="button" class="btn btn-default"  >
 									
 									<span class="glyphicon glyphicon-trash" /> Continue with Delete</a>
 								</div>

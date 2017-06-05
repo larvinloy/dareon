@@ -46,7 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		// Remove Ant matchers for the resources folders
 		web.ignoring().antMatchers("/js/**");
 		web.ignoring().antMatchers("/css/**");
+		web.ignoring().antMatchers("/error/**");
 		web.ignoring().antMatchers("/images/**");
+		web.ignoring().antMatchers("/fonts/**");
 		web.ignoring().antMatchers("/external/**");
 	}
   

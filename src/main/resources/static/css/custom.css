@@ -1,4 +1,9 @@
-@CHARSET "ISO-8859-1";
+@charset 'UTF-8';
+
+
+@font-face{font-family:'Museo500';src:url('/fonts/Museo-500.otf') format('truetype');}
+
+
 html {
   position: relative;
   min-height: 100%;
@@ -20,7 +25,6 @@ footer {
 }
 
 
-
 /* Login form */
 #login-dp{
     min-width: 250px;
@@ -31,7 +35,8 @@ footer {
     margin-bottom: 10px;
 }
 
-/* Labels */
+
+/* Form: Input Labels */
 #label-create {
 	text-align: left;
 }
@@ -39,9 +44,10 @@ footer {
 
 /* Banner */
 .jumbotron {
-  background-color: #e60028;
+  background-color: #E60028;
+  font-family: "Museo500", Arial;
   color: #fff;
-   padding: 20px;
+  padding: 20px;
 } 
 
 
@@ -74,16 +80,20 @@ footer {
     border-bottom-right-radius: 6px;
 }
 
+
 /* Badge colors */
 .badge {
   font-weight: bold;
 }
-.badge-red {
-  background-color: #b94a48;
+.badge-offline {
+  background-color: #E60028;
+  font-size: 10px;
 }
-.badge-green {
+.badge-online {
   background-color: #468847;
+  font-size: 10px;
 }
+
 
 /* Horizontal rule */
 hr {
@@ -97,8 +107,9 @@ hr.faded {
     margin-top: 20px;
     border: 0;
     height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
 	}
+
 
 /* DataTable */
 table.dataTable {
@@ -121,8 +132,73 @@ table.dataTable {
     padding-right: 0 !important;
     }
 
-.panel-body.no-margin {
-   padding: 10px !important;
-   margin: 0 !important;
+ .panel-body.no-margin {
+	padding: 10px !important;
+	margin: 0 !important;
 	}
 
+
+
+/* Headers */
+h1, h2, h3, h4 { 
+    font-family: "Museo500", Arial;
+}
+.page-header { 
+    color: #E60028;
+}
+
+
+/* Create Button */
+.btn-create {
+	color: #FFFFFF;
+	background-color: #000054;
+}
+.btn-create:hover {
+	color:#FFFFFF;
+	background-color:#0000ff;
+}
+
+
+
+/* Owner, Repository, CFP and Date */
+.label.label-owner {
+	background-color: #000000;
+	margin-right: 5px;
+}
+.label.label-date {
+	background-color: #FFFFFF;
+	color: #000000;
+}
+
+
+/* Login Menu */
+.dropdown-toggle.nav-login {
+	color:#9d9d9d;
+	margin-top: 5px;
+}
+
+.dropdown-toggle.nav-login:hover {
+	color:#FFFFFF;
+	background-color:transparent;
+}
+
+.dropdown.open > .dropdown-toggle.nav-login {
+	color:#FFFFFF;
+	background-color:transparent;
+}
+
+
+/* Repository, CFP & Proposal Title */
+a.link-title {
+	color:#000054;
+}
+a.link-title:hover {
+	color:#E60028;
+}
+
+
+.modal-header.modal-delete {
+	padding: 20px 15px; 
+	background-color: #E60028; 
+	color: #FFFFFF !important; 
+}

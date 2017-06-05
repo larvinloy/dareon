@@ -19,50 +19,49 @@
 					Dashboard
                 </h2>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-check"></i> Quick Guide</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                        Logged user: <span sec:authentication="name">Bob</span>
-						Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
-                        </p>
-
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                        <a href="#" class="btn btn-default">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-gift"></i> You Repositories</h4>
+                        <h4><i class="fa fa-fw fa-check"></i> Your Repositories</h4>
                     </div>
                     <div class="panel-body">
                         <p>Repository 1 </p>
                         <p>Repository 2 </p>
                         <p>Repository 3 </p>
                         <p>Repository 4 </p>
-                        <a href="#" class="btn btn-primary">Create a repository</a>
+                        <a href="#" class="btn btn-create"><span class="glyphicon glyphicon-pencil" />
+                        Create</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-compass"></i> Your Call for Proposals</h4>
+                        <h4><i class="fa fa-fw fa-gift"></i> Your Call for Proposals</h4>
                     </div>
                     <div class="panel-body">
-                        
                         <p>Call for Proposal 1 </p>
                         <p>Call for Proposal 2 </p>
                         <p>Call for Proposal 3 </p>
                         <p>Call for Proposal 4 </p>
-                        <a href="#" class="btn btn-primary">Create a Call for Proposal</a>
+                        <a href="#" class="btn btn-create"><span class="glyphicon glyphicon-pencil" />
+                        Create</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> Your Proposals</h4>
+                    </div>
+                    <div class="panel-body">
+                        
+                        <p>Proposal 1 </p>
+                        <p>Proposal 2 </p>
+                        <p>Proposal 3 </p>
+                        <p>Proposal 4 </p>
+                        <a href="#" class="btn btn-create"><span class="glyphicon glyphicon-pencil" />
+                        Create</a>
                     </div>
                 </div>
             </div>
@@ -74,7 +73,6 @@
  	
 	<div th:replace="layouts/fragments :: bodybottom-scripts-min"></div>
 	<head th:replace="layouts/fragments :: footer"></head>
-
 		
 </body>
 </html>
