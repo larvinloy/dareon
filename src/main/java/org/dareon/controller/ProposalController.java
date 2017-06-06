@@ -39,6 +39,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 
+ * @author Ayush Garg
+ * controller class Proposal field and functions in MVC structure implementing request mapping
+ * 
+ */
 @Controller
 public class ProposalController
 {
@@ -55,7 +61,14 @@ public class ProposalController
     {
 	auth.userDetailsService(userDetailsService);
     }
-
+    
+    /**
+     * 
+     * @param cFPService returns  details about the call for proposal service layer class to the immediate super class
+     * @param userService returns  details about the authenticated user defined by user service layer class to the immediate super class
+     * @param proposalService returns  details about the proposal service layer class to the immediate super class
+     * 
+     */
     @Autowired
     public ProposalController(CFPService cFPService, UserService userService,
 	    ProposalService proposalService)
@@ -66,6 +79,12 @@ public class ProposalController
 	this.proposalService = proposalService;
     }
 
+    
+    /**
+     * 
+     * @param model details authority model for create functionality 
+     * @return redirects the system to "proposal/create" url
+     */
     @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
     @RequestMapping("/proposal/create")
     public String proposalCreate(Model model)
@@ -75,6 +94,13 @@ public class ProposalController
 	model.addAttribute("proposal", new Proposal());
 	return "proposal/create";
     }
+    
+    /**
+     * 
+     * @param model details authority model for create functionality
+     * @param id details user id for create functionality for authenticated user
+     * @return redirects system to "proposal/create" url 
+     */
     
     @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('PROPOSAL_CREATE_PRIVILEGE')")
     @RequestMapping("/proposal/create/{id}")
@@ -96,7 +122,14 @@ public class ProposalController
 
 	return "redirect:read/" + savedproposal.getId();
     }
-
+    /**
+     * 
+     * 
+         * 
+         * @param model details authority model for edit functionality
+         * @param id details user id for edit functionality for authenticated user
+         * @return redirects system to "proposal/create" url ..
+     */
     @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('PROPOSAL_EDIT_PRIVILEGE'))")
     @RequestMapping("/proposal/edit/{id}")
     public String proposalEdit(@PathVariable Long id, Model model)
@@ -106,7 +139,12 @@ public class ProposalController
 	model.addAttribute("proposal", proposalService.findById(id));
 	return "proposal/create";
     }
-    
+    /**
+     * 
+     * @param model details authority model for read functionality
+     * @param id details user id for read functionality for authenticated user
+     * @return redirects system to "proposal/read" url 
+     */
     @PreAuthorize("hasAuthority('PROPOSAL_READ_PRIVILEGE')")
     @RequestMapping("/proposal/read/{id}")
     public String proposalRead(@PathVariable Long id, Model model)
@@ -115,7 +153,12 @@ public class ProposalController
 	model.addAttribute("proposal", proposalService.findById(id));
 	return "proposal/read";
     }
-
+    /**
+     * 
+     * @param model details authority model for delete functionality
+     * @param id details user id for delete functionality for authenticated user
+     * @return redirects system to "proposal/delete" url after checking the authority 
+     */
     @PreAuthorize("hasAuthority('PROPOSAL_READ_PRIVILEGE')")
     @RequestMapping("/proposal/list")
     public String proposalList(Model model)
@@ -132,7 +175,12 @@ public class ProposalController
 	model.addAttribute("proposal", proposalService.findById(id));
 	return "proposal/delete";
     }
-    
+    /**
+     * 
+     * @param model details authority model for delete functionality
+     * @param id details user id for delete functionality for authenticated user
+     * @return redirects system to "proposal/create" url after user deletes the proposal
+     */
     @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('PROPOSAL_DELETE_PRIVILEGE'))")
     @RequestMapping("/proposal/deleteconfirmed/{id}")
     public RedirectView proposalDeleteConfirmed(@PathVariable Long id, Model model)
