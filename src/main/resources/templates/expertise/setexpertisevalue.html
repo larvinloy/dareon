@@ -50,11 +50,14 @@ thead {
 							<tbody>
 								<th:block th:each="index : ${#numbers.sequence(0,(#object.expertises.size() - 1))}">						
 								<tr>
-									<td class="col-xs-1" th:text = "*{expertises[__${index}__].classification.code}" />
-									<td class="col-xs-5" th:text = "*{expertises[__${index}__].classification.name}">
+									<td class="col-xs-1"> 
+										<label class="control-label text-left" th:text = "*{expertises[__${index}__].classification.code}"/>
+									</td>
+									<td class="col-xs-5"> 
+										<label class="control-label text-left" th:text = "*{expertises[__${index}__].classification.name}"/>
 										<input type="hidden" th:field="*{expertises[__${index}__].classification}" />
-										<input type="hidden" th:field="*{expertises[__${index}__].user}" />										
-										</td>
+										<input type="hidden" th:field="*{expertises[__${index}__].user}" />									
+									</td>
 									<td class="col-xs-5">
 										<label class="radio-inline" style="padding-top:0px;"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="1" th:text="Novice" /></label>
 										<label class="radio-inline" style="padding-top:0px;"><input type="radio" th:field="*{expertises[__${index}__].value}" th:value="2" th:text="Advanced" /></label>
