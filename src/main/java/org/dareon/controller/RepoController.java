@@ -44,7 +44,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+/**
+ * 
+ * @author Ayush Garg.
+ *controller class  for repository management field and functions in MVC structure implementing request mapping.
+ */
 @Controller
 public class RepoController
 {
@@ -62,7 +66,16 @@ public class RepoController
     {
 	auth.userDetailsService(userDetailsService);
     }
+    /**
+     * 
+     * @param repoService
 
+     * 
+     * @param cFPService returns  details about the call for proposal service layer class to the immediate super class
+     * @param userService returns  details about role of the authenticated user defined by user service layer class to the immediate super class
+     * @param repoService returns  details about role of the the repo service layer class to the immediate super class
+     * @param classificationService details about role of the Classification service layer class to the immediate super class
+     */
     @Autowired
     public RepoController(RepoService repoService, UserService userService,
 	    CFPService cFPService, ClassificationService classificationService)
@@ -73,7 +86,11 @@ public class RepoController
 	this.cFPService = cFPService;
 	this.classificationService = classificationService;
     }
-
+    /**
+     * 
+     * @param model details create privilege model for the user
+     * @return redirects user to the "repo/create" url if has authentication
+     */
     @PreAuthorize("hasRole('ROLE_SA') OR hasAuthority('REPO_CREATE_PRIVILEGE')")
     @RequestMapping("/repo/create")
     public String repoCreate(Model model)
@@ -90,7 +107,12 @@ public class RepoController
 	model.addAttribute("pre", new String());
 	return "repo/create";
     }
-
+/**
+ * 
+ * @param repoForm details the fields of repoForm edited by user 
+ * @param domains details repo domain class attribute(String)
+ * @return redirects user to read url
+ */
     @PreAuthorize("hasRole('ROLE_SA') OR (hasAuthority('REPO_EDIT_PRIVILEGE') AND isRepoOwner(#repoForm))")
     @RequestMapping(value = "/repo/create", method = RequestMethod.POST)
     public String repoSave(@ModelAttribute RepoForm repoForm, @ModelAttribute String domains)
