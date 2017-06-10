@@ -58,14 +58,16 @@
 													OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}" 
 													th:href="|@{/repo/edit/}${repo.id}|"
 													class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit" /> Edit</a> 
-												<a th:if="(${#authorization.expression('hasAuthority(''REPO_DELETE_PRIVILEGE'')')} 
+												<a th:with='cleanedTitle=${#strings.replace(repo.title, "&apos;", "\&apos;")},
+													cleanedDescription=${#strings.replace(repo.shortDescription, "&apos;", "\&apos;")}'
+													th:if="(${#authorization.expression('hasAuthority(''REPO_DELETE_PRIVILEGE'')')} 
 													AND ${#authentication.getPrincipal().getUser().getEmail()} == ${repo.owner.Email})
 													OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}" 
 													class="btn btn-default btn-xs" th:onclick="'javascript:deleteModal(\'' 
-													+ ${repo.id} + ','
-													+ ${repo.title} + ',' 
-													+ ${repo.shortDescription} + ','
-													+ |${repo.owner.firstName} ${repo.owner.lastName}| + ','
+													+ ${repo.id} + '-dareon_delimeter-'
+													+ ${cleanedTitle} + '-dareon_delimeter-' 
+													+ ${cleanedDescription} + '-dareon_delimeter-'
+													+ |${repo.owner.firstName} ${repo.owner.lastName}| + '-dareon_delimeter-'
 													+ ${repo.getcFPs().size()}
 													+ '\');'" >
 													<span class="glyphicon glyphicon-trash" /> Delete</a>	
@@ -156,12 +158,12 @@
 	<script th:inline="javascript">
 
 		function deleteModal(repo) {
-			var arrRepo = repo.split(',');
-			var id=arrRepo[0];
-			var title=arrRepo[1];
-			var description=arrRepo[2];
-			var owner=arrRepo[3];
-			var CFPs=arrRepo[4];
+			var arr = repo.split('-dareon_delimeter-');
+			var id=arr[0];
+			var title=arr[1];
+			var description=Shorten(arr[2],500);
+			var owner=arr[3];
+			var CFPs=arr[4];
 			
 			document.getElementById("repo_title").innerHTML = title;
 			document.getElementById("repo_description").innerHTML = description;
@@ -171,6 +173,18 @@
 			document.getElementById("delete_btn").href = '/repo/deleteconfirmed/' + id;
 			$('#confirmDelete').modal('show');
 		}
+		
+		function Shorten(text,maxLength) {
+			if(text.length > maxLength) {
+				var text_end = '...';
+			} else {
+				var text_end = '';
+			} 
+			
+	        var reg = new RegExp('^(.{' + maxLength + '}[^\\s]*).*');
+	        return text.replace(reg, "$1") + text_end;
+		}
+		
 	</script>
 
 </body>

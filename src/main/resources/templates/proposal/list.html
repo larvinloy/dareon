@@ -64,16 +64,20 @@
 													OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}" 
 													th:href="|@{/proposal/edit/}${proposal.id}|"
 													class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit" /> Edit</a> 
-												<a th:if="(${#authorization.expression('hasAuthority(''PROPOSAL_EDIT_PRIVILEGE'')')}
+												<a th:with='cleanedTitle=${#strings.replace(proposal.title, "&apos;", "\&apos;")},
+													cleanedDescription=${#strings.replace(proposal.description, "&apos;", "\&apos;")},
+													cleanedCfpTitle=${#strings.replace(proposal.cfp.title, "&apos;", "\&apos;")},
+													cleanedRepoTitle=${#strings.replace(proposal.cfp.repo.title, "&apos;", "\&apos;")}'
+													th:if="(${#authorization.expression('hasAuthority(''PROPOSAL_EDIT_PRIVILEGE'')')}
 													AND ${#authentication.getPrincipal().getUser().getEmail()} == ${proposal.creator.Email})
 													OR ${#authorization.expression('hasAuthority(''ROLE_SA'')')}" 
 													class="btn btn-default btn-xs" 
 													th:onclick="'javascript:deleteModal(\'' 
-														+ ${proposal.id} + ','
-														+ ${proposal.title} + ',' 
-														+ ${proposal.description} + ','
-														+ ${proposal.cfp.title} + ','
-														+ ${proposal.cfp.repo.title}
+														+ ${proposal.id} + '-dareon_delimeter-'
+														+ ${cleanedTitle} + '-dareon_delimeter-' 
+														+ ${cleanedDescription} + '-dareon_delimeter-'
+														+ ${cleanedCfpTitle} + '-dareon_delimeter-'
+														+ ${cleanedRepoTitle}
 														+ '\');'" >
 													<span class="glyphicon glyphicon-trash" /> Delete</a>
 											</div>
@@ -158,10 +162,10 @@
 	<script>
 		function deleteModal(obj) {
 			
-			var arr = obj.split(',');
+			var arr = obj.split('-dareon_delimeter-');
 			var id=arr[0];
 			var title=arr[1];
-			var description=arr[2];
+			var description=Shorten(arr[2],500);
 			var repo=arr[3];
 			var cfp=arr[4];
 			
@@ -173,6 +177,18 @@
 			document.getElementById("delete_btn").href = '/proposal/deleteconfirmed/' + id;
 			$('#confirmDelete').modal('show');
 		}
+		
+		function Shorten(text,maxLength) {
+			if(text.length > maxLength) {
+				var text_end = '...';
+			} else {
+				var text_end = '';
+			} 
+			
+	        var reg = new RegExp('^(.{' + maxLength + '}[^\\s]*).*');
+	        return text.replace(reg, "$1") + text_end;
+		}
+
 	</script>
 
 	
