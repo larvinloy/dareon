@@ -25,7 +25,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
-
+/**
+ * 
+ * @author Ayush Garg
+ * 
+ *This is class of Spring MVC framework (the component of Spring Framework used to
+ * implement Web Application). The @Controller annotation indicates that this class serves 
+ * the role of a controller.The @Controller annotation acts as a stereotype for the annotated class, indicating its role. 
+ * The dispatcher scans such annotated classes for mapped methods and detects @RequestMapping annotations and fetch the url for the
+ * for classification page..
+ * 
+ */
 @Controller
 public class ClassificationController
 {
@@ -41,6 +51,11 @@ public class ClassificationController
 	auth.userDetailsService(userDetailsService);
     }
 
+    /**
+     * 
+     * @param classificationService returns the value of immediate super class object
+     * 
+     */
     @Autowired
     public ClassificationController(ClassificationService classificationService)
     {
@@ -63,7 +78,11 @@ public class ClassificationController
 	return "classification/create";
     }
 
-
+    /**
+     * 
+     * @param classificationForm stores the FOR values typed by the user in create form to the immediate super class
+     * @return the user to 'list, url
+     */
     @PreAuthorize("hasRole('ROLE_SA')")
     @RequestMapping(value = "/classification/create", method = RequestMethod.POST)
     public String forSave(@ModelAttribute ClassificationForm classificationForm)
@@ -94,7 +113,12 @@ public class ClassificationController
 	return "redirect:list";
     }
 
-    
+    /**
+     * 
+     * @param id check the authentication mentioned in the immediate super class and allows user to proceed further
+     * @param model defines the value of edit model to immediate super class
+     * @return the user to create url for making changes
+     */
     @PreAuthorize("hasRole('ROLE_SA')")
     @RequestMapping("/classification/edit/{id}")
     public String forEdit(@PathVariable Long id, Model model)

@@ -50,6 +50,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+/**
+ * 
+ * @author Ayush Garg
+ *This is the Controller for Expertise field of dareon website ,
+ *this defines request mapping for the functionalities of expertise service model.
+ */
 
 @Controller
 public class ExpertiseController
@@ -67,7 +73,12 @@ public class ExpertiseController
     {
 	auth.userDetailsService(userDetailsService);
     }
-
+    /**
+    *
+    * @param expertiseService details about the expertise of user in different selected fields
+    * @param classificationService  details about the classified fields selected by the user
+    * @param userService details about the particular authenticated user
+    */
     @Autowired
     public ExpertiseController(ExpertiseService expertiseService, ClassificationService classificationService, UserService userService)
     {
@@ -76,7 +87,12 @@ public class ExpertiseController
 	this.classificationService = classificationService;
 	this.userService = userService;
     }
-
+    /**
+     * 
+     * @param model defines the expertise model in model class of MVC
+     * @return the system to "expertise/addexpertise" url
+     * @throws JSONException throws exception for missing values
+     */
     @RequestMapping("/expertise/add")
     public String addExpertise(Model model) throws JSONException
     {
@@ -99,7 +115,12 @@ public class ExpertiseController
 	return "expertise/addexpertise";
 
     }
-
+    /**
+     * 
+     * @param addExpertiseForm details to be filled for the expertise of user
+     * @param model defines the model for add expertise url 
+     * @return redirect the system to set value field
+     */
     @RequestMapping(value = "/expertise/add", method = RequestMethod.POST)
     public String addExpertise(@ModelAttribute AddExpertiseForm addExpertiseForm, Model model)
     {
@@ -109,7 +130,11 @@ public class ExpertiseController
 	expertiseService.saveAll(userService.findByEmail(auth.getName()),addExpertiseForm.getFORCollection());
 	return "redirect:setvalue";
     }
-    
+    /**
+     * 
+     * @param model details about the setvalue mdel for expertise field
+     * @return redirects system to"expertise/setexpertisevalue" url 
+     */
     @RequestMapping(value = "/expertise/setvalue")
     public String setExpertiseValue(Model model)
     {
@@ -121,7 +146,12 @@ public class ExpertiseController
 	model.addAttribute("addExpertiseValueForm", addExpertiseValueForm);
 	return "expertise/setexpertisevalue";
     }
-    
+    /**
+     * 
+     * @param addExpertiseValueForm details to be filled in fields of form
+     * @param model  defines expertise add form  
+     * @return the index to the node 
+     */
     @RequestMapping(value = "/expertise/setvalue", method = RequestMethod.POST)
     public String setExpertiseValue(@ModelAttribute AddExpertiseValueForm addExpertiseValueForm, Model model)
     {

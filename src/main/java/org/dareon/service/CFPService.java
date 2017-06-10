@@ -8,7 +8,12 @@ import org.dareon.repository.CFPRepository;
 import org.dareon.repository.RepoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+/**
+ * 
+ * @author Ayush Garg
+ * 
+ * 
+ */
 @Service
 public class CFPService
 {
@@ -43,17 +48,28 @@ public class CFPService
 	    return cFPRepository.save(editCFP);
 	}
     }
-
+/**
+ * 
+ * @return returns list of CFP repo
+ */
     public List<CFP> list()
     {
 	return cFPRepository.findAllByOrderByCreatedOnDesc();
     }
-
+/**
+ * 
+ * @param title finds CFP repo by title
+ * @return cfp repo after searching by title
+ */
     public CFP findByTitle(String title)
     {
 	return cFPRepository.findByTitle(title);
     }
-
+/**
+ * 
+ * @param id details the CFP Id
+ * @return the CFP repo thus searched by id
+ */
     public CFP findById(Long id)
     {
 	// TODO Auto-generated method stub

@@ -36,7 +36,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+/**
+ * 
+ * @author Ayush Garg
+ *Class defining the controller of home page of the complete system.
+ *
+ */
 @Controller
 public class HomeController
 {
@@ -53,7 +58,12 @@ public class HomeController
     {
 	auth.userDetailsService(userDetailsService);
     }
-
+    /**
+     * 
+     * @param repoService details the reposervice layer and its functions
+     * @param userService details the authenticated user service defined by service layer
+     * @param cFPService details the calls for proposal service declared in CFP service layer class
+     */
     @Autowired
     public HomeController(RepoService repoService, UserService userService,
 	    CFPService cFPService)
@@ -69,7 +79,12 @@ public class HomeController
     {
 	return "index";
     }
-  
+    
+    /**
+     * 
+     * @param model detaiks the sys admin model for authority
+     * @return redirects system to authenticated admin to the "user/sysadmin" url
+     */
     @PreAuthorize("hasAuthority('SYSADMIN_CREATE_PRIVILEGE')")
     @RequestMapping("/user/sysadmin")
     public String sysAdminCreate(Model model)
@@ -78,7 +93,11 @@ public class HomeController
 	return "user/sysadmin";
 	
     }
-    
+    /**
+     * 
+     * @param sysAdmin details about the system administrator
+     * @return redirects system to the read url
+     */
     @PreAuthorize("hasAuthority('SYSADMIN_CREATE_PRIVILEGE')")
     @RequestMapping(value = "/user/sysadmin", method = RequestMethod.POST)
     public String sysAdminSave(@ModelAttribute User sysAdmin)
@@ -87,7 +106,12 @@ public class HomeController
 	return "redirect:read/" + newUser.getEmail();
 	
     }
-    
+    /**
+     * 
+     * @param email details stored email for authentication
+     * @param model details authority model 
+     * @return redirects the system to "user/read" url
+     */
     @PreAuthorize("hasAuthority('USER_READ_PRIVILEGE')")
     @RequestMapping("/user/read/{email}")
     public String userRead(@PathVariable String email, Model model)
