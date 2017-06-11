@@ -5,7 +5,6 @@ import org.dareon.domain.Privilege;
 import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * 
- * @author Ayush Garg
  *defines Privilege repository extending super class JpaRepository defining privilege
  */
 public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {

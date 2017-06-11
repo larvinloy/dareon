@@ -18,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 /**
  * 
- * @author Ayush Garg
  *Proposals class defines the proposal table and its relation with database
  */
 

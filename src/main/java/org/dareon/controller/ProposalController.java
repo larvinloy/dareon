@@ -41,7 +41,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 
- * @author Ayush Garg
  * controller class Proposal field and functions in MVC structure implementing request mapping
  * 
  */

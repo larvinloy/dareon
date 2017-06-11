@@ -9,7 +9,6 @@ import org.dareon.domain.Proposal;
 import org.dareon.domain.Repo;
 /**
  * 
- * @author Ayush Garg
  *defines Proposal repository extending CrudRepository defining create retrieve update and delete functionality
  */
 public interface ProposalRepository extends CrudRepository<Proposal, Long>

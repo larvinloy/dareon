@@ -27,8 +27,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * 
- * @author Ayush Garg
- * 
  *This is class of Spring MVC framework (the component of Spring Framework used to
  * implement Web Application). The @Controller annotation indicates that this class serves 
  * the role of a controller.The @Controller annotation acts as a stereotype for the annotated class, indicating its role. 

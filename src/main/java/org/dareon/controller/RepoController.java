@@ -46,7 +46,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 
- * @author Ayush Garg.
  *controller class  for repository management field and functions in MVC structure implementing request mapping.
  */
 @Controller

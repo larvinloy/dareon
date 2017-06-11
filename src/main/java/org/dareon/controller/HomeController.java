@@ -37,8 +37,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
- * 
- * @author Ayush Garg
  *Class defining the controller of home page of the complete system.
  *
  */

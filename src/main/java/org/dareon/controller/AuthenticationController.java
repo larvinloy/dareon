@@ -28,7 +28,6 @@ import com.nimbusds.jwt.SignedJWT;
 import net.minidev.json.JSONObject;
 /**
  * 
- * @author Ayush Garg
  *This is controller class for defining various user authentication with AAF
  */
 @Controller

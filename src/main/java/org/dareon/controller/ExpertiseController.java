@@ -51,8 +51,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
- * 
- * @author Ayush Garg
  *This is the Controller for Expertise field of dareon website ,
  *this defines request mapping for the functionalities of expertise service model.
  */

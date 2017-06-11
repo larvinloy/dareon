@@ -38,8 +38,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 
- * 
- * @author Ayush Garg
  *This class implements the main functionality of the different services provided by our system
  *and defines its relation with service layer
  */

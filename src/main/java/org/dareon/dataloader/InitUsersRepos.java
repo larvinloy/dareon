@@ -18,7 +18,6 @@ import org.dareon.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 /**
  * 
- * @author Ayush Garg
  *This Class sets initial users and roles for diifferent repositories of this website
  */
 public class InitUsersRepos

@@ -10,7 +10,6 @@ import javax.persistence.ManyToMany;
 
 /**
  * 
- * @author Ayush Garg
  *this is entity class describes privileges and its attributes
  */
 @Entity

@@ -25,7 +25,6 @@ import javax.persistence.TemporalType;
 
 /**
  * 
- * @author Ayush Garg
  *This is domain class for Call For Proposals defining 
  *objects used in project database and there relation with different objects
  */

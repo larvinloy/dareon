@@ -26,7 +26,6 @@ import org.hibernate.annotations.FetchMode;
 
 /**
  * 
- * @author Ayush Garg
  *this class defines the user domain of the system and its relation with other objects and classes
  */
 @Entity

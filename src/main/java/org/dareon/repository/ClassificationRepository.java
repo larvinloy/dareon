@@ -10,7 +10,6 @@ import org.dareon.domain.Repo;
 
 /**
  * 
- * @author Ayush Garg
  *defines Classification repository extending super class CrudRepository defining create retrieve update and delete functionality
  */
 public interface ClassificationRepository extends CrudRepository<Classification, Long>

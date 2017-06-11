@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 /**
  * 
- * @author Ayush Garg
  * Class defines roles and authentication of various users associated with the system
  *
  */

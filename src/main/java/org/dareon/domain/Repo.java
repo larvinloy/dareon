@@ -30,7 +30,6 @@ import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * 
- * @author Ayush Garg
  * this class defines the Repo table and relation of its various fields with other table and objects
  *
  */

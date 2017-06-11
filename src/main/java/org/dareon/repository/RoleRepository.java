@@ -4,7 +4,6 @@ import org.dareon.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * 
- * @author Ayush Garg
  *defines Role repository extending JpaRepository defining user roles
  */
 public interface RoleRepository extends JpaRepository<Role, Long> {
