@@ -12,7 +12,7 @@ The dockerised version of the Dareon project [docker-dareon](https://github.com/
 
 ## Reconfiguring Scripts for Fork
 
-###To reconfigure continuous deployment
+### To reconfigure continuous deployment
 1. Edit repo url in upload-jar.sh to the forked repo url
 2. Setup Travis account to monitor both repos (dareon and docker-dareon)
 
