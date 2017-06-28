@@ -14,6 +14,7 @@ The dockerised version of the Dareon project [docker-dareon](https://github.com/
 
 ### To reconfigure continuous deployment
 1. Edit repo url in upload-jar.sh to the forked repo url
+2. Create GitHub API key and add it to Travis account, follow instructions from this [blog](https://medium.com/@daggerdwivedi/push-your-apk-to-your-github-repository-from-travis-11e397ec430d)
 2. Setup Travis account to monitor both repos (dareon and docker-dareon)
 
 
